@@ -1,0 +1,100 @@
+.header{
+    height:100px;
+    padding-top: 20%;
+    padding-bottom: 10%;
+}
+
+.header_text{
+    font-weight: 600;
+    font-size: 50px;
+}
+
+.header__main{
+    color: white;
+    margin-top: 15%;
+    margin-bottom: 15%;
+}
+
+.nav__left{
+    position: fixed;
+    height: 100vh;
+}
+
+.time__con{
+    color: white;
+    font-size: 15px;
+    padding: 5px 5px 0 5px;
+    margin: 0;
+}
+
+.timer{
+    color: white;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    margin-bottom: 5%;
+}
+
+.header__name{
+    color: white;
+    margin-bottom: 5%;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 3px;
+}
+
+.border_one{
+    border-bottom: 1px white solid;
+}
+
+.sect{
+    padding-bottom: 10px;
+}
+
+.main{
+    margin-left: 16.66666666667%;
+}
+
+.name__task{
+    padding: 20px;
+    margin-bottom: 2%;
+    font-weight: bolder;
+    font-size: 50px;
+}
+
+.op__task{
+    font-size: 15px;
+    text-align: left;
+    padding: 20px;
+}
+
+.h__task{
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 600;
+    font-size: 35px;
+}
+
+.tabel__box{
+    padding: 0 20px 20px 20px;
+    margin-right: 40%;
+}
+
+.input__cont{
+    margin-top: 10%
+}
+
+.info__num{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+
+.len__pos{
+    border-radius: 50%;
+    color: rgb(255, 255, 255);
+    bottom: 35px;
+    position: absolute;
+    left: 36px;
+    z-index: 999;
+    padding: 2px 9px
+}
