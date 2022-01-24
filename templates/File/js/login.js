@@ -18,7 +18,7 @@ login.addEventListener('input', updateValue);
 password.addEventListener('input', updateValue);
 
 function updateValue(e){
-        eel.update_date(login.value, password.value)
+        eel.update_field_login(login.value, password.value)
 }
 
 eel.expose(update_error)

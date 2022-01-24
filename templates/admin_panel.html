@@ -13,23 +13,95 @@
   </head>
 
   <body>
-    <nav>
-        <div class="nav-wrapper">
-          <a href="#" class="brand-logo">Админ панель</a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="#">Добавить участника</a></li>
-            <li><a href="#">Добавить событие</a></li>
-            <li><a href="#">Список событий</a></li>
-            <li><a href="#">Список акаунтов</a></li>
-          </ul>
-        </div>
+    <nav class="nav-extended">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Админ панель</a>
+      </div>
+      <div class="nav-content center">
+        <ul class="tabs tabs-transparent">
+          <li class="tab"><a href="#test1">Управление участниками</a></li>
+          <li class="tab"><a href="#test2">Добавление нового события</a></li>
+        </ul>
+      </div>
     </nav>
-    <div class="container">
+      <div id="test1">
         <div class="row">
-            <h5>Админ панель</h5>
+          <div class="col s6">
+            <div class="container">
+              <table class="centered highlight" id="tabel">
+                <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Логин</th>
+                      <th>Имя</th>
+                      <th>Фамилия</th>
+                      <th>тип</th>
+                  </tr>
+                </thead>
+        
+                <tbody class="centered">
+                  <tr>
+                    <td>1</td>
+                    <td>admin</td>
+                    <td>vlad</td>
+                    <td>vlad</td>
+                    <td>админ</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col s6">
+            <div class="container">
+              <div class="row">
+                <form class="col s10 offset-s1">
+                  <div class="row">
+                    <div class="input-field">
+                      <input id="login" type="text" class="validate">
+                      <label for="login">Логин</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field">
+                      <input id="name" type="text" class="validate">
+                      <label for="name">Имя</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field">
+                      <input id="sename" type="text" class="validate">
+                      <label for="sename">Фамилия</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field">
+                      <input id="password" type="text" class="validate">
+                      <label for="password">Пароль</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <select id="selected" class="browser-default">
+                      <option value="" disabled selected>тип пользователя</option>
+                      <option value="1">админ</option>
+                      <option value="2">пользователь</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <h5 class="left-align error_text" id="error"></h5>
+                  </div>
+                  <div class="row">
+                    <a class="waves-effect waves-light btn" id="add_user">Добавить</a>
+                    <a class="waves-effect waves-light btn">Обновить</a>
+                    <a class="waves-effect waves-light btn">Удалить</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
+      <div id="test2" class="col s12"></div>
     </div>
     <script type="text/javascript" src="./File/js/materialize.min.js"></script>
-    <script type="text/javascript" src="./File/js/main.js"></script>
+    <script type="text/javascript" src="./File/js/admin_panel.js"></script>
   </body>
 </html>
