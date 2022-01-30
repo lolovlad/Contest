@@ -12,5 +12,7 @@ class AdminPanelView(Observer):
         eel.start('admin_panel.html', mode="chrome", size=(760, 760), port=3000)
 
     def update(self):
-        pass
-        #eel.update_error(self.__model.error)
+        print(self.__model.select_user.type)
+        print(self.__model.select_user.password)
+        print(self.__model.select_contest.name_contest)
+        print(self.__model.select_contest.datetime_start)

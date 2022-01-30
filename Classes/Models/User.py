@@ -8,4 +8,6 @@ class User(JsonObject):
     name = StringField()
     sename = StringField()
 
+    password = StringField()
+
     type = IntegerField()

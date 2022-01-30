@@ -20,7 +20,8 @@
       <div class="nav-content center">
         <ul class="tabs tabs-transparent">
           <li class="tab"><a href="#test1">Управление участниками</a></li>
-          <li class="tab"><a href="#test2">Добавление нового события</a></li>
+          <li class="tab" id="tab_contest"><a href="#test2">Добавление нового события</a></li>
+          <li class="tab"><a href="#test3">Редактированние события</a></li>
         </ul>
       </div>
     </nav>
@@ -39,14 +40,7 @@
                   </tr>
                 </thead>
         
-                <tbody class="centered">
-                  <tr>
-                    <td>1</td>
-                    <td>admin</td>
-                    <td>vlad</td>
-                    <td>vlad</td>
-                    <td>админ</td>
-                  </tr>
+                <tbody class="centered" id="tbody">
                 </tbody>
               </table>
             </div>
@@ -91,17 +85,117 @@
                   </div>
                   <div class="row">
                     <a class="waves-effect waves-light btn" id="add_user">Добавить</a>
-                    <a class="waves-effect waves-light btn">Обновить</a>
-                    <a class="waves-effect waves-light btn">Удалить</a>
+                    <a class="waves-effect waves-light btn" id="update_user">Обновить</a>
+                    <a class="waves-effect waves-light btn" id="delete_user">Удалить</a>
                   </div>
                 </form>
               </div>
             </div>
           </div>
         </div>
-      <div id="test2" class="col s12"></div>
-    </div>
+      </div>
+
+      <div id="test2">
+        <div class="row">
+          <div class="col s6">
+            <div class="container">
+              <table class="centered highlight" id="tabel">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Название соревнования</th>
+                    <th>Тип соревнования</th>
+                    <th>Дата регистрации</th>
+                    <th>Дата проведения</th>
+                    <th>Дата окончания</th>
+                  </tr>
+                </thead>
+        
+                <tbody class="centered" id="tbody_contest">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col s6">
+            <div class="container">
+              <div class="row">
+                <form class="col s10 offset-s1">
+                  <div class="row">
+                    <div class="input-field">
+                      <input id="name_contest" type="text" class="validate">
+                      <label for="name_contest">Название соревнования</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <select id="type_selected_contes" class="browser-default">
+                      <option value="" disabled selected>тип соревнования</option>
+                      <option value="1">олимпида</option>
+                      <option value="2">хакатон</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input type="text" id="datepicker_start">
+                      <label for="datepicker_start">Дата начала</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input type="text" id="timepicker_start">
+                      <label for="timepicker_start">Время начала</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input type="text" id="datepicker_stop">
+                      <label for="datepicker_stop">Дата конца</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input type="text" id="timepicker_stop">
+                      <label for="timepicker_stop">Время конца</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <h5 class="left-align error_text" id="error"></h5>
+                  </div>
+                  <div class="row">
+                    <a class="waves-effect waves-light btn" id="add_contest">Добавить</a>
+                    <a class="waves-effect waves-light btn" id="update_contest">Обновить</a>
+                    <a class="waves-effect waves-light btn" id="delete_contest">Удалить</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="test3">
+        <div class="row">
+          <div class="container">
+            <form class="col s12">
+              <div class="row">
+                <select id="select_col_test"> 
+                  <option value="" disabled selected>Колличества заданий</option>
+                  <option value="1">Задание 1</option>
+                  <option value="2">Задание 2</option>
+                  <option value="3">Задание 3</option>
+                  <option value="4">Задание 4</option>
+                  <option value="5">Задание 5</option>
+                  <option value="6">Задание 6</option>
+                </select>
+              </div>
+              <div class="row">
+                <a class="waves-effect waves-light btn" id="update_col_test">Обновить</a>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="container" id="body_test">
+          </div>
+        </div>
+      </div>
     <script type="text/javascript" src="./File/js/materialize.min.js"></script>
     <script type="text/javascript" src="./File/js/admin_panel.js"></script>
+    <script type="text/javascript" src="./File/js/create_contest.js"></script>
   </body>
 </html>
