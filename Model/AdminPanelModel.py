@@ -1,6 +1,7 @@
 from Interfase.Subject import Subject
 from Classes.Models.User import User
 from Classes.Models.Contes import Contest
+from Classes.Models.Task import Task
 import datetime
 from pykson import Pykson
 
@@ -10,7 +11,8 @@ class AdminPanelModel(Subject):
         self.__observer = []
         self.__users = []
         self.__select_user = User()
-        self.__select_contest = Contest
+        self.__select_contest = Contest()
+        self.__tasks = {}
 
     def add_user(self, val):
         self.__users.append(val)
@@ -22,6 +24,12 @@ class AdminPanelModel(Subject):
                 self.__users.pop(user_num)
                 self.notify()
                 return
+
+    def update_tasks(self, val):
+        self.__tasks[val["num_task"]] = val["data"]
+
+    def add_tasks(self, val):
+        self.__tasks[val["num_task"]] = val["date"]
 
     @property
     def select_user(self):

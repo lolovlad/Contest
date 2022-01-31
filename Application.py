@@ -1,6 +1,11 @@
 from Classes.ControllersInit import ControllersInit
 
+from tkinter import Tk, filedialog
 import eel
+
+root = Tk()
+root.withdraw()
+root.wm_attributes('-topmost', 1)
 
 
 @eel.expose
@@ -62,6 +67,17 @@ def select_contest(data):
 def update_field_login(login_text, password_text):
     ControllersInit().login.set_login(login_text)
     ControllersInit().login.set_password(password_text)
+
+
+@eel.expose
+def file():
+    folder = filedialog.askopenfile()
+    return str(folder.name)
+
+
+@eel.expose
+def update_tasks(val):
+    ControllersInit().admin_panel.update_tasks(val)
 
 
 if __name__ == '__main__':

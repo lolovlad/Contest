@@ -72,3 +72,6 @@ class AdminPanelController:
 
     def set_select_contest(self, contest):
         self.__model.select_contest = contest
+
+    def update_tasks(self, tasks):
+        self.__model.update_tasks(tasks)
