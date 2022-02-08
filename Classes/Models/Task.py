@@ -1,4 +1,4 @@
-from pykson import JsonObject, IntegerField, StringField, ByteArrayField
+from pykson import JsonObject, IntegerField, StringField, BytesField
 
 
 class Task(JsonObject):
@@ -18,6 +18,3 @@ class Task(JsonObject):
     path_programme_file = StringField()
 
     type_task = IntegerField()
-
-    test_file = ByteArrayField()
-    programme_file = ByteArrayField()

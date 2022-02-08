@@ -1,4 +1,5 @@
 import ctypes
+from time import sleep
 
 
 class EelModification:

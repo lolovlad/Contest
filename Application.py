@@ -54,6 +54,21 @@ def load_contest():
 
 
 @eel.expose
+def load_menu_contest():
+    ControllersInit().menu.load_contest()
+
+
+@eel.expose
+def select_task(id_task):
+    return ControllersInit().admin_panel.select_task(id_task)
+
+
+@eel.expose
+def load_tasks():
+    ControllersInit().admin_panel.load_tasks()
+
+
+@eel.expose
 def select_user(data):
     ControllersInit().admin_panel.set_select_user(data)
 
@@ -67,6 +82,21 @@ def select_contest(data):
 def update_field_login(login_text, password_text):
     ControllersInit().login.set_login(login_text)
     ControllersInit().login.set_password(password_text)
+
+
+@eel.expose
+def button_add_task():
+    ControllersInit().admin_panel.add_task()
+
+
+@eel.expose
+def button_delete_task():
+    ControllersInit().admin_panel.delete_task()
+
+
+@eel.expose
+def button_update_task():
+    ControllersInit().admin_panel.update_task()
 
 
 @eel.expose

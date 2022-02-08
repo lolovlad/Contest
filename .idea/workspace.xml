@@ -2,11 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d0c2e20-8cff-47f1-899d-cc956e664d99" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Classes/Models/Task.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classes/TabTask.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/EelModification.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/EelModification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/Models/Task.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/Task.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/AdminPanelController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/AdminPanelController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/LoginController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/LoginController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/MenuController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/MenuController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/AdminPanelModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/AdminPanelModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/MenuModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/MenuModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/AdminPanelView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/AdminPanelView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/File/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_panel.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_panel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +63,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Vlad\PycharmProjects\Contest\Classes\Models" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Vlad\PycharmProjects\Contest\Classes" />
     </key>
   </component>
   <component name="RunManager" selected="Python.Application">
@@ -154,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643551706806</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="tasks">
+      <created>1643648484485</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1643648484485</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -171,14 +190,15 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="admin_panel" />
     <MESSAGE value="contest" />
-    <option name="LAST_COMMIT_MESSAGE" value="contest" />
+    <MESSAGE value="tasks" />
+    <option name="LAST_COMMIT_MESSAGE" value="tasks" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Controller/LoginController.py</url>
-          <line>28</line>
+          <line>29</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -212,24 +232,19 @@
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/AdminPanelController.py</url>
-          <line>53</line>
-          <option name="timeStamp" value="64" />
+          <url>file://$PROJECT_DIR$/Model/AdminPanelModel.py</url>
+          <line>34</line>
+          <option name="timeStamp" value="113" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Controller/AdminPanelController.py</url>
-          <line>54</line>
-          <option name="timeStamp" value="65" />
+          <line>64</line>
+          <option name="timeStamp" value="114" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Controller/AdminPanelController.py</url>
-          <line>55</line>
-          <option name="timeStamp" value="66" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/AdminPanelController.py</url>
-          <line>56</line>
-          <option name="timeStamp" value="67" />
+          <line>63</line>
+          <option name="timeStamp" value="115" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

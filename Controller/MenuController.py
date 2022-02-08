@@ -15,8 +15,9 @@ class MenuController:
     def default(self):
         pass
 
-    '''def set_login(self, login):
-        self.__model.login = login
+    def load_contest(self):
+        BASE = "http://127.0.0.1:5000"
+        response = requests.get(f"{BASE}/contests/1")
+        response = response.json()
+        eel.updateMenuContest(response)
 
-    def set_password(self, password):
-        self.__model.password = password'''

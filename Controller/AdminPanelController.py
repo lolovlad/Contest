@@ -1,6 +1,7 @@
 import requests
 from View.AdminPanelView import AdminPanelView
 from Classes.TabContest import TabContest
+from Classes.TabTask import TabTask
 import eel
 from pykson import Pykson
 from json import loads
@@ -11,6 +12,7 @@ class AdminPanelController:
         self.__model = model
         self.__view = AdminPanelView(self, self.__model)
         self.__tab_contest = TabContest(self.__model)
+        self.__tab_task = TabTask(self.__model)
 
     def show_view(self):
         self.__view.show_view()
@@ -56,6 +58,13 @@ class AdminPanelController:
         response = response.json()
         eel.updateTableContest(response)
 
+    def load_tasks(self):
+        BASE = "http://127.0.0.1:5000"
+        response = requests.get(f"{BASE}/tasks/{self.__model.select_contest.id}")
+        response = response.json()
+        self.__model.tasks = response["tasks"]
+        eel.updateTableTasks(response)
+
     def add_contest(self):
         self.__tab_contest.add_contest()
 
@@ -67,6 +76,18 @@ class AdminPanelController:
         self.__tab_contest.update_contest()
         self.load_contest()
 
+    def add_task(self):
+        self.__tab_task.add_task()
+        self.load_tasks()
+
+    def delete_task(self):
+        self.__tab_task.delete_task()
+        self.load_tasks()
+
+    def update_task(self):
+        self.__tab_task.update_task()
+        self.load_tasks()
+
     def set_select_user(self, user):
         self.__model.select_user = user
 
@@ -74,4 +95,11 @@ class AdminPanelController:
         self.__model.select_contest = contest
 
     def update_tasks(self, tasks):
-        self.__model.update_tasks(tasks)
+        self.__model.select_task = tasks
+
+    def select_task(self, id_task):
+        for task in self.__model.tasks:
+            print(task)
+            if task["id"] == id_task:
+                return task
+

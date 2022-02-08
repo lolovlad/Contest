@@ -12,7 +12,8 @@ class AdminPanelModel(Subject):
         self.__users = []
         self.__select_user = User()
         self.__select_contest = Contest()
-        self.__tasks = {}
+        self.__select_task = {}
+        self.__tasks = []
 
     def add_user(self, val):
         self.__users.append(val)
@@ -25,11 +26,13 @@ class AdminPanelModel(Subject):
                 self.notify()
                 return
 
-    def update_tasks(self, val):
-        self.__tasks[val["num_task"]] = val["data"]
+    @property
+    def tasks(self):
+        return self.__tasks
 
-    def add_tasks(self, val):
-        self.__tasks[val["num_task"]] = val["date"]
+    @tasks.setter
+    def tasks(self, val):
+        self.__tasks = val
 
     @property
     def select_user(self):
@@ -43,6 +46,15 @@ class AdminPanelModel(Subject):
     @property
     def select_contest(self):
         return self.__select_contest
+
+    @property
+    def select_task(self):
+        return self.__select_task
+
+    @select_task.setter
+    def select_task(self, val):
+        self.__select_task = Pykson().from_json(val, Task)
+        self.notify()
 
     @select_contest.setter
     def select_contest(self, val):

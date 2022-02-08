@@ -21,7 +21,7 @@
         <ul class="tabs tabs-transparent">
           <li class="tab"><a href="#test1">Управление участниками</a></li>
           <li class="tab" id="tab_contest"><a href="#test2">Добавление нового события</a></li>
-          <li class="tab"><a href="#test3">Редактированние события</a></li>
+          <li class="tab disabled" id="tab_task"><a href="#test3">Редактированние события</a></li>
         </ul>
       </div>
     </nav>
@@ -170,28 +170,144 @@
 
       <div id="test3">
         <div class="row">
-          <div class="container">
-            <form class="col s12">
-              <div class="row">
-                <select id="select_col_test"> 
-                  <option value="" disabled selected>Колличества заданий</option>
-                  <option value="1">Задание 1</option>
-                  <option value="2">Задание 2</option>
-                  <option value="3">Задание 3</option>
-                  <option value="4">Задание 4</option>
-                  <option value="5">Задание 5</option>
-                  <option value="6">Задание 6</option>
-                </select>
-              </div>
-              <div class="row">
-                <a class="waves-effect waves-light btn" id="update_col_test">Обновить</a>
-              </div>
-            </form>
+
+        </div>
+        <div class="row">
+          <div class="col s12">
+            
+              <table class="centered highlight" id="tabel">
+                <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Время</th>
+                      <th>Количества памяти</th>
+                      <th>Тип входных данных</th>
+                      <th>Тип выходных файлов</th>
+                      <th>Имя задания</th>
+                      <th>Описание</th>
+                      <th>Описание входных данных</th>
+                      <th>Описание выходных данных</th>
+                      <th>Имя файла тестов</th>
+                      <th>Имя файла с программой</th>
+                      <th>Тип задания</th>
+                  </tr>
+                </thead>
+                <tbody class="centered" id="tbody_task">
+                </tbody>
+              </table>
+            
           </div>
         </div>
         <div class="row">
-          <div class="container" id="body_test">
-          </div>
+
+        </div>
+        <div class="row">
+          <div class="col s12">
+              <div class="row">
+                <form class="col s10 offset-s1" id="task_form">
+                  <div class="row">
+                    <div class="col s3">
+                          <select id="time_work" class="browser-default">
+                              <option value="" disabled selected>Колличестов времени</option>
+                              <option value="1">1 секунда</option>
+                              <option value="2">2 секунда</option>
+                              <option value="3">3 секунда</option>
+                              <option value="4">4 секунда</option>
+                              <option value="5">5 секунда</option>
+                          </select>
+                    </div>
+                    <div class="col s3">
+                          <div class="input-field">
+                              <input id="size_raw" type="text" class="validate">
+                              <label for="size_raw">Колличества памяти в Mb</label>
+                          </div>
+                    </div>
+                    <div class="col s3">
+                      <select id="type_input" class="browser-default">
+                          <option value="" disabled selected>ввод</option>
+                          <option value="1">стандартный ввод</option>
+                          <option value="2">файл input.txt</option>
+                          <option value="3">стандартный ввод или input.txt</option>
+                      </select>
+                    </div>
+                    <div class="col s3">
+                      <select id="type_output" class="browser-default">
+                          <option value="" disabled selected>вывод</option>
+                          <option value="1">стандартный вывод</option>
+                          <option value="2">файл output.txt</option>
+                          <option value="3">стандартный вывод или output.txt</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field">
+                      <input id="name_test" type="text" class="validate">
+                      <label for="name_test">Название задания</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <select id="type_task" class="browser-default">
+                      <option value="" disabled selected>Сложность задания</option>
+                      <option value="1">A</option>
+                      <option value="2">B</option>
+                      <option value="3">C</option>
+                      <option value="4">D</option>
+                      <option value="5">I</option>
+                      <option value="6">F</option>
+                  </select>
+                  </div>
+                  <div class="row">
+                    <div class="input-field">
+                      <textarea id="description" class="materialize-textarea"></textarea>
+                      <label for="description">Описание</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field">
+                      <input id="description_input" type="text" class="validate">
+                      <label for="description_input">Формат ввода</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field">
+                      <input id="description_output" type="text" class="validate">
+                      <label for="description_output">Формат вывода</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="file-field input-field">
+                        <div class="btn select_file" id="test_file">
+                            <span>JSON тестовый файл</span>
+                            <input type="hidden">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" id="text_test_file">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="file-field input-field">
+                        <div class="btn select_file" id="programme_file">
+                            <span>Файлс с правельной программой</span>
+                            <input type="hidden">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" id="text_programme_file">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <h5 class="left-align error_text" id="error"></h5>
+                  </div>
+                  <div class="row">
+                      <a class="waves-effect waves-light btn" id="delete_task">Удалить</a>
+                      <a class="waves-effect waves-light btn" id="update_task">Обновить</a>
+                      <a class="waves-effect waves-light btn" id="add_task">Добавить</a>
+                      <a class="waves-effect waves-light btn" id="clear_task">Очистить</a>
+                  </div>
+                </form>
+              </div>
+            </div>
         </div>
       </div>
     <script type="text/javascript" src="./File/js/materialize.min.js"></script>
