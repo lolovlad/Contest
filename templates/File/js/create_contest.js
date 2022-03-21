@@ -74,15 +74,15 @@ const datapicker_ru = {
                'Суббота',
                'Воскресенье'],
 
-    weekdaysShort: ['Пн',
+    weekdaysShort: ['Вс',
+                    'Пн',
                     'Вт',
                     'Ср',
                     'Чт',
                     'Пт',
-                    'Сб', 
-                    'Вс'],  
+                    'Сб',],  
 
-    weekdaysAbbrev: ['П','В','С','Ч','П','С','В']
+    weekdaysAbbrev: ['В','П','В','С','Ч','П','С']
 }
 
 const timepicker_ru = {

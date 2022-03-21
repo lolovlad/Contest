@@ -20,6 +20,7 @@ class LoginController:
         response = requests.post(f"{BASE}/login", {"login": self.__model.login, "password": self.__model.password})
         response = response.json()
         if response.get("error") is None:
+            self.__model.user = response
             if response["type"] == 1:
                 EelModification.close_window('localhost:8000/login.html')
                 self.__controllers.admin_panel.show_view()

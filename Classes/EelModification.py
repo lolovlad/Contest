@@ -1,5 +1,6 @@
 import ctypes
 from time import sleep
+from threading import Thread
 
 
 class EelModification:
@@ -23,8 +24,13 @@ class EelModification:
 
     @classmethod
     def close_window(cls, name_window):
+        def thread_close_window(window, window_close):
+            sleep(0.5)
+            hwnd = ctypes.windll.user32.FindWindowA(None, title[0])
+            ctypes.windll.user32.PostMessageA(window, window_close, 0, 0)
+
         cls.__enum_windows(cls.__enum_windows_proc(cls.__foreach_window), 0)
         for title, window in cls.__titles:
             if title == name_window:
-                hwnd = ctypes.windll.user32.FindWindowA(None, title[0])
-                ctypes.windll.user32.PostMessageA(window, cls.__WINDOW_CLOSE, 0, 0)
+                    thread = Thread(target=thread_close_window, args=(window, cls.__WINDOW_CLOSE,))
+                    thread.start()

@@ -7,7 +7,6 @@ class User(JsonObject):
     login = StringField()
     name = StringField()
     sename = StringField()
-
     password = StringField()
 
     type = IntegerField()

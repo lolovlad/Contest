@@ -2,19 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d0c2e20-8cff-47f1-899d-cc956e664d99" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Classes/TabTask.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classes/Models/Answer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classes/Session.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classes/EelModification.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/EelModification.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Models/Task.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/Task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/Models/User.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/User.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/AdminPanelController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/AdminPanelController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/LoginController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/LoginController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/MainWindowController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/MainWindowController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/MenuController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/MenuController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/AdminPanelModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/AdminPanelModel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/MenuModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/MenuModel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/AdminPanelView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/AdminPanelView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/LoginModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/LoginModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/MainWindowModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/MainWindowModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/MainWindowView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/MainWindowView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/File/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/File/js/create_contest.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/create_contest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/File/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin_panel.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_panel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/File/js/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -198,7 +203,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Controller/LoginController.py</url>
-          <line>29</line>
+          <line>30</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -232,11 +237,6 @@
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Model/AdminPanelModel.py</url>
-          <line>34</line>
-          <option name="timeStamp" value="113" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Controller/AdminPanelController.py</url>
           <line>64</line>
           <option name="timeStamp" value="114" />
@@ -245,6 +245,71 @@
           <url>file://$PROJECT_DIR$/Controller/AdminPanelController.py</url>
           <line>63</line>
           <option name="timeStamp" value="115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>63</line>
+          <option name="timeStamp" value="130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>64</line>
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="132" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>58</line>
+          <option name="timeStamp" value="133" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>59</line>
+          <option name="timeStamp" value="135" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>60</line>
+          <option name="timeStamp" value="136" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="137" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>45</line>
+          <option name="timeStamp" value="142" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>46</line>
+          <option name="timeStamp" value="143" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>19</line>
+          <option name="timeStamp" value="150" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>20</line>
+          <option name="timeStamp" value="152" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>21</line>
+          <option name="timeStamp" value="153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
+          <line>22</line>
+          <option name="timeStamp" value="154" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

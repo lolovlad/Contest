@@ -1,5 +1,5 @@
 from Classes.ControllersInit import ControllersInit
-
+from Classes.EelModification import EelModification
 from tkinter import Tk, filedialog
 import eel
 
@@ -69,6 +69,11 @@ def load_tasks():
 
 
 @eel.expose
+def load_answer():
+    ControllersInit().main_window.load_answer()
+
+
+@eel.expose
 def select_user(data):
     ControllersInit().admin_panel.set_select_user(data)
 
@@ -100,6 +105,11 @@ def button_update_task():
 
 
 @eel.expose
+def button_send_answer():
+    ControllersInit().main_window.send_answer()
+
+
+@eel.expose
 def file():
     folder = filedialog.askopenfile()
     return str(folder.name)
@@ -108,6 +118,38 @@ def file():
 @eel.expose
 def update_tasks(val):
     ControllersInit().admin_panel.update_tasks(val)
+
+
+@eel.expose
+def set_file(val):
+    ControllersInit().main_window.set_file(val)
+
+
+@eel.expose
+def user_load_contest(id_contest):
+    EelModification.close_window('localhost:3000/menu.html')
+    ControllersInit().main_window.show_view(id_contest)
+
+
+@eel.expose
+def user_load_tasks():
+    ControllersInit().main_window.load_tasks_on_contest()
+
+
+@eel.expose
+def user_upload_task(id_task):
+    task = ControllersInit().main_window.upload_task(id_task)
+    return task
+
+
+@eel.expose
+def load_report(id_report):
+    task = ControllersInit().main_window.load_report(id_report)
+
+
+@eel.expose
+def load_main_window_contest():
+    task = ControllersInit().main_window.load_contest()
 
 
 if __name__ == '__main__':

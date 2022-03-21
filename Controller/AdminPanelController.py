@@ -54,7 +54,7 @@ class AdminPanelController:
 
     def load_contest(self):
         BASE = "http://127.0.0.1:5000"
-        response = requests.get(f"{BASE}/contests/1")
+        response = requests.get(f"{BASE}/contests/0")
         response = response.json()
         eel.updateTableContest(response)
 

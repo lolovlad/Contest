@@ -19,25 +19,20 @@
                 <h5 class="center-align header__main">Агу контест</h5>
             </div>
             <div class="row ">
-                <h5 class="center-align header__name">НАзвание олимпиады бла блаб бал</h5>
+                <h5 class="center-align header__name" id="name_contest"></h5>
             </div>
             <div class="section ">
-                <ul class="collection with-header">
-                    <a href="#"><li class="collection-item"><span class="secondary-content">WE</span>Задание 1</li></a>
-                    <a href="#"><li class="collection-item"><span class="secondary-content">50</span>Задание 2</li></a>
-                    <a href="#"><li class="collection-item"><span class="secondary-content">20</span>Задание 3</li></a>
-                    <a href="#"><li class="collection-item"><span class="secondary-content">10</span>Задание 4</li></a>
-                    <a href="#"><li class="collection-item"><span class="secondary-content">30</span>Задание 5</li></a>
+                <ul class="collection with-header" id="list_tasks">
                 </ul>
             </div>
-            <div class="section ">
-                <p class="time__con">Зарегестрированн: 12.12.2021 12:30:12</p>
-                <p class="time__con">Старт: 14.12.2021 12:30:00</p>
-                <p class="time__con">Финишь: 14.12.2021 15:30:00</p>
-                <p class="time__con">Длительность: 3:00:00</p>
+            <div class="section">
+                <p class="time__con" id="time_registration"></p>
+                <p class="time__con" id="time_start"></p>
+                <p class="time__con" id="time_end"></p>
+                <p class="time__con" id="time_continuation"></p>
             </div>
             <div class="row ">
-                <h5 class="center-align timer">1:30:43</h5>
+                <h5 class="center-align timer" id="timer_show"></h5>
                 <div class="col s6 center">
                     <a class="waves-effect waves-light btn">Обявления</a>
                 </div>
@@ -59,7 +54,7 @@
         <div class="col s2" style="height: 100vh;"> </div>
         <div class="col s8 offset-s1">
             <div class="row">
-                <h5 class="name__task left-align">Задание 1 Камни и украшения [тестовая задача]</h5>
+                <h5 class="name__task left-align" id="name_test"></h5>
                 <div class="container">
                     <table class="highlight">
                         <tbody>
@@ -70,90 +65,52 @@
                             <td>Вывод</td>
                           </tr>
                           <tr>
-                            <td>1 секунда</td>
-                            <td>64Mb</td>
-                            <td>стандартный ввод или input.txt</td>
-                            <td>стандартный вывод или output.txt
-                            </td>
+                            <td id="time_work"></td>
+                            <td id="size_raw"></td>
+                            <td id="type_input"></td>
+                            <td id="type_output"></td>
                           </tr>
                         </tbody>
                       </table>
                 </div>
             </div>
-            <div class="row">
-                <p class="op__task">
-                    Даны две строки строчных латинских символов: строка J и строка S. Символы, входящие в строку J, — «драгоценности», входящие в строку S — «камни». Нужно определить, какое количество символов из S одновременно являются «драгоценностями». Проще говоря, нужно проверить, какое количество символов из S входит в J.
-                    Это разминочная задача, к которой мы размещаем готовые решения. Она очень простая и нужна для того, чтобы вы могли познакомиться с нашей автоматической системой проверки решений. Ввод и вывод осуществляется через файлы, либо через стандартные потоки ввода-вывода, как вам удобнее.<br />
-                    <br />
-                    Python: https://pastebin.com/bCKpF9Ru. В качестве языка выбирайте Python 2.7.<br />
-                    C++: https://pastebin.com/e5wMVV1u. Можно использовать GNU c++ 14 4.9.<br />
-                    C#: https://pastebin.com/UZU4iCB0. Язык: Mono C# 5.2.0.<br />
-                    Go: https://pastebin.com/vjVezxTg. Язык: gcc go.<br />
-                    Java: https://pastebin.com/SbLfafuv. Подойдёт, например, язык Java 8.<br />
-                    Kotlin: https://pastebin.com/Ruj3W2Er. Язык: Kotlin.<br />
-                    Swift: https://pastebin.com/Jh5PPwM6. Язык: Swift 4.1.1.<br />
-                    JavaScript: https://pastebin.com/B5YhwWFK. Язык: Node JS 8.9.4<br />
+            <div class="row" id="description">
+                <p class="op__task" >
                 </p>
             </div>
             <div class="row">
                 <h5 class="h__task left-align">Формат ввода</h5>
-                <p class="op__task">
-                    На двух первых строках входного файла содержатся две строки строчных латинских символов: строка J и строка S. Длина каждой не превосходит 100 символов.
+                <p class="op__task" id="description_input">
                 </p>
             </div>
             <div class="row">
                 <h5 class="h__task left-align">Формат вывода</h5>
-                <p class="op__task">
-                    Выходной файл должен содержать единственное число — количество камней, являющихся драгоценностями.
+                <p class="op__task" id="description_output">
                 </p>
             </div>
-            <div class="row">
-                <h5 class="h__task left-align">Пример 1</h5>
-                <div class="tabel__box">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Ввод</th>
-                            <th>Вывод</th>
-                        </tr>
-                        </thead>
-                
-                        <tbody>
-                        <tr>
-                            <td>abas</td>
-                            <td>4</td>
-                        </tr>
-                        <tr>
-                            <td>aabbccdsdfa
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div id="example">
             </div>
-            <div class="row">
-                <h5 class="h__task left-align">Пример 2</h5>
-                <div class="tabel__box">
-                    <table>
+
+            <div class="input__cont">
+                <div class="row">
+                    <table class="centered">
                         <thead>
                           <tr>
-                              <th>Ввод</th>
-                              <th>Вывод</th>
+                              <th>Условия</th>
+                              <th>Необходимые тесты</th>
                           </tr>
                         </thead>
                 
-                        <tbody>
+                        <tbody class="centered" id="test_tabel">
                           <tr>
-                            <td>abvb</td>
-                            <td>7</td>
-                          </tr>
-                          <tr>
-                            <td>aabbccdsdfa</td>
+                            <td>13.12.2021 20:57:48</td>
+                            <td>200321</td>
                           </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
             <div class="input__cont">
                 <div class="row">
                     <div class="input-field col s4">
@@ -170,16 +127,16 @@
                     <div class="col s4">
                         <form action="#">
                             <div class="file-field input-field">
-                            <div class="btn">
-                                <span>Загрузить файл с кодом</span>
-                                <input type="file">
+                                <div class="btn select_file" id="programm_file">
+                                    <span>Файл с программой</span>
+                                    <input type="hidden">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" id="text_test_file">
+                                </div>
                             </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text">
-                            </div>
-                            </div>
-                            <a class="waves-effect waves-light btn deep-orange accent-4 col s4" id="signin" type="button">Отправить</a>
-                            <p class="col s6 info__num">осталось 99 попыток</p>
+                            <a class="waves-effect waves-light btn deep-orange accent-4 col s4" id="send_answer" type="button">Отправить</a>
+                            <p class="col s6 info__num" id="count_answer"></p>
                         </form>
                     </div>
                 </div>
@@ -204,7 +161,7 @@
                           </tr>
                         </thead>
                 
-                        <tbody class="centered">
+                        <tbody class="centered" id="answer_body">
                           <tr>
                             <td>13.12.2021 20:57:48</td>
                             <td>200321</td>

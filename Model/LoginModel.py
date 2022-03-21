@@ -1,4 +1,7 @@
 from Interfase.Subject import Subject
+from Classes.Session import Session
+from pykson import Pykson
+from Classes.Models.User import User
 
 
 class LoginModel(Subject):
@@ -7,6 +10,7 @@ class LoginModel(Subject):
         self.__password = None
         self.__error = None
         self.__observer = []
+        self.__user = None
 
     @property
     def login(self):
@@ -15,6 +19,10 @@ class LoginModel(Subject):
     @property
     def password(self):
         return self.__password
+
+    @property
+    def user(self):
+        return self.__user
 
     @property
     def error(self):
@@ -32,6 +40,11 @@ class LoginModel(Subject):
     @password.setter
     def password(self, val):
         self.__password = val
+
+    @user.setter
+    def user(self, val):
+        self.__user = Pykson().from_json(val, User)
+        Session().user = self.__user
 
     def attach(self, observer):
         self.__observer.append(observer)

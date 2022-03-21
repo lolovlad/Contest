@@ -8,8 +8,9 @@ class MainWindowView(Observer):
         self.__model = model
         self.__model.attach(self)
 
-    def show_view(self):
+    def show_view(self, id_contest):
+        self.__model.id_contest = id_contest
         eel.start('main.html', mode="chrome", size=(760, 760), port=2000)
 
     def update(self):
-        pass
+        self.__controller.load_contest()
