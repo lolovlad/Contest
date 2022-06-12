@@ -7,6 +7,7 @@
     <link type="text/css" rel="stylesheet" href="./File/css/main.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="./File/css/materialize.min.css"  media="screen,projection"/>
     <script type="text/javascript" src="/eel.js"></script>
+    <title>Main</title>
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -16,7 +17,7 @@
     <div class="row">
         <div class="col s2 deep-orange accent-4 nav__left">
             <div class="row ">
-                <h5 class="center-align header__main">Агу контест</h5>
+                <img src="./File/image/logo.png" alt="" class="circle responsive-img">
             </div>
             <div class="row ">
                 <h5 class="center-align header__name" id="name_contest"></h5>
@@ -37,13 +38,13 @@
                     <a class="waves-effect waves-light btn">Обявления</a>
                 </div>
                 <div class="col s6 center">
-                    <a class="waves-effect waves-light btn">Завершить</a>
+                    <a class="waves-effect waves-light btn" id="closeContestButton">Завершить</a>
                 </div>
             </div>
         </div>
 
         
-        <div class="fixed-action-btn" id="posl">
+        <div class="fixed-action-btn" id="packageButton">
             <a class="btn-floating btn-large waves-effect waves-light">
               <i class="large material-icons">chat</i>
             </a>
@@ -65,10 +66,10 @@
                             <td>Вывод</td>
                           </tr>
                           <tr>
-                            <td id="time_work"></td>
-                            <td id="size_raw"></td>
-                            <td id="type_input"></td>
-                            <td id="type_output"></td>
+                            <td id="timeWork"></td>
+                            <td id="sizeRaw"></td>
+                            <td id="typeInput"></td>
+                            <td id="typeOutput"></td>
                           </tr>
                         </tbody>
                       </table>
@@ -113,17 +114,6 @@
 
             <div class="input__cont">
                 <div class="row">
-                    <div class="input-field col s4">
-                        <select>
-                        <option value="" disabled selected>Выбирите язык программирования</option>
-                        <option value="1">Python</option>
-                        <option value="2">C#</option>
-                        <option value="3">C++</option>
-                        </select>
-                        <label>Язык программирования</label>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col s4">
                         <form action="#">
                             <div class="file-field input-field">
@@ -135,8 +125,8 @@
                                     <input class="file-path validate" type="text" id="text_test_file">
                                 </div>
                             </div>
-                            <a class="waves-effect waves-light btn deep-orange accent-4 col s4" id="send_answer" type="button">Отправить</a>
-                            <p class="col s6 info__num" id="count_answer"></p>
+                            <a class="waves-effect waves-light btn deep-orange accent-4 col s4 sendAnswer" id="sendAnswer" type="button">Отправить</a>
+                            <p class="col s6 info__num" id="countAnswer"></p>
                         </form>
                     </div>
                 </div>
@@ -161,20 +151,7 @@
                           </tr>
                         </thead>
                 
-                        <tbody class="centered" id="answer_body">
-                          <tr>
-                            <td>13.12.2021 20:57:48</td>
-                            <td>200321</td>
-                            <td>Влад</td>
-                            <td>1</td>
-                            <td>Python</td>
-                            <td><span color="red">RE</span></td>
-                            <td>125ms</td>
-                            <td>4.45Mb</td>
-                            <td>1</td>
-                            <td>3</td>
-                            <td><a href="#">отчет</a></td>
-                          </tr>
+                        <tbody class="centered" id="answeBody">
                         </tbody>
                     </table>
                 </div>

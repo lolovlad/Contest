@@ -1,7 +1,22 @@
+.logo{
+    width: 10%;
+    margin-top: 3%;
+    margin-left: 3%;
+}
+
+.table{
+    height: 90%;
+    overflow: auto;
+    margin: 4%;
+}
+
+.form-table{
+    margin-top: 5%;
+}
+
 .header{
-    height:100px;
-    padding-top: 20%;
-    padding-bottom: 10%;
+    padding-top: 5%;
+    padding-bottom: 2%;
 }
 
 .error_text{
@@ -108,4 +123,13 @@
     height: 1px;
     width: auto;
     background-color: rgb(168, 168, 168);
+}
+
+
+.no_active{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(100,100,100,0.7);
+    z-index: 1000;
 }

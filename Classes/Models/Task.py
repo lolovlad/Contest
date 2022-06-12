@@ -2,9 +2,8 @@ from pykson import JsonObject, IntegerField, StringField, BytesField
 
 
 class Task(JsonObject):
-
     id = IntegerField()
-
+    id_contest = IntegerField()
     time_work = IntegerField()
     size_raw = IntegerField()
     type_input = IntegerField()
@@ -15,6 +14,6 @@ class Task(JsonObject):
     description_output = StringField()
 
     path_test_file = StringField()
-    path_programme_file = StringField()
 
     type_task = IntegerField()
+    number_shipments = IntegerField()

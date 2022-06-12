@@ -7,6 +7,7 @@
     <link type="text/css" rel="stylesheet" href="./File/css/main.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="./File/css/materialize.min.css"  media="screen,projection"/>
     <script type="text/javascript" src="/eel.js"></script>
+    <title>AdminPanel</title>
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -15,20 +16,40 @@
   <body>
     <nav class="nav-extended">
       <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Админ панель</a>
+        <a href="#" class="brand-logo center">Админ панель</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a class="waves-effect waves-light deep-orange accent-4 btn" id="buttonExit">Выход</a></li>
+        </ul>
       </div>
       <div class="nav-content center">
         <ul class="tabs tabs-transparent">
-          <li class="tab"><a href="#test1">Управление участниками</a></li>
-          <li class="tab" id="tab_contest"><a href="#test2">Добавление нового события</a></li>
-          <li class="tab disabled" id="tab_task"><a href="#test3">Редактированние события</a></li>
+          <li class="tab"><a href="#user">Управление участниками</a></li>
+          <li class="tab" id="tabContest"><a href="#contest">Добавление нового события</a></li>
+          <li class="tab disabled" id="tabTask"><a href="#task">Редактированние события</a></li>
+          <li class="tab" id="tabTeam"><a href="#team">Редактировать команду</a></li>
         </ul>
       </div>
     </nav>
-      <div id="test1">
+      <div id="user">
         <div class="row">
           <div class="col s6">
-            <div class="container">
+            <!--<form>
+              <div class="row">
+                <div class="input-field col s4">
+                  <input id="sename" type="text" class="validate">
+                  <label for="sename">Фамилия</label>
+                </div>
+                <div class="input-field col s4">
+                  <input id="sename" type="text" class="validate">
+                  <label for="sename">Фамилия</label>
+                </div>
+                <div class="input-field col s4">
+                  <input id="sename" type="text" class="validate">
+                  <label for="sename">Фамилия</label>
+                </div>
+              </div>
+            </form>-->
+            <div class="table">
               <table class="centered highlight" id="tabel">
                 <thead>
                   <tr>
@@ -36,23 +57,25 @@
                       <th>Логин</th>
                       <th>Имя</th>
                       <th>Фамилия</th>
+                      <th>Отчество</th>
                       <th>тип</th>
+                      <th>Зарегистрировать</th>
                   </tr>
                 </thead>
         
-                <tbody class="centered" id="tbody">
+                <tbody class="centered" id="tbodyUser">
                 </tbody>
               </table>
             </div>
           </div>
           <div class="col s6">
             <div class="container">
-              <div class="row">
-                <form class="col s10 offset-s1">
+              <div class="row form-table">
+                <form class="col s10 offset-s1" id="formUser">
                   <div class="row">
                     <div class="input-field">
-                      <input id="login" type="text" class="validate">
-                      <label for="login">Логин</label>
+                      <input id="sename" type="text" class="validate">
+                      <label for="sename">Фамилия</label>
                     </div>
                   </div>
                   <div class="row">
@@ -63,8 +86,14 @@
                   </div>
                   <div class="row">
                     <div class="input-field">
-                      <input id="sename" type="text" class="validate">
-                      <label for="sename">Фамилия</label>
+                      <input id="secondname" type="text" class="validate">
+                      <label for="secondname">Отчество</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field">
+                      <input id="login" type="text" class="validate">
+                      <label for="login">Логин</label>
                     </div>
                   </div>
                   <div class="row">
@@ -74,7 +103,7 @@
                     </div>
                   </div>
                   <div class="row">
-                    <select id="selected" class="browser-default">
+                    <select id="type" class="browser-default">
                       <option value="" disabled selected>тип пользователя</option>
                       <option value="1">админ</option>
                       <option value="2">пользователь</option>
@@ -84,9 +113,13 @@
                     <h5 class="left-align error_text" id="error"></h5>
                   </div>
                   <div class="row">
-                    <a class="waves-effect waves-light btn" id="add_user">Добавить</a>
-                    <a class="waves-effect waves-light btn" id="update_user">Обновить</a>
-                    <a class="waves-effect waves-light btn" id="delete_user">Удалить</a>
+                    <a class="waves-effect waves-light btn light-blue darken-2" id="addUser">Добавить</a>
+                    <a class="waves-effect waves-light btn light-blue darken-2 disabled" id="updateUser">Обновить</a>
+                    <a class="waves-effect waves-light btn deep-orange accent-4 disabled" id="deleteUser">Удалить</a>
+                    <a class="waves-effect waves-light btn light-blue darken-2 disabled" id="clearUser">Очистить</a>
+                  </div>
+                  <div class="row">
+                    <a class="waves-effect waves-light btn disabled" id="registrationContest"> <i class="material-icons left">border_color</i> Зарегестрировать на олимпиаду</a>
                   </div>
                 </form>
               </div>
@@ -95,10 +128,10 @@
         </div>
       </div>
 
-      <div id="test2">
+      <div id="contest">
         <div class="row">
           <div class="col s6">
-            <div class="container">
+            <div class="table">
               <table class="centered highlight" id="tabel">
                 <thead>
                   <tr>
@@ -111,7 +144,7 @@
                   </tr>
                 </thead>
         
-                <tbody class="centered" id="tbody_contest">
+                <tbody class="centered" id="tbodyContest">
                 </tbody>
               </table>
             </div>
@@ -119,47 +152,51 @@
           <div class="col s6">
             <div class="container">
               <div class="row">
-                <form class="col s10 offset-s1">
+                <form class="col s10 offset-s1" id="formContest">
                   <div class="row">
                     <div class="input-field">
-                      <input id="name_contest" type="text" class="validate">
-                      <label for="name_contest">Название соревнования</label>
+                      <input id="nameContest" type="text" class="validate">
+                      <label for="nameContest">Название соревнования</label>
                     </div>
                   </div>
                   <div class="row">
-                    <select id="type_selected_contes" class="browser-default">
+                    <select id="typeSelectedContes" class="browser-default">
                       <option value="" disabled selected>тип соревнования</option>
-                      <option value="1">олимпида</option>
-                      <option value="2">хакатон</option>
+                      <option value="1">Олимпида</option>
+                      <option value="2">Командная олимпиада</option>
+                      <option value="3">Хакатон</option>
                     </select>
                   </div>
                   <div class="row">
                     <div class="input-field col s6">
-                      <input type="text" id="datepicker_start">
-                      <label for="datepicker_start">Дата начала</label>
+                      <input type="text" id="datepickerStart">
+                      <label for="datepickerStart">Дата начала</label>
                     </div>
                     <div class="input-field col s6">
-                      <input type="text" id="timepicker_start">
-                      <label for="timepicker_start">Время начала</label>
+                      <input type="text" id="timepickerStart">
+                      <label for="timepickerStart">Время начала</label>
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row" style="position: relative;">
                     <div class="input-field col s6">
-                      <input type="text" id="datepicker_stop">
-                      <label for="datepicker_stop">Дата конца</label>
+                      <input type="text" id="datepickerStop" disabled>
+                      <label for="datepickerStop">Дата конца</label>
                     </div>
                     <div class="input-field col s6">
-                      <input type="text" id="timepicker_stop">
-                      <label for="timepicker_stop">Время конца</label>
+                      <input type="text" id="timepickerStop" disabled>
+                      <label for="timepickerStop">Время конца</label>
                     </div>
                   </div>
                   <div class="row">
                     <h5 class="left-align error_text" id="error"></h5>
                   </div>
                   <div class="row">
-                    <a class="waves-effect waves-light btn" id="add_contest">Добавить</a>
-                    <a class="waves-effect waves-light btn" id="update_contest">Обновить</a>
-                    <a class="waves-effect waves-light btn" id="delete_contest">Удалить</a>
+                    <a class="waves-effect waves-light btn light-blue darken-2" id="addContest">Добавить</a>
+                    <a class="waves-effect waves-light btn light-blue darken-2 disabled" id="updateContest">Обновить</a>
+                    <a class="waves-effect waves-light btn deep-orange accent-4 disabled" id="deleteContest">Удалить</a>
+                  </div>
+                  <div class="row">
+                    <a class="waves-effect waves-light btn disabled" id="creatingReport"><i class="material-icons left">cloud_download</i> Сгенерировать отчет</a>
                   </div>
                 </form>
               </div>
@@ -168,13 +205,13 @@
         </div>
       </div>
 
-      <div id="test3">
+      <div id="task">
         <div class="row">
 
         </div>
         <div class="row">
           <div class="col s12">
-            
+            <div class="table">
               <table class="centered highlight" id="tabel">
                 <thead>
                   <tr>
@@ -188,14 +225,13 @@
                       <th>Описание входных данных</th>
                       <th>Описание выходных данных</th>
                       <th>Имя файла тестов</th>
-                      <th>Имя файла с программой</th>
                       <th>Тип задания</th>
                   </tr>
                 </thead>
-                <tbody class="centered" id="tbody_task">
+                <tbody class="centered" id="tbodyTask">
                 </tbody>
               </table>
-            
+            </div>
           </div>
         </div>
         <div class="row">
@@ -204,7 +240,7 @@
         <div class="row">
           <div class="col s12">
               <div class="row">
-                <form class="col s10 offset-s1" id="task_form">
+                <form class="col s10 offset-s1" id="taskForm">
                   <div class="row">
                     <div class="col s3">
                           <select id="time_work" class="browser-default">
@@ -227,7 +263,6 @@
                           <option value="" disabled selected>ввод</option>
                           <option value="1">стандартный ввод</option>
                           <option value="2">файл input.txt</option>
-                          <option value="3">стандартный ввод или input.txt</option>
                       </select>
                     </div>
                     <div class="col s3">
@@ -235,7 +270,6 @@
                           <option value="" disabled selected>вывод</option>
                           <option value="1">стандартный вывод</option>
                           <option value="2">файл output.txt</option>
-                          <option value="3">стандартный вывод или output.txt</option>
                       </select>
                     </div>
                   </div>
@@ -286,32 +320,137 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="file-field input-field">
-                        <div class="btn select_file" id="programme_file">
-                            <span>Файлс с правельной программой</span>
-                            <input type="hidden">
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" id="text_programme_file">
-                        </div>
-                    </div>
-                  </div>
-                  <div class="row">
                       <h5 class="left-align error_text" id="error"></h5>
                   </div>
                   <div class="row">
-                      <a class="waves-effect waves-light btn" id="delete_task">Удалить</a>
-                      <a class="waves-effect waves-light btn" id="update_task">Обновить</a>
-                      <a class="waves-effect waves-light btn" id="add_task">Добавить</a>
-                      <a class="waves-effect waves-light btn" id="clear_task">Очистить</a>
+                      <a class="waves-effect waves-light light-blue darken-2 btn" id="addTask">Добавить</a>
+                      <a class="waves-effect waves-light light-blue darken-2 btn disabled" id="updateTask">Обновить</a>
+                      <a class="waves-effect waves-light deep-orange accent-4 btn disabled" id="deleteTask">Удалить</a>
+                      <a class="waves-effect waves-light light-blue darken-2 btn disabled" id="clearTask">Очистить</a>
                   </div>
                 </form>
               </div>
             </div>
         </div>
       </div>
+
+      <div id="team">
+        <div class="row">
+          <div class="col s6">
+            <div class="table">
+              <table class="centered highlight" id="team_table">
+                <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Участники</th>
+                      <th>Соревнование</th>
+                      <th>Имя команды</th>
+                      <th>Один в команде</th>
+                      <th>Состояние команды</th>
+                  </tr>
+                </thead>
+        
+                <tbody class="centered" id="tbodyTeam">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col s6">
+            <div class="container">
+              <div class="row">
+                <form class="col s10 offset-s1" id="teamForm">
+                  <div class="row">
+                    <div class="input-field">
+                      <input id="name_team" type="text" class="validate">
+                      <label for="name_team">Имя команды</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <select id="id_contest" class="browser-default">
+                      <option value="" disabled selected>Зарегестрированны на соревнование</option>
+                      <option value="soloTeam" disabled selected>Одиночное соревнование</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <a class="waves-effect waves-light btn" id="selectUsers">Выбирите участников</a>
+                    <p id="viewSelectUsers"></p>
+                  </div>
+                  <div class="row">
+                    <select id="state_contest" class="browser-default">
+                      <option value="" disabled selected>Состояние команды</option>
+                      <option value="1">Зарегестрированны на соревнование</option>
+                      <option value="2">Закончил соревнования</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <h5 class="left-align error_text" id="error"></h5>
+                  </div>
+                  <div class="row">
+                    <a class="waves-effect waves-light light-blue darken-2 btn" id="addTeam">Добавить</a>
+                    <a class="waves-effect waves-light light-blue darken-2 btn disabled" id="updateTeam">Обновить</a>
+                    <a class="waves-effect waves-light deep-orange accent-4 btn disabled" id="deleteTeam">Удалить</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    
+      <div id="modalTeam" class="modal">
+        <div class="modal-content">
+          <h4>Выберете соревнование</h4>
+          <div class="row">
+            <div class="container">
+              <select id="id_contest_model" class="browser-default">
+                <option value="" disabled selected>Выбрать команду</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect light-blue darken-2 btn" id="agreeButton">Подтвердить</a>
+        </div>
+      </div>
+
+      <div id="modalSelectUser" class="modal">
+        <div class="modal-content">
+          <h4>Выбирите участников</h4>
+          <div class="row">
+            <div class="col s6">
+              <div class="table">
+                <table class="centered highlight" id="tabel">
+                  <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Отчество</th>
+                    </tr>
+                  </thead>
+          
+                  <tbody class="centered" id="tbodyUserModel">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col s6">
+              <div class="container" id="listUsers">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect light-blue darken-2 btn" id="agreeButtonUser">Подтвердить</a>
+        </div>
+      </div>
+
     <script type="text/javascript" src="./File/js/materialize.min.js"></script>
     <script type="text/javascript" src="./File/js/admin_panel.js"></script>
+    <script type="text/javascript" src="./File/js/userTab.js"></script>
     <script type="text/javascript" src="./File/js/create_contest.js"></script>
+    <script type="text/javascript" src="./File/js/create_team.js"></script>
   </body>
 </html>

@@ -12,5 +12,5 @@ class Subject(ABC):
         pass
 
     @abstractmethod
-    def notify(self):
+    def notify(self, type_notify):
         pass

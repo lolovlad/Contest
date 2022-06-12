@@ -6,60 +6,91 @@ const timeEnd = document.getElementById("time_end")
 const timeСontinuation = document.getElementById("time_continuation")
 const timerShow = document.getElementById("timer_show")
 
+const packageButton = document.getElementById("packageButton")
+const closeContestButton = document.getElementById("closeContestButton")
+
+let dptWindow = 0
+
+closeContestButton.addEventListener("click", function(){
+    eel.close_contest()
+})
+
+packageButton.addEventListener("click", function(){
+    eel.open_package_window()
+})
+
+
 let dataEndDate = ""
 let nowSeconds = 0
+let planeSeconds = 0
 
 let numberShipments = 0
 
+let timerIntervalId = 0
+
 
 document.addEventListener('DOMContentLoaded', () => {
-   eel.user_load_tasks()
-   eel.load_main_window_contest()
+    eel.load_main_window_contest()
+    eel.user_load_tasks()
+
+    eel.is_close()((isClose)=>{
+         if(isClose)
+             closeContest()
+    })
+    window.setInterval(intervalLoadAnswer, 20000)
 });
 
-function updateNumberShipments(num){
-    const countAnswer = document.getElementById("count_answer")
+function updateNumberShipments(num=0){
+    const countAnswer = document.getElementById("countAnswer")
     countAnswer.innerHTML = `осталось ${numberShipments - num} попыток`
+}
+
+function closeContest(){
+    for(let buttonFile of document.querySelectorAll(".select_file")){
+        buttonFile.classList.add("disabled")
+    }
+
+    for(let button of document.querySelectorAll(".sendAnswer")){
+        button.classList.add("disabled")
+    }
+    closeContestButton.classList.add("disabled")
 }
 
 function loadsTasks(tasks){
     listTasks.innerHTML = ""
-
 
     for(let i=0; i < tasks.length; i++){
 
         listTasks.innerHTML += `<a href="#" id="select_tasks">
                                     <li class="collection-item">
                                         <input value=${tasks[i].id} type="hidden">
-                                        <span class="secondary-content">0</span>${tasks[i].type_task}.${tasks[i].name_test}
+                                        <span class="secondary-content" id="total">-</span>${tasks[i].type_task}.${tasks[i].name_test}
                                     </li>
                                 </a>`
     }
     for(let task of document.querySelectorAll("#select_tasks")){
         task.addEventListener("click", (event)=>{
-            const id_task= event.target.querySelectorAll("input")[0].value
-            eel.user_upload_task(parseInt(id_task))((task)=>{
-                selectTask(task)
-            })
+            const id_task = event.target.querySelectorAll("input")[0].value
+            eel.user_select_task(parseInt(id_task))
         })
     }
-    eel.user_upload_task(parseInt(tasks[0].id))((task)=>{
-        selectTask(task)
-    })
-
+    eel.user_select_task(parseInt(tasks[0].id))
 }
 
 
-function loadsLeftInformation(task){
-    nameContest.innerHTML = task.name_contest
-    timeRegistration.innerHTML = "Зарегестрированн: " + task.datetime_registration
-    timeStart.innerHTML = "Старт: " + task.datetime_start
-    timeEnd.innerHTML = "Финишь: " + task.datetime_end
+function loadsLeftInformation(contest){
+    nameContest.innerHTML = contest.name_contest
+    timeRegistration.innerHTML = "Зарегестрированн: " + contest.datetime_registration
+    timeStart.innerHTML = "Старт: " + contest.datetime_start
+    timeEnd.innerHTML = "Финишь: " + contest.datetime_end
 
-    const dateStart = new Date(task.datetime_start)
-    const dateEnd = new Date(task.datetime_end)
+    console.log(contest)
+
+    const dateStart = new Date(contest.datetime_start)
+    const dateEnd = new Date(contest.datetime_end)
 
     let dateNow = dateEnd - dateStart
+    planeSeconds = dateNow
 
     let hours = parseInt(dateNow / 1000 / 60 / 60)
 
@@ -87,9 +118,13 @@ function loadsLeftInformation(task){
     milliseconds = Date.now()
     nowSeconds = (dataEndDate - milliseconds) / 1000
 
-    window.setInterval(timer, 1000)
+
+    timerIntervalId = window.setInterval(timer, 1000)
     
     timeСontinuation.innerHTML = `Длительность: ${hours}:${minuts}:${seconds}`
+
+    let strTimer = `${hours}:${minuts}:${seconds}`;
+    timerShow.innerHTML = strTimer;
 
 }
 
@@ -122,55 +157,78 @@ function timer(){
     }
 
     if (nowSeconds <= 0) {
-        console.log(nowSeconds)
-    } else {
+        timerShow.innerHTML = "00:00:00"
+        eel.close_contest()
+        window.clearInterval(timerIntervalId)
+    }else{
         let strTimer = `${hours}:${minuts}:${seconds}`;
         timerShow.innerHTML = strTimer;
-        console.log(seconds, minuts, hours)
+        --nowSeconds;        
     }
-    --nowSeconds;
 }
 
 
-function loadsAnswers(answer){
+function loadAnswers(answers){
     const totalColor = {"OK": "green"}
     let types = {1: "Python"}
-    const tabel = document.getElementById("answer_body");
-    tabel.innerHTML = ""
-    for(let i=0; i < answer.answers.length; i++){
-        let row = tabel.insertRow(-1)
+    const tabelAnswers = document.getElementById("answeBody");
+    tabelAnswers.innerHTML = ""
+    for(let i=0; i < answers.length; i++){
+        const row = tabelAnswers.insertRow(-1)
         row.innerHTML = ` <tr>
-                              <td>${answer.answers[i].date_send}</td>
-                              <td>${answer.answers[i].id}</td>
-                              <td>${answer.answers[i].user_send}</td>
-                              <td>${answer.answers[i].id_task}</td>
-                              <td>${types[answer.answers[i].type_compiler]}</td>
-                              <td><span color="${totalColor[answer.answers[i].total]}">${answer.answers[i].total}</span></td>
-                              <td>${answer.answers[i].time}</td>
-                              <td>${answer.answers[i].memory_size}</td>
-                              <td>${answer.answers[i].number_test}</td>
-                              <td>${answer.answers[i].points}</td>
-                              <td><span class="light-blue darken-4" id="aReport" id_report=${answer.answers[i].id}>отчет</span></td>
+                              <td>${answers[i].date_send}</td>
+                              <td>${answers[i].id}</td>
+                              <td>${answers[i].user.name}</td>
+                              <td>${answers[i].task.id}</td>
+                              <td>${types[answers[i].type_compiler]}</td>
+                              <td><span color="${totalColor[answers[i].total]}">${answers[i].total}</span></td>
+                              <td>${answers[i].time}</td>
+                              <td>${answers[i].memory_size}</td>
+                              <td>${answers[i].number_test}</td>
+                              <td>${answers[i].points}</td>
+                              <td><span class="light-blue darken-4" id="aReport" id_report=${answers[i].id}>отчет</span></td>
                           </tr>`
-        
-        const report = document.getElementById("aReport")
+    }
+    for(let report of document.querySelectorAll("#aReport")){
         report.addEventListener("click", openWindowReport)
     }
-    updateNumberShipments(answer.answers.length)
+    updateNumberShipments(answers.length)
     
 }
 
 
+function loadMenu(menu){
+    if(Object.keys(menu).length > 0){
+        for(let taskMenu of listTasks.querySelectorAll("a")){
+            const id_task = parseInt(taskMenu.querySelectorAll("input")[0].value)
+            let total = menu[id_task]
+            if(total != undefined){
+                if(total.points == 0){
+                    total = total.total
+                }else if(total.points == 0 && total.total == "-"){
+                    total = "0"
+                }else{
+                    total = total.points
+                }
+            }else{
+                total = "-"
+            }
+            taskMenu.querySelectorAll("span")[0].innerHTML = total
+        }
+    }
+}
 
-function selectTask(task){
+
+
+function loadSelectTask(task){
     let typesTime = {1: "1 секунда", 2: "2 секунда", 3: "3 секунда", 4: "4 секунда", 5: "5 секунда"}
-    let typesInput = {1: "стандартный ввод", 2: "файл input.txt", 3: "стандартный ввод или input.txt"}
-    let typesOutput = {1: "стандартный вывод", 2: "файл output.txt", 3: "стандартный вывод или output.txt"}
+    let typesInput = {1: "стандартный ввод", 2: "файл input.txt"}
+    let typesOutput = {1: "стандартный вывод", 2: "файл output.txt"}
     
-    const timeWork = document.getElementById("time_work")
-    const sizeRaw = document.getElementById("size_raw")
-    const typeInput = document.getElementById("type_input")
-    const typeOutput = document.getElementById("type_output")
+    const timeWork = document.getElementById("timeWork")
+    const sizeRaw = document.getElementById("sizeRaw")
+    const typeInput = document.getElementById("typeInput")
+    const typeOutput = document.getElementById("typeOutput")
     const nameTest = document.getElementById("name_test")
     const description = document.getElementById("description")
     const descriptionInput = document.getElementById("description_input")
@@ -205,6 +263,7 @@ function selectTask(task){
 
     example.innerHTML = ""
 
+
     for(let i=0; i < task.path_test_file.example.answer.length; i++){
         example.innerHTML += `<div class="row">
                                 <h5 class="h__task left-align">Пример ${i+1}</h5>
@@ -237,7 +296,6 @@ function intervalLoadAnswer(){
     eel.load_answer()
 }
 
-window.setInterval(intervalLoadAnswer, 10000) // dddddd
 
 function openSelectFile(event){
     eel.file()((pathFile)=>{
@@ -266,9 +324,10 @@ function loadsReports(report){
         </body>
     </html>`
     newWin.document.write(body)
-
+    console.log(report.list_report)
     const bodyMain = newWin.document.body
     for(let i=0; i < report.list_report.length; i++){
+        console.log(report.list_report[i])
         bodyMain.innerHTML += `<div class="row">
                                     <h5 class="h__task left-align">номер теска ${i + 1}</h5>
                                     <h6 class="h__task left-align">${report.list_report[i].name_test}</h6>
@@ -278,9 +337,12 @@ function loadsReports(report){
                                 <div class="line">
                                 </div>`
     }
+    dptWindow = newWin
 }
 
 function openWindowReport(event){
+    if(dptWindow.closed == false)
+        dptWindow.close()
     eel.load_report(parseInt(event.target.getAttribute("id_report")))
 }
 
@@ -290,9 +352,12 @@ for(buttonFile of document.querySelectorAll(".select_file")){
 
 eel.expose(loadsLeftInformation)
 eel.expose(loadsTasks)
-eel.expose(loadsAnswers)
+eel.expose(loadSelectTask)
+eel.expose(loadAnswers)
 eel.expose(loadsReports)
+eel.expose(closeContest)
+eel.expose(loadMenu)
 
-document.getElementById("send_answer").onclick = ()=>{
+document.getElementById("sendAnswer").onclick = ()=>{
     eel.button_send_answer()
 }

@@ -1,13 +1,17 @@
-from pykson import JsonObject, IntegerField, StringField
+from pykson import IntegerField, ObjectField, StringField, JsonObject, DateTimeField
+from Classes.Models.TeamToUser import TeamToUser
+from Classes.Models.UserToTeam import UserToTeam
+from Classes.Models.Task import Task
+
+from datetime import datetime
 
 
-class Task(JsonObject):
+class Answer(JsonObject):
+    date_send = DateTimeField()
     id = IntegerField()
-
-    date_send = StringField()
-    id_contest = IntegerField()
-    user_send = StringField()
-    id_task = IntegerField()
+    team = ObjectField(TeamToUser)
+    user = ObjectField(UserToTeam)
+    task = ObjectField(Task)
     type_compiler = IntegerField()
     total = StringField()
     time = StringField()

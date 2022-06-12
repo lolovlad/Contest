@@ -1,8 +1,7 @@
-import requests
-
+from Classes.ProxyController.LoginProxy import LoginProxy
 from View.LoginView import LoginView
 from Classes.EelModification import EelModification
-import eel
+from Classes.Session import Session
 
 
 class LoginController:
@@ -10,25 +9,29 @@ class LoginController:
         self.__model = model
         self.__view = LoginView(self, self.__model)
         self.__controllers = controllers
+        self.__login_proxy = LoginProxy()
 
     def show_view(self):
         self.__view.show_view()
 
     def login(self):
-        '''new class'''
-        BASE = "http://127.0.0.1:5000"
-        response = requests.post(f"{BASE}/login", {"login": self.__model.login, "password": self.__model.password})
-        response = response.json()
-        if response.get("error") is None:
-            self.__model.user = response
-            if response["type"] == 1:
-                EelModification.close_window('localhost:8000/login.html')
+        data = {"login": self.__model.login,
+                "password": self.__model.password}
+
+        self.__login_proxy.login(data)
+        response = self.__login_proxy.send()[0]
+        if response[0]:
+            body_response = response[1]
+            self.__model.user = body_response["user"]
+            Session().user = self.__model.user
+            if self.__model.user.type == 1:
+                EelModification.close_window(self.__view.name_window)
                 self.__controllers.admin_panel.show_view()
-            elif response["type"] == 2:
-                EelModification.close_window('localhost:8000/login.html')
+            elif self.__model.user.type == 2:
+                EelModification.close_window(self.__view.name_window)
                 self.__controllers.menu.show_view()
         else:
-            self.__model.error = response["error"]
+            self.__model.error = response[1]
 
     def set_login(self, login):
         self.__model.login = login

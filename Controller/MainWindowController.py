@@ -1,7 +1,9 @@
 import requests
 from Classes.Session import Session
+from Classes.ProxyController.MainProxy import MainProxy
 from View.MainWindowView import MainWindowView
 from json import dumps, loads
+from pykson import Pykson
 import eel
 
 
@@ -9,73 +11,93 @@ class MainWindowController:
     def __init__(self, model):
         self.__model = model
         self.__view = MainWindowView(self, self.__model)
+        self.__proxy = MainProxy()
 
-    def show_view(self, id_contest):
-        self.__view.show_view(id_contest)
+    def show_view(self, contest):
+        self.__view.show_view(contest)
 
     def default(self):
         pass
 
     def load_contest(self):
-        BASE = "http://127.0.0.1:5000"
-        response = requests.get(f"{BASE}/contests/{self.__model.id_contest}")
-        response = response.json()
-        eel.loadsLeftInformation(response["contests"][0])
+        self.__model.notify("contests")
 
     def load_tasks_on_contest(self):
-        BASE = "http://127.0.0.1:5000"
-        response = requests.get(f"{BASE}/tasks/{self.__model.id_contest}")
-        response_task = response.json()
-        response = requests.get(f"{BASE}/json/{self.__model.id_contest}")
-        response_json = response.json()
-        for i in range(len(response_json["jsons_view"])):
-            response_task["tasks"][i]["path_test_file"] = response_json["jsons_view"][i]
-        self.__model.tasks = response_task["tasks"]
-        eel.loadsTasks(self.__model.tasks)
+        data = {
+            "list_name_file": dumps({"name_files": [task["path_test_file"] for task in self.__model.tasks]})
+        }
+        is_send, response = self.__proxy.load_to_database_json_test_file(data)
+
+        json = response[1]["jsons_view"]
+
+        self.__model.files = json
+
+        self.__model.notify("tasks_update")
 
     def load_answer(self):
-        BASE = "http://127.0.0.1:5000"
-        response = requests.get(f"{BASE}/answer/{self.__model.select_task['id']}")
-        response = response.json()
-        self.__model.answers = response
-        eel.loadsAnswers(self.__model.answers)
+        data = {
+            "id_task": 0,
+            "id_team": Session().user.team.id,
+            "id_contest": self.__model.contest["id"]
+        }
+        is_send, response = self.__proxy.load_to_database_answers(data)
+        main = response[1]["answers"]
+
+        menu = self.__model.menu
+        select_answer = []
+        if len(main) > 0:
+            for id_task in self.__model.id_list_task():
+                answer_task = list(sorted(main, key=lambda x: x["points"] and
+                                                              x["task"]["id"] == id_task, reverse=True))[0]
+                menu[id_task] = {"total": answer_task["total"],
+                                 "points": answer_task["points"]}
+                select_answer = list(filter(lambda x: x["task"]["id"] == self.__model.select_task["id"], main))
+        self.__model.select_answers = select_answer
+        self.__model.menu = menu
 
     def load_report(self, id_report):
-        BASE = "http://127.0.0.1:5000"
-        response = requests.get(f"{BASE}/report/{id_report}")
-        response = loads(response.json())
-        eel.loadsReports(response)
+        data = {
+            "id_report": id_report
+        }
+        is_send, response = self.__proxy.load_to_database_json_report(data)
+        self.__model.select_report = loads(response[1])
 
-    def upload_task(self, id_task):
-        self.__model.get_select_task(id_task)
-        return self.__model.select_task
+    def select_task(self, id_task):
+        self.__model.select_task = id_task
 
     def send_answer(self):
-        BASE = "http://127.0.0.1:5000"
-        answer = {
-            "extension_file": "py",
-            "user_id": Session().user.id
+        response = {
+            "id_task": self.__model.select_task["id"]
         }
 
+        data = {"id_team": Session().user.team.id,
+                "id_user": Session().user.id,
+                "extension_file": "py"}
         try:
-            answer["file"] = open(self.__model.file, "rb").read().decode("utf-8")
+            data["file"] = open(self.__model.file, "rb").read().decode("utf-8")
         except Exception:
             pass
-        response = requests.post(f"{BASE}/answer/{self.__model.select_task['id']}", {"data": dumps(answer)})
-        response = response.json()
-        if response.get("error") is None:
-            print("ok")
-            self.load_answer()
-        else:
-            print(response["error"])
+
+        response["data"] = dumps(data)
+        is_send, response = self.__proxy.add_answer(response)
+        print(response)
+        self.load_answer()
+
+    def close_contest(self):
+        Session().user.team.state_contest = 2
+        json_team = Pykson().to_dict_or_list(Session().user.team)
+        data = {
+            "id_team": 1,
+            "team": dumps(json_team)
+        }
+        is_send, response = self.__proxy.update_team(data)
+        self.__view.update("close_contest")
+
+    def is_close_contest(self):
+        return Session().user.team.state_contest == 2
+
+    def open_package_window(self, controller):
+        controller.show_view(self.__model.contest["id"])
 
     def set_file(self, path_file):
         self.__model.file = path_file
-
-
-
-    '''def set_login(self, login):
-        self.__model.login = login
-
-    def set_password(self, password):
-        self.__model.password = password'''

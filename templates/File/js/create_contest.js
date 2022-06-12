@@ -1,22 +1,27 @@
-const tabContest = document.getElementById("tab_contest")
-const tabTask = document.getElementById("tab_task")
+const datepickerStart = document.getElementById('datepickerStart');
+const datepickerStop = document.getElementById('datepickerStop');
+const timepickerStart = document.getElementById('timepickerStart');
+const timepickerStop = document.getElementById('timepickerStop');
 
+const nameContest = document.getElementById('nameContest');
+const typeSelectedContes = document.getElementById('typeSelectedContes');
+const formContest = document.getElementById("formContest")
 
+const selectTypeContest = createObjectToSelect(typeSelectedContes)
 
-tabContest.onclick = () => {
-    eel.load_contest()
-}
+const buttonAddContest = document.getElementById("addContest")
+const buttonUpdateContest = document.getElementById("updateContest")
+const buttonDeleteContest = document.getElementById("deleteContest")
+const buttonCreatingReport = document.getElementById("creatingReport")
 
-tabTask.onclick = () => {
-    eel.load_tasks()
-}
+//const selectColTest = document.getElementById('select_col_test');
 
+let datepickerStartInit
+let timepickerStartInit
+let timepickerStopInit
+let datepickerStopInit
+//let selectColTestInit
 
-let datepickerStart = document.getElementById('datepicker_start');
-let datepickerStop = document.getElementById('datepicker_stop');
-let timepickerStart = document.getElementById('timepicker_start');
-let timepickerStop = document.getElementById('timepicker_stop');
-let selectColTest = document.getElementById('select_col_test');
 
 
 let selectContest = {
@@ -25,10 +30,10 @@ let selectContest = {
     typeSelectedContes: 1,
     dateStart: {day: 1,
                 month: 1,
-                year: 2001},
+                year: 2014},
     dateEnd: {day: 1,
               month: 1,
-              year: 2001},
+              year: 2014},
     timeStart: {hours: 1,
                 min: 1},
     timeEnd:  {hours: 1,
@@ -36,7 +41,7 @@ let selectContest = {
 
 }
 
-const datapicker_ru = {
+const datapickerRu = {
     cancel: 'Отмена',
     clear: 'Очистить',
     done: 'Ок',
@@ -85,7 +90,7 @@ const datapicker_ru = {
     weekdaysAbbrev: ['В','П','В','С','Ч','П','С']
 }
 
-const timepicker_ru = {
+const timepickerRu = {
     cancel: 'Отмена',
     clear: 'Очистить',
     done: 'Ок'
@@ -95,47 +100,43 @@ const timepicker_ru = {
 document.addEventListener('DOMContentLoaded', () => {
 
     M.textareaAutoResize(document.getElementById("description"))
-    selectColTest = M.FormSelect.init(selectColTest, {});
 
+    const dateNow = new Date()
 
-
-    datepickerStart = M.Datepicker.init(datepickerStart, {i18n: datapicker_ru, 
+    datepickerStartInit = M.Datepicker.init(datepickerStart, {i18n: datapickerRu, 
                                                           onSelect(date){
                                                             selectContest.dateStart.day = this.date.getDate(), 
                                                             selectContest.dateStart.month = this.date.getMonth() + 1, 
                                                             selectContest.dateStart.year = this.date.getFullYear()
-                                                            eel.select_contest(selectContest)  
-                                                        },
-                                                          format: 'dd/mm/yyyy'});
-    datepickerStop = M.Datepicker.init(datepickerStop, {i18n: datapicker_ru, 
-                                                        onSelect(date){
-                                                            selectContest.dateEnd.day = this.date.getDate(), 
-                                                            selectContest.dateEnd.month = this.date.getMonth() + 1, 
-                                                            selectContest.dateEnd.year = this.date.getFullYear()
                                                             eel.select_contest(selectContest)
-                                                        },
-                                                        format: 'dd/mm/yyyy',})
-    timepickerStart = M.Timepicker.init(timepickerStart, {i18n: timepicker_ru,
+                                                         },
+                                                         onClose(){
+                                                            activeInput()
+                                                         },
+                                                         format: 'yyyy-mm-dd',
+                                                         minDate: dateNow,
+                                                         });
+    timepickerStartInit = M.Timepicker.init(timepickerStart, {i18n: timepickerRu,
                                                           twelveHour: false,
                                                           onSelect(hours, min){
                                                             selectContest.timeStart.hours = hours
                                                             selectContest.timeStart.min = min
                                                             eel.select_contest(selectContest)},
-                                                          default: "00:00"
+                                                          default: "00:00",
+                                                          onCloseEnd(){
+                                                            activeInput()
+                                                         }
                                                     })
-    timepickerStop = M.Timepicker.init(timepickerStop, {i18n: timepicker_ru,
+    timepickerStopInit = M.Timepicker.init(timepickerStop, {i18n: timepickerRu,
                                                         twelveHour: false,
                                                         onSelect(hours, min){
                                                             selectContest.timeEnd.hours = hours
                                                             selectContest.timeEnd.min = min
-                                                            eel.select_contest(selectContest)},
+                                                            eel.select_contest(selectContest)
+                                                            return},
                                                         default: "00:00"})
 
 });
-
-
-const nameContest = document.getElementById('name_contest');
-const typeSelectedContes = document.getElementById('name');
 
 
 nameContest.addEventListener('input', (e)=>{
@@ -145,8 +146,24 @@ nameContest.addEventListener('input', (e)=>{
 
 typeSelectedContes.onchange = function(){
     let btnValue = this.options[this.selectedIndex].value;
-    selectContest.type = parseInt(btnValue)
+    selectContest.typeSelectedContes = parseInt(btnValue)
     eel.select_contest(selectContest)
+}
+
+function activeInput(){
+    if(timepickerStartInit.time != undefined && datepickerStartInit.date != undefined){
+        datepickerStop.removeAttribute("disabled")
+        datepickerStopInit = M.Datepicker.init(datepickerStop, {i18n: datapickerRu, 
+            onSelect(date){
+                selectContest.dateEnd.day = this.date.getDate(), 
+                selectContest.dateEnd.month = this.date.getMonth() + 1, 
+                selectContest.dateEnd.year = this.date.getFullYear()
+                timepickerStop.removeAttribute("disabled")
+                eel.select_contest(selectContest)
+            },
+            format: 'yyyy-mm-dd',
+            minDate: datepickerStartInit.date})
+    }
 }
 
 function clearSelctContest(){
@@ -166,46 +183,10 @@ function clearSelctContest(){
                    min: 1},
     }
 
+    buttonUpdateContest.classList.add("disabled")
+    buttonDeleteContest.classList.add("disabled")
+    buttonCreatingReport.classList.add("disabled")
     tabTask.classList.add("disabled")
-}
-
-function selectRowContest(){
-    let tabel = document.getElementById("tbody_contest");
-    let rIndex = 0
-    
-    for(let i = 0; i < tabel.rows.length; i++)
-    {
-        tabel.rows[i].onclick = function(){
-            rIndex = this.rowIndex;
-            nameContest.labels[0].classList.add("active")
-            nameContest.value = this.cells[1].innerHTML;
-            
-            let datetimeStart = this.cells[4].innerHTML.split(",")
-            let datetimeStop = this.cells[5].innerHTML.split(",")
-
-
-            datepickerStart.setDate(new Date(datetimeStart[0]))
-            datepickerStop.setDate(new Date(datetimeStop[0]))
-            datepickerStart.setInputValue()
-            datepickerStop.setInputValue()
-
-            let ts = document.getElementById('timepicker_start');
-            let tsp = document.getElementById('timepicker_stop');
-            
-            ts.value = datetimeStart[1]
-            ts.labels[0].classList.add("active")
-
-            tsp.value = datetimeStop[1]
-            tsp.labels[0].classList.add("active")
-
-
-
-            let types = {"олимпиада": 1, "хакатон": 2}
-            typeSelectedContes.value = types[this.cells[2].innerHTML];
-            
-            selectedContest(this.cells[0].innerHTML, this.cells[1].innerHTML, parseInt(typeSelectedContes.value), datetimeStart, datetimeStop)
-        }
-    }
 }
 
 function selectedContest(id, nameContest, type, datetimeStart, datetimeStop){
@@ -213,18 +194,16 @@ function selectedContest(id, nameContest, type, datetimeStart, datetimeStop){
     selectContest.nameContest = nameContest
     selectContest.typeSelectedContes = type
 
-    let dateStart = datetimeStart[0].split("/")
-    let dateEnd = datetimeStop[0].split("/")
+    let dateStart = datetimeStart[0].split("-")
+    let dateEnd = datetimeStop[0].split("-")
 
+    selectContest.dateStart.year = parseInt(dateStart[0])
+    selectContest.dateStart.month = parseInt(dateStart[1])
+    selectContest.dateStart.day = parseInt(dateStart[2])
 
-    selectContest.dateStart.day = parseInt(dateStart[1])
-    selectContest.dateStart.month = parseInt(dateStart[0])
-    selectContest.dateStart.year = parseInt(dateStart[2])
-
-
-    selectContest.dateEnd.day = parseInt(dateEnd[1])
-    selectContest.dateEnd.month = parseInt(dateEnd[0])
-    selectContest.dateEnd.year = parseInt(dateEnd[2])
+    selectContest.dateEnd.year = parseInt(dateEnd[0])
+    selectContest.dateEnd.month = parseInt(dateEnd[1])
+    selectContest.dateEnd.day = parseInt(dateEnd[2])
 
 
     let timeStart = datetimeStart[1].split(":")
@@ -236,87 +215,151 @@ function selectedContest(id, nameContest, type, datetimeStart, datetimeStop){
 
     selectContest.timeEnd.hours = parseInt(timeEnd[0])
     selectContest.timeEnd.min = parseInt(timeEnd[1])
-
-    tabTask.classList.remove("disabled")
-
-    eel.select_contest(selectContest)
 }
 
 
-function updateTableContest(rowsTabel){
-    let types = {1: "олимпиада", 2: "хакатон"}
-    const tabel = document.getElementById("tbody_contest");
-    tabel.innerHTML = ""
-
-    for(let i=0; i < rowsTabel.contests.length; i++){
-        let row = tabel.insertRow(-1)
-        console.log(row)
+function updateContestTable(contests){
+    const types = reverseObject(selectTypeContest)
+    const tabelContest = document.getElementById("tbodyContest");
+    tabelContest.innerHTML = ""
+    for(let i=0; i < contests.length; i++){
+        const row = tabelContest.insertRow(-1)
         row.innerHTML = `<tr>
-                            <td>${rowsTabel.contests[i].id}</td>
-                            <td>${rowsTabel.contests[i].name_contest}</td>
-                            <td>${types[rowsTabel.contests[i].type]}</td>
-                            <td>${rowsTabel.contests[i].datetime_registration}</td>
-                            <td>${rowsTabel.contests[i].datetime_start}</td>
-                            <td>${rowsTabel.contests[i].datetime_end}</td>
+                            <td>${contests[i].id}</td>
+                            <td>${contests[i].name_contest}</td>
+                            <td>${types[contests[i].type]}</td>
+                            <td>${contests[i].datetime_registration}</td>
+                            <td>${contests[i].datetime_start}</td>
+                            <td>${contests[i].datetime_end}</td>
                         </tr>`
+        row.addEventListener("click", selectRowContest)
     }
-    selectRowContest()
 }
 
-eel.expose(updateTableContest)
+function selectRowContest(event){
+    const data = event.path[1].cells
+
+    const datetimeStartString = data[4].innerHTML.split(" ")
+    const datetimeStopString = data[5].innerHTML.split(" ")
+
+    datepickerStartInit.date = new Date(datetimeStartString[0])
+    timepickerStartInit.time = datetimeStartString[1]
+    
+    let dataInputs = {
+        nameContest: data[1].innerHTML,
+        datepickerStart: datetimeStartString[0],
+        timepickerStart: datetimeStartString[1],
+        datepickerStop: datetimeStopString[0],
+        timepickerStop: datetimeStopString[1]
+
+    }
+    let dataSelect = [data[2].innerHTML]
+
+    const inputs = formContest.querySelectorAll("input")
+    const selects = formContest.querySelectorAll("select")
+
+    for(let i = 0; i < inputs.length; i++){
+        if(!inputs[i].hasAttribute("data-target")){
+            const rargetId = inputs[i].id
+            inputs[i].labels[0].classList.add("active")
+            inputs[i].value = dataInputs[rargetId]
+        }
+    }
+
+    for(let i = 0; i < selects.length; i++){
+        const rargetId = selects[i].id
+        selects[i].value = selectTypeContest[dataSelect[i]]
+    }
+
+    selectedContest(parseInt(data[0].innerHTML), dataInputs.nameContest, parseInt(selectTypeContest[dataSelect[0]]), datetimeStartString, datetimeStopString)
+    updateSelectContest()
+}
+
+
+eel.expose(updateContestTable)
+
+function updateSelectContest(){
+    console.log(selectContest)
+    eel.select_contest(selectContest)
+
+    buttonUpdateContest.classList.remove("disabled")
+    buttonDeleteContest.classList.remove("disabled")
+    buttonCreatingReport.classList.remove("disabled")
+
+    timepickerStop.removeAttribute("disabled")
+    datepickerStop.removeAttribute("disabled")
+    activeInput()
+    tabTask.classList.remove("disabled")
+}
 
 function clearInputsContest(){
-    nameContest.value = ""
-    typeSelectedContes.value = 1
-
-    nameContest.labels[0].classList.remove("active")
-    typeSelectedContes.labels[0].classList.remove("active")
-
-    let ts = document.getElementById('timepicker_start')
-    let tsp = document.getElementById('timepicker_stop')
+    for(input of formContest.querySelectorAll("input")){
+        input.value = ""
+        try{
+            input.labels[0].classList.remove("active")
+        }catch{
+        }
+    }
     
-    ts.value = ""
-    ts.labels[0].classList.remove("active")
-    tsp.value = ""
-    tsp.labels[0].classList.remove("active")
+    for(select of formUser.querySelectorAll("select")){
+        select.value = ""
+    }
 
+    timepickerStop.setAttribute("disabled", "disabled")
+    datepickerStop.setAttribute("disabled", "disabled")
 
-    ts = document.getElementById('datepicker_start')
-    tsp = document.getElementById('datepicker_stop')
     
-    ts.value = ""
-    ts.labels[0].classList.remove("active")
-    tsp.value = ""
-    tsp.labels[0].classList.remove("active")
-
     clearSelctContest()
 }
 
 async function addContest(){
-    eel.button_add_contest()
+    await eel.button_add_contest()
     clearInputsContest()
 }
 
 async function updateContest(){
-    eel.button_update_contest()
+    await eel.button_update_contest()
     clearInputsContest()
 }
 
 
 async function deleteContest(){
-    if(selectContest.id != -1){
-        eel.button_delete_contest()
-    }
+    await eel.button_delete_contest()
     clearInputsContest()
 }
 
-document.getElementById("add_contest").onclick = addContest
-document.getElementById("update_contest").onclick = updateContest
-document.getElementById("delete_contest").onclick = deleteContest
-
+buttonAddContest.onclick = addContest
+buttonUpdateContest.onclick = updateContest
+buttonDeleteContest.onclick = deleteContest
+buttonCreatingReport.onclick = createReport
 /************************************* */
 
-let selectTasks = { 
+const buttonDeleteTask = document.getElementById("deleteTask")
+const buttonUpdateTask = document.getElementById("updateTask")
+const buttonAddTask = document.getElementById("addTask")
+const buttonClearTask = document.getElementById("clearTask")
+
+const timeWork = document.getElementById("time_work")
+const typeInput = document.getElementById("type_input")
+const typeOutput = document.getElementById("type_output")
+const typeTask = document.getElementById("type_task")
+
+const descriptionInput = document.querySelectorAll("textarea")[0]
+const textTestFile = document.getElementById("text_test_file")
+
+const selectTypeTime = createObjectToSelect(timeWork)
+const selectTypeInput = createObjectToSelect(typeInput)
+const selectTypeOutput = createObjectToSelect(typeOutput)
+const selectTypeTask = createObjectToSelect(typeTask)
+
+const formTask = document.getElementById("taskForm")
+
+buttonDeleteTask.onclick = deleteTask
+buttonUpdateTask.onclick = updateTask
+buttonAddTask.onclick = addTask
+buttonClearTask.onclick = clearTask
+
+let selectTask = { 
     id: -1,
     time_work: 0,
     size_raw: 0,
@@ -328,14 +371,8 @@ let selectTasks = {
     description_output: "",
 
     path_test_file: "",
-    path_programme_file: "",
 
     type_task: 1
-}
-
-function updateTasks(val){
-    selectTasks = val
-    eel.update_tasks(val)
 }
 
 function addTask(){
@@ -357,8 +394,12 @@ function clearTask(){
     clearInputsTask()
 }
 
+function createReport(){
+    eel.button_contest_create_report()
+}
+
 function clearSelectTask(){
-    selectTasks = { 
+    selectTask = { 
         id: -1,
         time_work: 0,
         size_raw: 0,
@@ -370,141 +411,86 @@ function clearSelectTask(){
         description_output: "",
     
         path_test_file: "",
-        path_programme_file: "",
     
         type_task: 1
     }
 }
 
-function updateTableTasks(rowsTabel){
-    let typesTime = {1: "1 секунда", 2: "2 секунда", 3: "3 секунда", 4: "4 секунда", 5: "5 секунда"}
-    let typesInput = {1: "стандартный ввод", 2: "файл input.txt", 3: "стандартный ввод или input.txt"}
-    let typesOutput = {1: "стандартный вывод", 2: "файл output.txt", 3: "стандартный вывод или output.txt"}
-    let typesTask = {1: "A", 2: "B", 3: "C", 4: "D", 5: "I", 6: "F"}
-    const tabel = document.getElementById("tbody_task");
-    tabel.innerHTML = ""
-
-    console.log(rowsTabel, tabel)
-
-    for(let i=0; i < rowsTabel.tasks.length; i++){
-
-        let row = tabel.insertRow(-1)
+function updateTaskTable(tasks){
+    let typesTime = reverseObject(selectTypeTime)
+    let typesInput = reverseObject(selectTypeInput)
+    let typesOutput = reverseObject(selectTypeOutput)
+    let typesTask = reverseObject(selectTypeTask)
+    const tabelTask = document.getElementById("tbodyTask");
+    tabelTask.innerHTML = ""
+    for(let i=0; i < tasks.length; i++){
+        const row = tabelTask.insertRow(-1)
         row.innerHTML = `<tr>
-                            <td>${rowsTabel.tasks[i].id}</td>
-                            <td>${typesTime[rowsTabel.tasks[i].time_work]}</td>
-                            <td>${rowsTabel.tasks[i].size_raw}</td>
-                            <td>${typesInput[rowsTabel.tasks[i].type_input]}</td>
-                            <td>${typesOutput[rowsTabel.tasks[i].type_output]}</td>
+                            <td>${tasks[i].id}</td>
+                            <td>${typesTime[tasks[i].time_work]}</td>
+                            <td>${tasks[i].size_raw}</td>
+                            <td>${typesInput[tasks[i].type_input]}</td>
+                            <td>${typesOutput[tasks[i].type_output]}</td>
 
-                            <td>${rowsTabel.tasks[i].name_test}</td>
-                            <td>${rowsTabel.tasks[i].description.slice(0, 30)}...</td>
-                            <td>${rowsTabel.tasks[i].description_input.slice(0, 30)}...</td>
-                            <td>${rowsTabel.tasks[i].description_output.slice(0, 30)}...</td>
+                            <td>${tasks[i].name_test}</td>
+                            <td>${tasks[i].description.slice(0, 30)}...</td>
+                            <td>${tasks[i].description_input.slice(0, 30)}...</td>
+                            <td>${tasks[i].description_output.slice(0, 30)}...</td>
 
-                            <td>${rowsTabel.tasks[i].path_test_file}</td>
-                            <td>${rowsTabel.tasks[i].path_programme_file}</td>
-                            <td>${typesTask[rowsTabel.tasks[i].type_task]}</td>
+                            <td>${tasks[i].path_test_file}</td>
+                            <td>${typesTask[tasks[i].type_task]}</td>
                         </tr>`
-        console.log(row)
+        row.addEventListener("click", selectRowTask)
     }
-    selectRowTask()
 }
 
-eel.expose(updateTableTasks)
+eel.expose(updateTaskTable)
+eel.expose(loadFormTask)
 
-function selectRowTask(){
-    let tabel = document.getElementById("tbody_task");
-    let rIndex = 0
+function selectRowTask(event){
+    let newSelectTask = {}
+    const data = event.path[1].cells
+    newSelectTask.id = parseInt(data[0].innerHTML)
+    newSelectTask.type_response = "selectChange"
+    eel.select_task(newSelectTask)
+}
 
-    let typesTime = {"1 секунда": 1, "2 секунда": 2, "3 секунда": 3, "4 секунда": 4, "5 секунда": 5}
-    let typesTask = {"A": 1, "B": 2, "C": 3, "D": 4, "I": 5, "F": 6}
-    let typesInput = {"стандартный ввод": 1, "файл input.txt": 2, "стандартный ввод или input.txt": 3}
-    let typesOutput = {"стандартный вывод": 1, "файл output.txt": 2, "стандартный вывод или output.txt": 3}
-    
-    for(let i = 0; i < tabel.rows.length; i++)
-    {
-        tabel.rows[i].onclick = function(){
-            eel.select_task(parseInt(this.cells[0].innerHTML))((task)=>{
-                let selectTasks = { 
-                    id: task.id,
-                    time_work: task.time_work,
-                    size_raw: task.size_raw,
-                    type_input: task.type_input,
-                    type_output: task.type_output,
-                    name_test: task.name_test,
-                    description: task.description,
-                    description_input: task.description_input,
-                    description_output: task.description_output,
-                
-                    path_test_file: task.path_test_file,
-                    path_programme_file: task.path_programme_file,
-                
-                    type_task: task.type_task
-                }
-    
-                rIndex = this.rowIndex;
-    
-                console.log(selectTasks)
-    
-    
-                const timeWork = document.getElementById("time_work")
-                const typeTask = document.getElementById("type_task")
-                const sizeRaw = document.getElementById("size_raw")
-                const typeInput = document.getElementById("type_input")
-                const typeOutput = document.getElementById("type_output")
-                const nameTest = document.getElementById("name_test")
-                const description = document.getElementById("description")
-                const descriptionInput = document.getElementById("description_input")
-                const descriptionOutput = document.getElementById("description_output")
-                const textTestFile = document.getElementById("text_test_file")
-                const textProgrammeFile = document.getElementById("text_programme_file")
-    
-                timeWork.value = selectTasks.time_work
-    
-                typeTask.value = selectTasks.type_task
-    
-                sizeRaw.labels[0].classList.add("active")
-                sizeRaw.value = selectTasks.size_raw
-    
-                typeInput.value = selectTasks.type_input
-                typeOutput.value = selectTasks.type_output
-    
-                nameTest.labels[0].classList.add("active")
-                nameTest.value = selectTasks.name_test
-    
-                description.labels[0].classList.add("active")
-                description.value = selectTasks.description
-                M.textareaAutoResize(description)
-    
-                descriptionInput.labels[0].classList.add("active")
-                descriptionInput.value = selectTasks.description_input
-    
-                descriptionOutput.labels[0].classList.add("active")
-                descriptionOutput.value = selectTasks.description_output
-    
-                textProgrammeFile.value = selectTasks.path_programme_file
-                textTestFile.value = selectTasks.path_test_file
-                
-                updateTasks(selectTasks)
-            })
-
+function loadFormTask(task){
+    const inputs = formTask.querySelectorAll("input")
+    const selects = formTask.querySelectorAll("select")
+    for(let i = 0; i < inputs.length - 1; i++){
+        if(inputs[i].type != "hidden"){
+            const rargetId = inputs[i].id
+            inputs[i].labels[0].classList.add("active")
+            inputs[i].value = task[rargetId]
         }
     }
+
+    for(let i = 0; i < selects.length; i++){
+        const rargetId = selects[i].id
+        selects[i].value = task[rargetId]
+    }
+
+    descriptionInput.labels[0].classList.add("active")
+    descriptionInput.value = task.description
+    M.textareaAutoResize(description)
+    textTestFile.value = task.path_test_file
+
+    selectTask = task
+
+    buttonUpdateTask.classList.remove("disabled")
+    buttonDeleteTask.classList.remove("disabled")
+    buttonClearTask.classList.remove("disabled")
 }
 
 function clearInputsTask(){
-    const textArea = document.querySelectorAll("textarea")[0]
-    textArea.value = ""
-    textArea.labels[0].classList.remove("active")
-
-    const textTestFile = document.getElementById("text_test_file")
-    const textProgrammeFile = document.getElementById("text_programme_file")
+    descriptionInput.value = ""
+    descriptionInput.labels[0].classList.remove("active")
 
     textTestFile.value = ""
-    textProgrammeFile.value = ""
 
 
-    for(input of document.getElementById("task_form").querySelectorAll("input")){
+    for(input of formTask.querySelectorAll("input")){
         input.value = ""
         try{
             input.labels[0].classList.remove("active")
@@ -512,10 +498,13 @@ function clearInputsTask(){
         }
     }
     
-    for(select of document.querySelectorAll("select")){
+    for(select of formTask.querySelectorAll("select")){
         select.value = ""
     }
 
+    buttonUpdateTask.classList.add("disabled")
+    buttonDeleteTask.classList.add("disabled")
+    buttonClearTask.classList.add("disabled")
     clearSelectTask()
 }
 
@@ -525,49 +514,52 @@ function openSelectFile(event){
         let div = event.path[2]
         div.querySelectorAll(".file-path")[0].value = pathFile
         const id_file = div.querySelectorAll(".select_file")[0].id
-        selectTasks[`path_${id_file}`] = pathFile
-        updateTasks(selectTasks)
+        selectTask[`path_${id_file}`] = pathFile
+        updateTasks(selectTask)
     })
 }
 
 function updateInput(event){
     const targetId = event.target.id
     if(targetId == "size_raw"){
-        selectTasks[targetId] = parseInt(event.target.value)
+        selectTask[targetId] = parseInt(event.target.value)
     }else{
-        selectTasks[targetId] = event.target.value
+        selectTask[targetId] = event.target.value
     }
-    updateTasks(selectTasks)
+    updateTasks(selectTask)
 }
 
 function updateSelector(event){
     let name_id = event.target.id
-    selectTasks[name_id] = parseInt(event.target.value)
-    updateTasks(selectTasks)
+    selectTask[name_id] = parseInt(event.target.value)
+    updateTasks(selectTask)
 }
 
-function createFormTest(){
+function updateTasks(val){
+    selectTask = val
+    buttonUpdateTask.classList.remove("disabled")
+    buttonDeleteTask.classList.remove("disabled")
+    buttonClearTask.classList.remove("disabled")
+    eel.select_task(val)
 }
 
-document.getElementById("add_task").onclick = addTask
-document.getElementById("update_task").onclick = updateTask
-document.getElementById("delete_task").onclick = deleteTask
-document.getElementById("clear_task").onclick = clearTask
-
-document.querySelectorAll("textarea")[0].addEventListener("input", updateInput)
+descriptionInput.addEventListener("input", updateInput)
 
 
-
-for(buttonFile of document.querySelectorAll(".select_file")){
+for(buttonFile of formTask.querySelectorAll(".select_file")){
     buttonFile.onclick = openSelectFile
 }
 
 
-for(input of document.getElementById("task_form").querySelectorAll("input")){
+for(input of formTask.querySelectorAll("input")){
     input.addEventListener("input", updateInput)
 }
 
-for(select of document.querySelectorAll("select")){
+for(select of formTask.querySelectorAll("select")){
     select.addEventListener("change", updateSelector)
 }
 
+/*как сделать конфетку
+когда вводяться данные надо просто добавлять в структуру ключ и значение
+если оно было созданно то просто обновлять
+если там пусто то блокировать кнопки*/

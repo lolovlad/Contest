@@ -1,13 +1,14 @@
-function set_result()
+function setResult()
 {
-        let isLogin = eel.button_login()      
+        let isLogin = eel.button_login()
+        //window.close() 
 }
 
 
-function update_error(error_val){
-        console.log(123)
+
+function update_error(errorVal){
         error = document.getElementById("error")
-        error.innerHTML = error_val
+        error.innerHTML = errorVal
 }
 
 
@@ -21,5 +22,6 @@ function updateValue(e){
         eel.update_field_login(login.value, password.value)
 }
 
+
 eel.expose(update_error)
-document.getElementById("signin").onclick = set_result;
+document.getElementById("signin").onclick = setResult;
