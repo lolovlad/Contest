@@ -133,3 +133,20 @@
     background: rgba(100,100,100,0.7);
     z-index: 1000;
 }
+
+.type__report{
+    width: 100%;
+    min-height: 225px;
+    padding: 35px 0;
+    transition: 0.25;
+}
+
+.type__report:hover{
+    background-color: black;
+    color: white;
+}
+
+.type__report__active{
+    background-color: black;
+    color: white;
+}

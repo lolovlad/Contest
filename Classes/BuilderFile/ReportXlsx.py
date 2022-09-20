@@ -1,12 +1,16 @@
+from typing import List
 from Classes.BuilderFile.Cell import SoloCell, MergeCell
 from Classes.BuilderFile.FileBuilder import FileBuilder
 from Classes.BuilderFile.FileOutput import FileXlsx
+from .TypeReport import TypeContest
+from itertools import chain
 
 
-class ReportXlsx(FileBuilder):
-    def __init__(self, data):
-        self.__data = data['reports_total']
-        self.__file = FileXlsx()
+class ReportBuilder(FileBuilder):
+    def __init__(self, data: List[dict], type_report: int, file):
+        self.__data = data
+        self.__file = file
+        self.__type_report = type_report
 
     @property
     def file(self):
@@ -16,33 +20,67 @@ class ReportXlsx(FileBuilder):
         self.__file = FileXlsx()
 
     def build_name_column(self):
+        if self.__type_report == TypeContest.OLIMPIADA:
+            self.__build_name_column_solo()
+        else:
+            self.__build_name_column_team()
 
+    def build_main_body(self):
+        if self.__type_report == TypeContest.OLIMPIADA:
+            self.__build_main_body_solo()
+        else:
+            self.__build_main_body_team()
+
+    def __build_name_column_team(self):
         self.__file.add_cells_name(SoloCell(1, 1, "№"))
-        self.__file.add_cells_name(SoloCell(1, 2, "Имя"))
-        self.__file.add_cells_name(SoloCell(1, 3, "Фамилия"))
-        self.__file.add_cells_name(SoloCell(1, 4, "Отчество"))
-        self.__file.add_cells_name(SoloCell(1, 5, "Имя команды"))
-        name_contest = list(self.__data.keys())[0]
-        len_task = len(self.__data[name_contest][0]["total"])
-        col = 5
+        self.__file.add_cells_name(SoloCell(1, 2, "Название команды"))
+        len_task = len(self.__data[0]["total"])
+        col = self.__file.find_to_name_cell("Название команды").col
         for i in range(1, len_task + 1):
             col += 1
             self.__file.add_cells_name(SoloCell(1, col, f"Задани {i}"))
         self.__file.add_cells_name(SoloCell(1, col + 1, "Итог"))
         self.__file.add_cells_name(SoloCell(1, col + 2, "Место"))
 
-    def build_main_body(self):
-        name_contest = list(self.__data.keys())[0]
-        task = self.__data[name_contest]
-        for i, user in enumerate(task):
-            col = 5
-            name_users = user['name_users'].split()
+    def __build_name_column_solo(self):
+        self.__file.add_cells_name(SoloCell(1, 1, "№"))
+        self.__file.add_cells_name(SoloCell(1, 2, "ФИО"))
+        len_task = len(self.__data[0]["total"])
+        col = self.__file.find_to_name_cell("ФИО").col
+        for i in range(1, len_task + 1):
+            col += 1
+            self.__file.add_cells_name(SoloCell(1, col, f"Задани {i}"))
+        self.__file.add_cells_name(SoloCell(1, col + 1, "Итог"))
+        self.__file.add_cells_name(SoloCell(1, col + 2, "Место"))
+
+    def __build_main_body_team(self):
+        for i, row in enumerate(self.__converted_data()):
             self.__file.add_main_body(SoloCell(i + 2, 1, i + 1))
-            self.__file.add_main_body(SoloCell(i + 2, 2, name_users[0]))
-            self.__file.add_main_body(SoloCell(i + 2, 3, name_users[1]))
-            self.__file.add_main_body(SoloCell(i + 2, 4, name_users[2]))
-            self.__file.add_main_body(SoloCell(i + 2, 5, user["name_team"]))
-            for j, points in enumerate(user["total"]):
-                col += 1
-                self.__file.add_main_body(SoloCell(i + 2, col, user["total"][points]["points"]))
-            self.__file.add_main_body(SoloCell(i + 2, col + 1, user["sum_point"]))
+            for j, cell in enumerate(row):
+                self.__file.add_main_body(SoloCell(i + 2, j + 2, cell))
+
+    def __build_main_body_solo(self):
+        for i, row in enumerate(self.__converted_data()):
+            self.__file.add_main_body(SoloCell(i + 2, 1, i + 1))
+            for j, cell in enumerate(row):
+                self.__file.add_main_body(SoloCell(i + 2, j + 2, cell))
+
+    def __converted_data(self):
+        data_new = []
+        for report in self.__data:
+            del report["name_contest"]
+            del report["type_contest"]
+            if report["name_user"]:
+                del report["name_team"]
+            else:
+                del report["name_user"]
+            report["total"] = list(report["total"].values())
+            report["total"] = [po["points"] for po in report["total"]]
+            item = []
+            for i in report.values():
+                if isinstance(i, list):
+                    item += i
+                else:
+                    item.append(i)
+            data_new.append(tuple(item))
+        return data_new

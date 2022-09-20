@@ -1,12 +1,14 @@
+from typing import List
+
 from Interfase.Proxy.Login import Login
 from Classes.ProxyController.LoginAPI import LoginAPI
 from functools import partial
 
 
 class LoginProxy(Login):
-    def __init__(self):
-        self.__login = LoginAPI()
-        self.operations = []
+    def __init__(self, login_api: LoginAPI = LoginAPI()):
+        self.__login = login_api
+        self.operations: List[object] = []
 
     def login(self, data):
         func = partial(self.__login.login, data)
@@ -14,8 +16,8 @@ class LoginProxy(Login):
 
     def send(self):
         try:
-            response = list(map(lambda f: f(), self.operations))
+            responses = list(map(lambda f: f(), self.operations))
             self.operations = []
-            return response
+            return responses[-1]
         except Exception:
             return [(False, "ошибка в отправке данных")]

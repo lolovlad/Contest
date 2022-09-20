@@ -1,42 +1,41 @@
 from Classes.ProxyController.LoginProxy import LoginProxy
 from View.LoginView import LoginView
-from Classes.EelModification import EelModification
+from Model.LoginModel import LoginModel
 from Classes.Session import Session
+from Interfase import Controller
+import eel
+
+from Controller.UserController import UserController
+from Controller.MenuController import MenuController
 
 
-class LoginController:
-    def __init__(self, model, controllers):
+class LoginController(Controller):
+    def __init__(self, controllers, model: LoginModel = LoginModel(),
+                 login_proxy: LoginProxy = LoginProxy()):
         self.__model = model
         self.__view = LoginView(self, self.__model)
         self.__controllers = controllers
-        self.__login_proxy = LoginProxy()
+        self.__login_proxy = login_proxy
 
     def show_view(self):
         self.__view.show_view()
 
     def login(self):
-        data = {"login": self.__model.login,
-                "password": self.__model.password}
-
-        self.__login_proxy.login(data)
-        response = self.__login_proxy.send()[0]
-        if response[0]:
-            body_response = response[1]
-            self.__model.user = body_response["user"]
+        self.__login_proxy.login(self.__model.login.dict())
+        response: dict = self.__login_proxy.send()
+        if response.get("message") is None:
+            self.__model.user = response
             Session().user = self.__model.user
             if self.__model.user.type == 1:
-                EelModification.close_window(self.__view.name_window)
-                self.__controllers.admin_panel.show_view()
+                self.__controllers.user = UserController()
+                self.__controllers.user.show_view()
             elif self.__model.user.type == 2:
-                EelModification.close_window(self.__view.name_window)
+                self.__controllers.menu = MenuController()
                 self.__controllers.menu.show_view()
         else:
-            self.__model.error = response[1]
+            self.__model.error = response["message"]
 
-    def set_login(self, login):
+    def set_login(self, login: dict):
         self.__model.login = login
-
-    def set_password(self, password):
-        self.__model.password = password
 
 

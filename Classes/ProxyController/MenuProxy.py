@@ -1,3 +1,4 @@
+from typing import List
 from Interfase.Proxy.Menu import Menu
 from Classes.ProxyController.MenuAPI import MenuAPI
 from functools import partial
@@ -5,9 +6,9 @@ from functools import partial
 
 class MenuProxy(Menu):
 
-    def __init__(self):
-        self.__api = MenuAPI()
-        self.operations = []
+    def __init__(self, api: MenuAPI = MenuAPI()):
+        self.__api = api
+        self.operations: List[object] = []
 
     def load_to_database_contest(self, data):
         try:

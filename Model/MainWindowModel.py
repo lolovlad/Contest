@@ -1,38 +1,63 @@
-from Interfase.Subject import Subject
-from Classes.Models.Task import Task
-from Classes.Models.Contes import Contest
-from Classes.Models.Answer import Answer
+from typing import List
+from Classes.Models.Task import TaskGet, TaskPage
+from Classes.Models.Contest import ContestGetPage
+from Interfase.Observer import Subject, Observer
+from Classes.Models.Answer import AnswerGet, AnswerPost
+from Classes.Models.Report import Report
 from pykson import Pykson
 
 
 class MainWindowModel(Subject):
     def __init__(self):
-        self.__observer = []
-        self.__tasks = []
+        self.__id_contest: int = 0
+        self.__contest: ContestGetPage = ContestGetPage()
+        self.__observer: List[Observer] = []
+        self.__tasks: List[TaskPage] = []
         self.__files = {}
-        self.__contest = Contest()
-        self.__select_task = Task()
-        self.__select_answers = []
-        self.__select_report = None
-        self.__answers = []
-        self.__menu = {}
-        self.__file = None
+        self.__select_task: TaskPage = TaskPage()
+        self.__select_answer: AnswerPost = AnswerPost()
+        self.__select_report: Report = Report()
+        self.__answers: List[AnswerGet] = []
+        self.__menu: dict = {}
+        self.__file: dict = {}
 
     @property
-    def files(self):
-        return self.__files
+    def id_contest(self):
+        return self.__id_contest
 
-    @files.setter
-    def files(self, val):
-        self.__files = val
+    @id_contest.setter
+    def id_contest(self, val: int):
+        self.__id_contest = val
 
     @property
-    def contest(self):
-        return Pykson().to_dict_or_list(self.__contest)
+    def file(self):
+        return self.__file
+
+    @file.setter
+    def file(self, val: dict):
+        print(val)
+        self.__file = val
+
+    @property
+    def menu(self):
+        return self.__menu
+
+    @menu.setter
+    def menu(self, val: dict):
+        self.__menu = val
+        self.notify("menu")
+
+    @property
+    def contest(self) -> dict:
+        contest = self.__contest.dict()
+        contest["datetime_start"] = contest["datetime_start"].isoformat()
+        contest["datetime_end"] = contest["datetime_end"].isoformat()
+        contest["datetime_registration"] = contest["datetime_registration"].isoformat()
+        return contest
 
     @contest.setter
-    def contest(self, val):
-        self.__contest = val
+    def contest(self, val: dict):
+        self.__contest = ContestGetPage(**val)
         self.tasks = self.__contest.tasks
         self.notify("contests")
 
@@ -41,54 +66,60 @@ class MainWindowModel(Subject):
         return list(map(Pykson().to_dict_or_list, self.__tasks))
 
     @tasks.setter
-    def tasks(self, val):
-        if isinstance(val[0], Task):
-            self.__tasks = val
-        else:
-            self.__tasks = list(map(lambda x: Pykson().from_json(x, Task), val))
+    def tasks(self, val: List[TaskGet]):
+        self.__tasks = val
         self.notify("tasks")
 
     @property
-    def file(self):
-        return self.__file
+    def select_answer(self):
+        return self.__select_answer.dict()
 
-    @file.setter
-    def file(self, val):
-        self.__file = val
-
-    @property
-    def select_answers(self):
-        return Pykson().to_dict_or_list(self.__select_answers)
-
-    @select_answers.setter
-    def select_answers(self, val):
-        self.__select_answers = list(map(lambda x: Pykson().from_json(x, Answer), val))
-        self.notify("select_answers")
+    @select_answer.setter
+    def select_answer(self, val: dict):
+        try:
+            answer_old = self.__select_answer.dict()
+            for key in val:
+                answer_old[key] = val[key]
+            self.__select_answer = AnswerPost(**answer_old)
+        except ValueError as e:
+            #eel.errorUpdateFieldUser(e)
+            pass
 
     @property
-    def select_report(self):
-        return self.__select_report
+    def select_report(self) -> dict:
+        return self.__select_report.dict()
 
     @select_report.setter
-    def select_report(self, val):
-        self.__select_report = val
+    def select_report(self, val: dict):
+        self.__select_report = Report(**val)
         self.notify("select_report")
 
     @property
-    def menu(self):
-        return self.__menu
+    def answers(self) -> List[dict]:
+        answers = []
+        for answer in self.__answers:
+            answer_target = answer.dict()
+            answer_target["date_send"] = answer_target["date_send"].isoformat()
+            answers.append(answer_target)
+        return answers
 
-    @menu.setter
-    def menu(self, val):
-        self.__menu = val
-        self.notify("menu")
+    @answers.setter
+    def answers(self, val: dict):
+        self.__answers.clear()
+        for answer in val:
+            self.__answers.append(AnswerGet(**answer))
+        self.notify("select_answers")
+
+    def add_answer(self, val: dict):
+        self.__answers.append(AnswerGet(**val))
+        self.notify("select_answers")
 
     @property
     def select_task(self):
-        return Pykson().to_dict_or_list(self.__select_task)
+        return self.__select_task.dict()
 
     @select_task.setter
-    def select_task(self, val):
+    def select_task(self, val: int):
         for task in self.__tasks:
             if task.id == val:
                 self.__select_task = task

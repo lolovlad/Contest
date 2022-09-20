@@ -1,27 +1,46 @@
-function setResult()
-{
-        let isLogin = eel.button_login()
-        //window.close() 
-}
-
-
+const app = new Vue({
+        el: "#app",
+        data: {
+                login: "",
+                password: "",
+                error: ""
+        },
+        methods: {
+                setResult(){
+                        eel.button_login()
+                },
+                clear(){
+                        this.login = ""
+                        this.password = ""
+                        this.error = ""
+                },
+                setError(errorVal){
+                        this.error = errorVal
+                }
+        },
+        watch: {
+                login: function(val){
+                        this.login = val
+                        eel.update_field_login({"login": this.login, 
+                                                "password": this.password})
+                },
+                password: function(val){
+                        this.password = val
+                        eel.update_field_login({"login": this.login, 
+                                                "password": this.password})
+                }
+        }
+})
 
 function update_error(errorVal){
-        error = document.getElementById("error")
-        error.innerHTML = errorVal
+        app.setError(errorVal)
 }
 
-
-const login = document.getElementById('login');
-const password = document.getElementById('password');
-
-login.addEventListener('input', updateValue);
-password.addEventListener('input', updateValue);
-
-function updateValue(e){
-        eel.update_field_login(login.value, password.value)
+function locationReplace(path){
+        console.log(111)
+        window.location.replace(`/${path}`);
 }
 
 
 eel.expose(update_error)
-document.getElementById("signin").onclick = setResult;
+eel.expose(locationReplace)

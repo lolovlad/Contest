@@ -1,103 +1,91 @@
-import requests
+from typing import List
 from Classes.Session import Session
 from Classes.ProxyController.MainProxy import MainProxy
 from View.MainWindowView import MainWindowView
-from json import dumps, loads
-from pykson import Pykson
-import eel
+from Model.MainWindowModel import MainWindowModel
+from Classes.Models import Menu
+from json import dumps
+from Interfase import Controller
+from Classes.Models.Message import TypeStatus, StatusUser
 
 
-class MainWindowController:
-    def __init__(self, model):
+class MainWindowController(Controller):
+    def __init__(self, model: MainWindowModel = MainWindowModel(), proxy: MainProxy = MainProxy()):
         self.__model = model
-        self.__view = MainWindowView(self, self.__model)
-        self.__proxy = MainProxy()
+        self.__view: MainWindowView = MainWindowView(self, self.__model)
+        self.__proxy = proxy
 
-    def show_view(self, contest):
-        self.__view.show_view(contest)
-
-    def default(self):
-        pass
+    def show_view(self, contest: Menu):
+        self.__model.id_contest = contest.contests.id
+        self.__view.show_view()
 
     def load_contest(self):
-        self.__model.notify("contests")
+        data = {"id_contest": self.__model.id_contest}
+        is_send, response = self.__proxy.load_to_database_contest_page(data)
+        if is_send:
+            self.__model.contest = response
 
-    def load_tasks_on_contest(self):
-        data = {
-            "list_name_file": dumps({"name_files": [task["path_test_file"] for task in self.__model.tasks]})
-        }
-        is_send, response = self.__proxy.load_to_database_json_test_file(data)
+    def load_compilation(self) -> List[dict]:
+        is_send, response = self.__proxy.load_to_database_compilation({})
+        if is_send:
+            return response
+        return []
 
-        json = response[1]["jsons_view"]
-
-        self.__model.files = json
-
-        self.__model.notify("tasks_update")
-
-    def load_answer(self):
-        data = {
-            "id_task": 0,
-            "id_team": Session().user.team.id,
-            "id_contest": self.__model.contest["id"]
-        }
+    def load_answer(self, data: dict):
+        data["id_user"] = Session().user.id
+        data["id_contest"] = self.__model.contest["id"]
         is_send, response = self.__proxy.load_to_database_answers(data)
-        main = response[1]["answers"]
+        if is_send:
+            self.__model.answers = response["answers"]
+            self.__model.menu = response["menu"]
 
-        menu = self.__model.menu
-        select_answer = []
-        if len(main) > 0:
-            for id_task in self.__model.id_list_task():
-                answer_task = list(sorted(main, key=lambda x: x["points"] and
-                                                              x["task"]["id"] == id_task, reverse=True))[0]
-                menu[id_task] = {"total": answer_task["total"],
-                                 "points": answer_task["points"]}
-                select_answer = list(filter(lambda x: x["task"]["id"] == self.__model.select_task["id"], main))
-        self.__model.select_answers = select_answer
-        self.__model.menu = menu
-
-    def load_report(self, id_report):
+    def load_report(self, id_answer: int):
         data = {
-            "id_report": id_report
+            "id_answer": id_answer
         }
         is_send, response = self.__proxy.load_to_database_json_report(data)
-        self.__model.select_report = loads(response[1])
+        if is_send:
+            self.__model.select_report = response
 
     def select_task(self, id_task):
         self.__model.select_task = id_task
 
     def send_answer(self):
-        response = {
-            "id_task": self.__model.select_task["id"]
-        }
-
-        data = {"id_team": Session().user.team.id,
-                "id_user": Session().user.id,
-                "extension_file": "py"}
+        self.__model.select_answer = {"id_contest": self.__model.contest["id"],
+                                      "id_user": Session().user.id,
+                                      "extension_file": self.__model.file["extension_file"]}
+        data = self.__model.select_answer
         try:
-            data["file"] = open(self.__model.file, "rb").read().decode("utf-8")
+            data["file"] = open(self.__model.file["file_name"], "rb").read().decode("utf-8")
         except Exception:
             pass
 
-        response["data"] = dumps(data)
-        is_send, response = self.__proxy.add_answer(response)
+        response = self.__proxy.add_answer(data)
         print(response)
-        self.load_answer()
+        self.__model.add_answer(response)
 
     def close_contest(self):
-        Session().user.team.state_contest = 2
-        json_team = Pykson().to_dict_or_list(Session().user.team)
         data = {
-            "id_team": 1,
-            "team": dumps(json_team)
+            "id_user": Session().user.id,
+            "id_contest": self.__model.id_contest
         }
-        is_send, response = self.__proxy.update_team(data)
+        self.__proxy.close_contest_to_user(data)
         self.__view.update("close_contest")
 
     def is_close_contest(self):
-        return Session().user.team.state_contest == 2
+        data = {
+            "id_user": Session().user.id,
+            "id_contest": self.__model.id_contest
+        }
+        response = self.__proxy.get_status_user(data)
+        status = StatusUser(**response)
+        return status.status != TypeStatus.GRANTED
 
     def open_package_window(self, controller):
         controller.show_view(self.__model.contest["id"])
 
-    def set_file(self, path_file):
-        self.__model.file = path_file
+    def set_select_answer(self, value: dict):
+        self.__model.select_answer = value
+
+    def set_file(self, value: dict):
+        self.__model.file = value

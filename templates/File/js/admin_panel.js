@@ -1,66 +1,100 @@
+const windowUser = document.getElementById("windowUser")
+const windowContest = document.getElementById("windowContest")
+const windowTeam = document.getElementById("windowTeam")
+
+windowContest.addEventListener("click", ()=>{
+    eel.open_window_contest()
+})
+
+windowUser.addEventListener("click", ()=>{
+    eel.open_window_user()
+})
+
+windowTeam.addEventListener("click", ()=>{
+    eel.open_window_team()
+})
+
+
+let datepickerStartInit
+
+const datapickerRu = {
+    cancel: 'Отмена',
+    clear: 'Очистить',
+    done: 'Ок',
+    months: [ 'Январь',
+              'Февраль',
+              'Март',
+              'Апрель',
+              'Май',
+              'Июнь',
+              'Июль',
+              'Август',
+              'Сентябрь',
+              'Октябрь',
+              'Ноябрь',
+              'Декабрь'],
+
+    monthsShort: ['Янв', 
+                  'Фев', 
+                  'Мар', 
+                  'Апр', 
+                  'Май', 
+                  'Июн', 
+                  'Июл', 
+                  'Авг', 
+                  'Сен', 
+                  'Окт', 
+                  'Ноя', 
+                  'Дек'],
+           
+    weekdays: ['Понедельник',
+               'Вторник',
+               'Среда',
+               'Четверг',
+               'Пятница',
+               'Суббота',
+               'Воскресенье'],
+
+    weekdaysShort: ['Вс',
+                    'Пн',
+                    'Вт',
+                    'Ср',
+                    'Чт',
+                    'Пт',
+                    'Сб',],  
+
+    weekdaysAbbrev: ['В','П','В','С','Ч','П','С']
+}
+
+const timepickerRu = {
+    cancel: 'Отмена',
+    clear: 'Очистить',
+    done: 'Ок'
+}
+
 const tabContest = document.getElementById("tabContest")
 const tabTask = document.getElementById("tabTask")
 const tabTeam = document.getElementById("tabTeam")
 
-const selectContes = document.getElementById("id_contest")
-const selectModelContes = document.getElementById("id_contest_model")
-
 const buttonAgree = document.getElementById("agreeButton")
 
-const buttonExit = document.getElementById("buttonExit")
-
-console.log(buttonExit)
-
-buttonExit.addEventListener("click", ()=>{
-    console.log(1111)
-    eel.button_exit_window()
-})
 
 
-tabContest.onclick = (e) => {
-    //eel.load_contest("all")
-}
-
-tabTask.onclick = (e) => {
-    if(!e.path[1].classList.contains("disabled"))
-        eel.load_tasks()
-}
-
-tabTeam.onclick = (e) => {
-    eel.load_teams()
-}
-
-let modelWindowContest = NaN
-let modelWindowUser = NaN
-
+let datapickerElementStart = NaN
+let datapickerElementEnd = NaN
 
 document.addEventListener('DOMContentLoaded', () => {
+    window.resizeTo(1500, 1100)
     let element = document.querySelector('.tabs');
     let instance = M.Tabs.init(element);
 
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems);
+    
+    initDatePiker()
 
-    var elems = document.querySelectorAll('.modal');
-    modelWindowContest = M.Modal.init(elems[0]);
-    modelWindowContest = M.Modal.getInstance(elems[0]);
-
-    modelWindowUser = M.Modal.init(elems[1], {onCloseEnd: closeModel});
-    modelWindowUser = M.Modal.getInstance(elems[1]);
-
-    eel.load_user()
-    eel.load_contest("all")
 });
 
-
-function createObjectToSelect(selector){
-    const data = {}
-    for(let option of selector.querySelectorAll("option")){
-        if(option.value != "")
-            data[option.innerHTML] = option.value
-    }
-    return data
-}
 
 function reverseObject(obj){
     const data = {}
@@ -70,38 +104,53 @@ function reverseObject(obj){
     return data
 }
 
-
-function loadSelectContest(contests){
-    console.log(contests)
-    selectModelContes.innerHTML = '<option value="" disabled selected>Выбрать команду</option>'
-    selectContes.innerHTML = '<option value="" disabled selected>Зарегестрированны на соревнование</option> <option value="soloTeam" disabled selected>Одиночное соревнование</option>'
-    for(let i=0; i < contests.length; i++){
-        const opt = document.createElement('option')
-        opt.value = parseInt(contests[i].id)
-        opt.innerHTML = contests[i].name_contest
-        console.log(opt)
-        if(contests[i].type == 1){
-            selectModelContes.appendChild(opt.cloneNode(true))
-        }else{
-            selectContes.appendChild(opt)
-        }
-    }
-}
-
-buttonAgree.addEventListener("click", ()=>{
-
-    if(selectModelContes.value != ""){
-        const data = {id_user: selectUser.id,
-                      id_contest: parseInt(selectModelContes.value)}
-        eel.registration_user_event(data)
-        selectModelContes.value = ""
-        modelWindowContest.close()
-    }
-})
-
 function alert(message){
      M.toast({html: message})
 }
 
+function initDatePiker(){
+    const datepickerStart = document.getElementById('datepickerStart');
+    const datepickerStop = document.getElementById('datepickerStop');
+    const timepickerStart = document.getElementById('timepickerStart');
+    const timepickerStop = document.getElementById('timepickerStop');
+    const dateNow = new Date()
+
+    datapickerElementStart = M.Datepicker.init(datepickerStart, {i18n: datapickerRu, 
+                                               onSelect(date){
+                                                   appContest.dateStart = this.date
+                                               },
+                                               format: 'dd.mm.yyyy',
+                                               minDate: dateNow,
+                                               firstDay: 1})
+    M.Timepicker.init(timepickerStart, {i18n: timepickerRu,
+                                        twelveHour: false,
+                                        onSelect(hours, min){
+                                            appContest.dateStartNotStr.setHours(hours)
+                                            appContest.dateStartNotStr.setMinutes(min)
+                                            appContest.timeStart = `${hours}:${min}`
+                                        },
+                                        default: "00:00"})
+    M.Timepicker.init(timepickerStop, {i18n: timepickerRu,
+                                        twelveHour: false,
+                                        onSelect(hours, min){
+                                            appContest.dateEndNotStr.setHours(hours)
+                                            appContest.dateEndNotStr.setMinutes(min)
+                                            appContest.timeEnd = `${hours}:${min}`
+                                        },
+                                        default: "00:00"})
+    datapickerElementEnd = M.Datepicker.init(datepickerStop, {i18n: datapickerRu,
+                                                              onSelect(date){
+                                                                   appContest.dateEnd = this.date
+                                                              },
+                                                              format: 'dd.mm.yyyy',
+                                                              minDate: dateNow,
+                                                              firstDay: 1})
+}
+
+function locationReplace(path){
+    console.log(path)
+    window.location.replace(`/${path}`);
+}
+
+eel.expose(locationReplace)
 eel.expose(alert)
-eel.expose(loadSelectContest)

@@ -1,25 +1,31 @@
-from Interfase.Subject import Subject
+from typing import List
+from Interfase.Observer import Subject, Observer
 from pykson import Pykson
-from Classes.Models.Answer import Answer
+from Classes.Models.Answer import AnswerGet
+from Classes.Models.Report import Report
 
 
 class PackageModel(Subject):
     def __init__(self):
-        self.__observer = []
-        self.__answers = []
-        self.__id_contest = None
-        self.__select_report = None
+        self.__observer: List[Observer] = []
+        self.__answers: List[AnswerGet] = []
+        self.__id_contest: int = 0
+        self.__select_report: Report = Report()
 
     @property
     def answers(self):
-        return list(map(Pykson().to_dict_or_list, self.__answers))
+        answers = []
+        for answer in self.__answers:
+            answer_target = answer.dict()
+            answer_target["date_send"] = answer_target["date_send"].isoformat()
+            answers.append(answer_target)
+        return answers
 
     @answers.setter
-    def answers(self, val):
-        if isinstance(val[0], Answer):
-            self.__answers = val
-        else:
-            self.__answers = list(map(lambda x: Pykson().from_json(x, Answer), val))
+    def answers(self, val: List[dict]):
+        self.__answers.clear()
+        for answer in val:
+            self.__answers.append(AnswerGet(**answer))
         self.notify("answers")
 
     @property
@@ -27,16 +33,16 @@ class PackageModel(Subject):
         return self.__id_contest
 
     @id_contest.setter
-    def id_contest(self, val):
+    def id_contest(self, val: int):
         self.__id_contest = val
 
     @property
     def select_report(self):
-        return self.__select_report
+        return self.__select_report.dict()
 
     @select_report.setter
-    def select_report(self, val):
-        self.__select_report = val
+    def select_report(self, val: dict):
+        self.__select_report = Report(**val)
         self.notify("select_report")
 
     def attach(self, observer):

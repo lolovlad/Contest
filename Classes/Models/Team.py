@@ -1,21 +1,36 @@
-from pykson import JsonObject, IntegerField, ObjectField, StringField, BooleanField, DateTimeField, ObjectListField
-from Classes.Models.UserToTeam import UserToTeam
+from pydantic import BaseModel
+from typing import List
 
 
-class ContestTeam(JsonObject):
-    id = IntegerField()
-    name_contest = StringField()
-    datetime_registration = DateTimeField()
-    datetime_start = DateTimeField()
-    datetime_end = DateTimeField()
-    type = IntegerField()
+class UserTeam(BaseModel):
+    id: int = 0
+    name: str = ""
+    sename: str = ""
+    secondname: str = ""
+    id_team: int = 0
 
 
-class Team(JsonObject):
-    id = IntegerField()
-    id_contest = IntegerField(default_value=0)
-    name_team = StringField(default_value="")
-    is_solo = BooleanField(default_value=False)
-    state_contest = IntegerField(default_value=0)
-    users = ObjectListField(UserToTeam)
-    contest = ObjectField(ContestTeam)
+class BaseTeam(BaseModel):
+    name_team: str = ""
+    is_solo: bool = True
+
+
+class TeamGet(BaseTeam):
+    id: int = 0
+    users: List[UserTeam] = []
+
+    class Config:
+        orm_mode = True
+
+
+class TeamPost(BaseTeam):
+    users: List[UserTeam] = []
+
+
+class TeamDelete(BaseTeam):
+    id: int = 0
+
+
+class TeamsContest(BaseModel):
+    team_in_contest: List[TeamGet] = []
+    team_not_in_contest: List[TeamGet] = []

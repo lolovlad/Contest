@@ -12,7 +12,6 @@ class PackageView(Observer, View):
         self.__name_window = "Package"
         self.__geometry = {'size': (720, 760), 'position': (300, 50)}
         self.__port = randint(8000, 8030)
-        self._create_geometry(self.__geometry)
 
     @property
     def name_window(self):

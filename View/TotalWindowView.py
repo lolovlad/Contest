@@ -14,15 +14,13 @@ class TotalWindowView(Observer, View):
         self.__name_window = "Total"
         self.__port = randint(8000, 8030)
         self.__geometry = {'size': (760, 760), 'position': (300, 50)}
-        self._create_geometry(self.__geometry)
 
     @property
     def name_window(self):
         return self.__name_window
 
     def show_view(self):
-        eel.start(self.__file_templates, mode="chrome", size=self.__geometry["size"],
-                  port=self.__port, position=self.__geometry["position"])
+        eel.locationReplace(self.__file_templates)
 
     def update(self, type_notify=None):
         if type_notify == "report_contest":

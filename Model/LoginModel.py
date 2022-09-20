@@ -1,24 +1,21 @@
-from Interfase.Subject import Subject
+from typing import List
+
+from Interfase import Observer, Subject, Model
 from Classes.Session import Session
-from pykson import Pykson
-from Classes.Models.User import User
+from Classes.Models import Login
+from Classes.Models.User import UserUpdate as User
 
 
-class LoginModel(Subject):
-    def __init__(self):
-        self.__login = None
-        self.__password = None
-        self.__error = None
-        self.__observer = []
-        self.__user = None
+class LoginModel(Subject, Model):
+    def __init__(self, user: User = User(), login: Login = Login()):
+        self.__login: Login = login
+        self.__error: str = ""
+        self.__observer: List[Observer] = []
+        self.__user: User = user
 
     @property
     def login(self):
         return self.__login
-
-    @property
-    def password(self):
-        return self.__password
 
     @property
     def user(self):
@@ -29,29 +26,25 @@ class LoginModel(Subject):
         return self.__error
 
     @error.setter
-    def error(self, val):
+    def error(self, val: str):
         self.__error = val
         self.notify()
 
     @login.setter
-    def login(self, val):
-        self.__login = val
-
-    @password.setter
-    def password(self, val):
-        self.__password = val
+    def login(self, val: dict):
+        self.__login = Login(**val)
 
     @user.setter
-    def user(self, val):
-        self.__user = Pykson().from_json(val, User)
+    def user(self, val: dict):
+        self.__user = User(**val)
         Session().user = self.__user
 
-    def attach(self, observer):
+    def attach(self, observer: Observer):
         self.__observer.append(observer)
 
-    def detach(self, observer):
+    def detach(self, observer: Observer):
         self.__observer.remove(observer)
 
-    def notify(self):
+    def notify(self, type_notify: str = None):
         for observer in self.__observer:
-            observer.update()
+            observer.update(type_notify)

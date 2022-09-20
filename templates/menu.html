@@ -7,6 +7,7 @@
     <link type="text/css" rel="stylesheet" href="./File/css/main.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="./File/css/materialize.min.css"  media="screen,projection"/>
     <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript" src="./File/js/vue.js"></script>
     <title>Menu</title>
 
     <!--Let browser know website is optimized for mobile-->
@@ -14,18 +15,29 @@
   </head>
 
   <body>
-    <nav>
+    <nav id="nav">
         <div class="nav-wrapper">
           <a href="#" class="brand-logo">Агу контест</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="" id="openTotal">Итоги конкурсов</a></li>
-            <li><a href="" id="openContest">Конкурсы</a></li>
-            <li><a class="waves-effect waves-light deep-orange accent-4 btn" id="buttonExit">Выход</a></li>
+            <li><a href="" v-on:click="OpenWindowTotal">Итоги Соревнований</a></li>
+            <li><a href="" v-on:click="openWindowContest">Соревнования</a></li>
+            <li><a class="waves-effect waves-light deep-orange accent-4 btn" v-on:click="ExitMenu">Выход</a></li>
           </ul>
         </div>
     </nav>
-    <div class="container">
+    <div class="container" id="menu">
         <div class="row" id="menuContest">
+          <div class="col s12 m4" v-for="contest in contests" v-bind:key="contest.id" v-on:click="selectRowContest(contest)">
+            <div class="card blue-grey darken-1">
+                <div v-bind:class="{ no_active: isActive(contest) }"></div>
+                <div class="card-content white-text">
+                    <span class="card-title center-align">{{contest.contests.name_contest}}</span>
+                </div>
+                <div class="card-action">
+                    <a href="#">перейти в контест</a>
+                </div>
+            </div>
+          </div>
         </div>
     </div>
     <script type="text/javascript" src="./File/js/materialize.min.js"></script>

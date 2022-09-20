@@ -1,42 +1,36 @@
-const menuContest = document.getElementById("menuContest")
-
+const appMenu = new Vue({
+    el: "#menu",
+    data: {
+        contests: [],
+        selectContest: null
+    },
+    methods: {
+        updateContests(value){
+            console.log(value)
+            this.contests.length = 0
+            for(let contest of value){
+                this.contests.push(contest)
+            }
+        },
+        selectRowContest(contest){
+            eel.user_load_contest(contest)
+        },
+        isActive(contest){
+            if(contest.contests.state_contest == 3)
+                return true
+            if(contest.state_user == 2)
+                return true
+            return false
+        }
+    }
+})
 
 function updateMenuContest(contests){
-    menuContest.innerHTML = ""
-    console.log(contests)
-    for(let i=0; i < contests.length; i++){
-        let tm = ""
-        console.log(contests[i])
-        if(contests[i].state_contest == 0 || contests[i].state_contest == 2){
-            tm = `<div class="no_active">
-            </div>`
-        }
-
-        menuContest.innerHTML += `<div class="col s12 m4">
-                                        <div class="card blue-grey darken-1">
-                                            ${tm}
-                                            <div class="card-content white-text">
-                                                <span class="card-title center-align">${contests[i].name_contest}</span>
-                                                <input value="${contests[i].id}" type="hidden">
-                                            </div>
-                                            <div class="card-action">
-                                                <a href="#" id="uploadContest">перейти в контест</a>
-                                            </div>
-                                        </div>
-                                </div>`
-        
-    }
-
-    for(menu of document.querySelectorAll("#uploadContest")){
-        menu.addEventListener("click", (event)=>{
-            const id_contest = event.path[2].querySelectorAll("input")[0].value
-            eel.user_load_contest(parseInt(id_contest))
-        })
-    }
+    appMenu.updateContests(contests)
 }
 
-eel.expose(updateMenuContest)
 
+const menuContest = document.getElementById("menuContest")
 
 document.addEventListener("DOMContentLoaded", ()=>{
     eel.load_menu_contest()
@@ -46,5 +40,11 @@ function intervalMenuContestr(){
     eel.load_menu_contest()
 }
 
-//window.setInterval(intervalMenuContestr, 10000) 
+function locationReplace(path){
+    window.location.replace(`/${path}`);
+}
+
+eel.expose(updateMenuContest)
+eel.expose(locationReplace)
+
 

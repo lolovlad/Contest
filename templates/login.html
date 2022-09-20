@@ -7,6 +7,7 @@
       <link type="text/css" rel="stylesheet" href="./File/css/materialize.min.css"  media="screen,projection"/>
       <link type="text/css" rel="stylesheet" href="./File/css/main.css"/>
       <script type="text/javascript" src="/eel.js"></script>
+      <script type="text/javascript" src="./File/js/vue.js"></script>
       <title>Login</title>
       
 
@@ -19,26 +20,26 @@
       <div class="row header">
         <h5 class="center-align header_text">Вход</h5>
       </div>
-      <div class="row">
+      <div class="row" id="app">
         <form class="col s6 offset-s3">
           <div class="row">
             <div class="input-field">
-              <input id="login" type="text" class="validate">
+              <input type="text" v-model="login">
               <label for="login">Login</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field">
-              <input id="password" type="text" class="validate">
+              <input type="password" v-model="password">
               <label for="password">Password</label>
             </div>
           </div>
           <div class="row">
-            <h5 class="left-align error_text" id="error"></h5>
+            <h5 class="left-align error_text">{{error}}</h5>
           </div>
           <div class="row">
-            <a class="waves-effect waves-light btn light-blue darken-2" id="signin" type="button">Вход</a>
-            <a class="waves-effect waves-light btn deep-orange accent-4" >Отмена</a>
+            <a class="waves-effect waves-light btn light-blue darken-2" v-on:click="setResult">Вход</a>
+            <a class="waves-effect waves-light btn deep-orange accent-4" v-on:click="clear">Отмена</a>
           </div>
         </form>
       </div>
