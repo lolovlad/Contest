@@ -1,117 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0d0c2e20-8cff-47f1-899d-cc956e664d99" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Classes/BuilderFile/TypeReport.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/Models/Contest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/Models/EducationalOrganizations.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/Models/Login.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/Models/Menu.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/Models/Message.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/Models/Report.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/Models/TaskView.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/Models/TypeNotify.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/Models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/NotyfiCollection/NotifyList.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/NotyfiCollection/NotifyType.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/NotyfiCollection/Subject.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/NotyfiCollection/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/ContestAPI.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/ContestProxy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/EducationalOrganizationsAPI.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/EducationalOrganizationsProxy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/TaskAPI.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/TaskProxy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/TeamAPI.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/TeamProxy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/UserAPI.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/UserProxy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Controller/ContestController.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Controller/TeamController.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Controller/UserController.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Controller/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Files/settings_app.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Interfase/Controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Interfase/Model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Interfase/Proxy/Contest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Interfase/Proxy/EducationalOrganizations.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Interfase/Proxy/Task.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Interfase/Proxy/Team.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Interfase/Proxy/User.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Interfase/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Model/ContestModel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Model/TeamModel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Model/UserModel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/View/ContestView.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/View/TeamView.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/View/UserView.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/File/js/vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Sort_Robot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Sort_Robot.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="0d0c2e20-8cff-47f1-899d-cc956e664d99" name="Changes" comment="beta 1.2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/BuilderFile/Cell.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/BuilderFile/Cell.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/BuilderFile/FileOutput.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/BuilderFile/FileOutput.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/BuilderFile/ReportXlsx.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/BuilderFile/ReportXlsx.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/ControllersInit.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ControllersInit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Models/Answer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/Answer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Models/Contes.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Models/Task.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/Task.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Models/Team.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/Team.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Models/TeamToUser.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Models/User.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/User.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Models/UserToTeam.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/AdminPanelAPI.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/AdminPanelProxy.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/Models/Contest.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/Contest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/Models/Login.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/Login.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/ContestAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/ContestAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/ContestProxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/ContestProxy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classes/ProxyController/LoginAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/LoginAPI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classes/ProxyController/LoginProxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/LoginProxy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/MainProxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/MainProxy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/MenuAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/MenuAPI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/MenuProxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/MenuProxy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/TaskAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/TaskAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/TaskProxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/TaskProxy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/TeamAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/TeamAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/UserAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/UserAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/UserProxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/UserProxy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classes/RequestsAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/RequestsAPI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classes/Session.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Session.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/AdminPanelController.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/LoginController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/LoginController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/MainWindowController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/MainWindowController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/MenuController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/MenuController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/PackageController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/PackageController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/Tabs/TabContest.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/Tabs/TabTask.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/Tabs/TabTeam.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/Tabs/TabUser.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/TotalWindowController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/TotalWindowController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interfase/Observer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interfase/Observer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interfase/Proxy/AdminPanel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interfase/Proxy/AdminPanel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interfase/Proxy/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interfase/Proxy/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interfase/Subject.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/NotyfiCollection/Observer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interfase/View.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interfase/View.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/AdminPanelModel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/UserController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/UserController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Files/settings_app.env" beforeDir="false" afterPath="$PROJECT_DIR$/Files/settings_app.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/ContestModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/ContestModel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/LoginModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/LoginModel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/MainWindowModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/MainWindowModel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/MenuModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/MenuModel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/PackageModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/PackageModel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/TotalWindowModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/TotalWindowModel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/AdminPanelView.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/LoginView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/LoginView.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/MainWindowView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/MainWindowView.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/MenuView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/MenuView.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/PackageView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/PackageView.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/TotalWindowView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/TotalWindowView.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/File/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/File/js/admin_panel.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/admin_panel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/File/js/create_contest.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/File/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/File/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/File/js/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/menu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/File/js/otch.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin_panel.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_panel.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/posl.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/posl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +52,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectId" id="23Xn96xbj1JBx4TcvK6fXDnKMLm" />
   <component name="ProjectViewState">
@@ -279,8 +190,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.Application" />
-        <item itemvalue="Python.RequestsAPI" />
         <item itemvalue="Python.test_reg" />
+        <item itemvalue="Python.RequestsAPI" />
         <item itemvalue="Python.LoginResourceProxy" />
         <item itemvalue="Python.LoginController" />
       </list>
@@ -333,7 +244,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655033957937</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="beta 1.2">
+      <created>1663652008111</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1663652008111</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -353,7 +271,8 @@
     <MESSAGE value="tasks" />
     <MESSAGE value="answers" />
     <MESSAGE value="beta 1.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="beta 1.0" />
+    <MESSAGE value="beta 1.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="beta 1.2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -455,36 +374,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>58</line>
-          <option name="timeStamp" value="1263" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>59</line>
-          <option name="timeStamp" value="1264" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>60</line>
-          <option name="timeStamp" value="1265" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>61</line>
-          <option name="timeStamp" value="1266" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>62</line>
-          <option name="timeStamp" value="1267" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>63</line>
-          <option name="timeStamp" value="1268" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
           <line>66</line>
           <option name="timeStamp" value="1269" />
         </line-breakpoint>
@@ -517,6 +406,71 @@
           <url>file://$PROJECT_DIR$/Model/MainWindowModel.py</url>
           <line>61</line>
           <option name="timeStamp" value="1275" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Model/ContestModel.py</url>
+          <line>95</line>
+          <option name="timeStamp" value="1276" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Model/ContestModel.py</url>
+          <line>96</line>
+          <option name="timeStamp" value="1277" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Model/ContestModel.py</url>
+          <line>99</line>
+          <option name="timeStamp" value="1281" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
+          <line>47</line>
+          <option name="timeStamp" value="1313" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
+          <line>48</line>
+          <option name="timeStamp" value="1314" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
+          <line>51</line>
+          <option name="timeStamp" value="1317" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
+          <line>50</line>
+          <option name="timeStamp" value="1318" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
+          <line>49</line>
+          <option name="timeStamp" value="1319" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
+          <line>52</line>
+          <option name="timeStamp" value="1320" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
+          <line>53</line>
+          <option name="timeStamp" value="1321" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/ProxyController/ContestAPI.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="1324" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/TotalWindowController.py</url>
+          <line>15</line>
+          <option name="timeStamp" value="1331" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/TotalWindowController.py</url>
+          <line>16</line>
+          <option name="timeStamp" value="1333" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

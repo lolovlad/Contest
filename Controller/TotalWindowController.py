@@ -13,9 +13,8 @@ class TotalWindowController:
         self.__proxy = proxy
 
     def load_total_report(self, id_contest):
-        is_send, response = self.__proxy.get_report_total(id_contest)
-        if is_send:
-            self.__model.total_report = response
+        response = self.__proxy.get_report_total(id_contest)
+        self.__model.total_report = response
 
     def load_contest(self):
         self.__view.update("contests")

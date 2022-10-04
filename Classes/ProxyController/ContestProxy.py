@@ -5,8 +5,8 @@ from functools import partial
 
 
 class ContestProxy(Contest):
-    def __init__(self, api: ContestAPI = ContestAPI()):
-        self.__api = api
+    def __init__(self):
+        self.__api: ContestAPI = ContestAPI()
         self.operations = []
 
     def get_list_contest(self):

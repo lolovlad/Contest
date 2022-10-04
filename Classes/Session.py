@@ -1,6 +1,6 @@
 from Interfase.Singleton import Singleton
-from Classes.Models.User import UserUpdate as User
+from Classes.Models.Login import Token
 
 
 class Session(metaclass=Singleton):
-    user: User = User()
+    token: Token = Token()

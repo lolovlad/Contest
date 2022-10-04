@@ -5,8 +5,8 @@ from functools import partial
 
 
 class TaskProxy(Task):
-    def __init__(self, api: TaskAPI = TaskAPI()):
-        self.__api = api
+    def __init__(self):
+        self.__api: TaskAPI = TaskAPI()
         self.operations = []
 
     def post_task(self, task: TaskPostInServer):

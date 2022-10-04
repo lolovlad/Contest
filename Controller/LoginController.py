@@ -24,12 +24,12 @@ class LoginController(Controller):
         self.__login_proxy.login(self.__model.login.dict())
         response: dict = self.__login_proxy.send()
         if response.get("message") is None:
-            self.__model.user = response
-            Session().user = self.__model.user
-            if self.__model.user.type == 1:
+            self.__model.token = response
+            Session().token = self.__model.token
+            if self.__model.token.type_user == 1:
                 self.__controllers.user = UserController()
                 self.__controllers.user.show_view()
-            elif self.__model.user.type == 2:
+            elif self.__model.token.type_user == 2:
                 self.__controllers.menu = MenuController()
                 self.__controllers.menu.show_view()
         else:

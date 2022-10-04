@@ -15,9 +15,6 @@ class LoginProxy(Login):
         self.operations.append(func)
 
     def send(self):
-        try:
-            responses = list(map(lambda f: f(), self.operations))
-            self.operations = []
-            return responses[-1]
-        except Exception:
-            return [(False, "ошибка в отправке данных")]
+        responses = list(map(lambda f: f(), self.operations))
+        self.operations = []
+        return responses[-1]

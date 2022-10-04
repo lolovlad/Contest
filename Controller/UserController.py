@@ -8,10 +8,10 @@ import eel
 
 
 class UserController(Controller):
-    def __init__(self, model: UserModel = UserModel(), proxy: UserProxy = UserProxy()):
+    def __init__(self, model: UserModel = UserModel()):
         self.__model = model
         self.__view: UserView = UserView(self, self.__model)
-        self.__proxy = proxy
+        self.__proxy: UserProxy = UserProxy()
 
     def show_view(self):
         self.__view.show_view()

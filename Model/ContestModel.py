@@ -79,12 +79,13 @@ class ContestModel(Subject):
                 break
         self.notify(TypeNotify.CONTEST_TABLE)
 
-    def update_contest(self, val):
+    def update_contest(self, val, if_notify=True):
         for i, contest in enumerate(self.__contests):
             if contest.id == val["id"]:
                 self.__contests[i] = ContestGet(**val)
                 break
-        self.notify(TypeNotify.CONTEST_TABLE)
+        if if_notify:
+            self.notify(TypeNotify.CONTEST_TABLE)
 
     @property
     def select_task(self) -> TaskPut:
@@ -111,7 +112,7 @@ class ContestModel(Subject):
 
     def add_task(self, val):
         self.__select_contest.tasks.append(TaskGet(**val))
-        self.update_contest(self.json_select_contest())
+        self.update_contest(self.json_select_contest(), False)
         self.notify(TypeNotify.TASK_TABLE)
 
     def delete_task(self, val):
@@ -119,7 +120,7 @@ class ContestModel(Subject):
             if task.id == val["id"]:
                 self.__select_contest.tasks.pop(i)
                 break
-        self.update_contest(self.json_select_contest())
+        self.update_contest(self.json_select_contest(), False)
         self.notify(TypeNotify.TASK_TABLE)
 
     def update_task(self, val):
@@ -127,7 +128,7 @@ class ContestModel(Subject):
             if task.id == val["id"]:
                 self.__select_contest.tasks[i] = TaskGet(**val)
                 break
-        self.update_contest(self.json_select_contest())
+        self.update_contest(self.json_select_contest(), False)
         self.notify(TypeNotify.TASK_TABLE)
 
     def tasks(self):

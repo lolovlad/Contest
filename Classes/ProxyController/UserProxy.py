@@ -2,11 +2,12 @@ from Interfase.Proxy.User import User
 from Classes.ProxyController.UserAPI import UserAPI
 from Classes.Models.User import UserPost, UserUpdate
 from functools import partial
+from Classes.Models.Login import Token
 
 
 class UserProxy(User):
-    def __init__(self, api: UserAPI = UserAPI()):
-        self.__api = api
+    def __init__(self):
+        self.__api: UserAPI = UserAPI()
         self.operations = []
 
     def get_users(self):
