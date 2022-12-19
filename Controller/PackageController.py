@@ -8,10 +8,10 @@ import eel
 
 
 class PackageController:
-    def __init__(self, model: PackageModel = PackageModel(), proxy: MainProxy = MainProxy()):
+    def __init__(self, model: PackageModel = PackageModel()):
         self.__model = model
         self.__view: PackageView = PackageView(self, self.__model)
-        self.__proxy = proxy
+        self.__proxy: MainProxy = MainProxy()
         self.__model.attach(self.__view)
 
     def load_answer_package(self):

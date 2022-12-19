@@ -1,0 +1,107 @@
+{% extends 'base_admin.html' %}
+{% block nav_content %}{% endblock %}
+{% block content %}
+{% raw %}
+<div id="user">
+    <div class="row">
+      <div class="col s6">
+        <div class="table">
+          <table class="centered highlight" id="tabel">
+            <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>Логин</th>
+                  <th>Фамилия</th>
+                  <th>Имя</th>
+                  <th>Отчество</th>
+                  <th>Класс</th>
+                  <th>Tип</th>
+              </tr>
+            </thead>
+    
+            <tbody class="centered">
+              <tr v-for="user in users" v-bind:key="user.id" v-on:click="selectRowUser(user)">
+                <td>{{user.id}}</td>
+                <td>{{user.login}}</td>
+                <td>{{user.sename}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.secondname}}</td>
+                <td>{{user.learning_stage | isNoneFild}}</td>
+                <td>{{user.type | typeUser}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col s6">
+        <div class="container">
+          <div class="row form-table">
+            <form class="col s10 offset-s1" id="formUser">
+              <div class="row">
+                <div class="input-field">
+                  <input id="sename" type="text" placeholder="Фамилия" v-model="sename">
+                  <label for="sename">Фамилия</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field">
+                  <input id="name" type="text" placeholder="Имя" v-model="name">
+                  <label for="name">Имя</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field">
+                  <input id="secondname" type="text" placeholder="Отчество" v-model="secondname">
+                  <label for="secondname">Отчество</label>
+                </div>
+              </div>
+              <div class="row">
+                <select class="browser-default" v-model="typeEdu">
+                  <option v-for="typeEdu in selectTypeEdu" :value="typeEdu.value">{{typeEdu.text}}</option>
+                </select>
+              </div>
+              <div class="row">
+                <select class="browser-default" v-model="placeOfStudy">
+                  <option v-for="edu in targetEdu" :value="edu.value">{{edu.text}}</option>
+                </select>
+              </div>
+              <div class="row">
+                <select class="browser-default" v-model="learningStage">
+                  <option v-for="learningStage in targetLearningStage" :value="learningStage.value">{{learningStage.text}}</option>
+                </select>
+              </div>
+              <div class="row">
+                <div class="input-field">
+                  <input id="login" type="text" placeholder="Логин" v-model="login">
+                  <label for="login">Логин</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field">
+                  <input id="password" type="text" class="validate" placeholder="Логин" v-model="password">
+                  <label for="password">Пароль</label>
+                </div>
+              </div>
+              <div class="row">
+                <select id="type" class="browser-default" v-model="type">
+                  <option v-for="typeUser in selectTypeUser" :value="typeUser.value">{{typeUser.text}}</option>
+                </select>
+              </div>
+              <div class="row">
+                <h5 class="left-align error_text">{{error}}</h5>
+              </div>
+              <div class="row">
+                <a class="waves-effect waves-light btn light-blue darken-2" v-on:click="addUser" :disabled="isSelect">Добавить</a>
+                <a class="waves-effect waves-light btn light-blue darken-2" v-on:click="updateUser" :disabled="!isSelect">Обновить</a>
+                <a class="waves-effect waves-light btn deep-orange accent-4" v-on:click="deleteUser" :disabled="!isSelect">Удалить</a>
+                <a class="waves-effect waves-light btn light-blue darken-2" v-on:click="clearForm">Очистить</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="../File/js/user.js"></script>
+  {% endraw %}
+  {% endblock %}

@@ -258,7 +258,7 @@ const appMain = new Vue({
             eel.open_window_menu()
         },
         examplePrint(val){
-            const new_val = val.replace("\n", "<br />")
+            const new_val = val.replaceAll("\n", "<br />")
             return new_val
         }
     },

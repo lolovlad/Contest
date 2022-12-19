@@ -8,10 +8,10 @@ import eel
 
 
 class TeamController(Controller):
-    def __init__(self, model: TeamModel = TeamModel(), proxy: TeamProxy = TeamProxy()):
+    def __init__(self, model: TeamModel = TeamModel()):
         self.__model = model
         self.__view: TeamView = TeamView(self, self.__model)
-        self.__proxy = proxy
+        self.__proxy: TeamProxy = TeamProxy()
 
     def show_view(self):
         self.__view.show_view()

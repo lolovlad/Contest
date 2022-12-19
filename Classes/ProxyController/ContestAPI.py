@@ -26,7 +26,7 @@ class ContestAPI(Contest):
         return self.__api.put_token("contests/registration_users", contest.dict())
 
     def contests_by_user_id(self, id_user: int) -> List[dict]:
-        return self.__api.get(f"contests/contests_by_user_id/{id_user}", {})
+        return self.__api.get_toke(f"contests/contests_by_user_id/{id_user}", {})
 
     def contest_page(self, id_contest: int) -> dict:
         return self.__api.get(f"contests/contest_page/{id_contest}", {})

@@ -7,10 +7,10 @@ from Model.TotalWindowModel import TotalWindowModel
 
 
 class TotalWindowController:
-    def __init__(self, model: TotalWindowModel = TotalWindowModel(), proxy: ContestProxy = ContestProxy()):
+    def __init__(self, model: TotalWindowModel = TotalWindowModel()):
         self.__model = model
         self.__view = TotalWindowView(self, self.__model)
-        self.__proxy = proxy
+        self.__proxy: ContestProxy = ContestProxy()
 
     def load_total_report(self, id_contest):
         response = self.__proxy.get_report_total(id_contest)

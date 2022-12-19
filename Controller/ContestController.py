@@ -12,13 +12,11 @@ import eel
 
 
 class ContestController(Controller):
-    def __init__(self, model: ContestModel = ContestModel(),
-                 proxy_contest: ContestProxy = ContestProxy(),
-                 proxy_task: TaskProxy = TaskProxy()):
+    def __init__(self, model: ContestModel = ContestModel()):
         self.__model = model
         self.__view: ContestView = ContestView(self, self.__model)
-        self.__proxy_contest = proxy_contest
-        self.__proxy_task = proxy_task
+        self.__proxy_contest: ContestProxy = ContestProxy()
+        self.__proxy_task: TaskProxy = TaskProxy()
 
     def show_view(self):
         self.__view.show_view()

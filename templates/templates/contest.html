@@ -1,0 +1,333 @@
+{% extends 'base_admin.html' %}
+{% block nav_content %}
+{% raw %}
+<ul class="tabs tabs-transparent" id="navApp">
+    <li class="tab" id="tabContest"><a href="#contest">Добавление нового события</a></li>
+    <li class="tab" id="tabTask" v-bind:class="{ disabled: !isSelect }" v-on:click="loadsTasks"><a href="#task">Редактированние события</a></li>
+</ul>
+{% endraw %}
+{% endblock %}
+{% block content %}
+{% raw %}
+
+<div id="contest">
+    <div class="row">
+      <div class="col s7">
+        <div class="table">
+          <table class="centered highlight" id="tabel">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Название соревнования</th>
+                <th>Тип соревнования</th>
+                <th>Дата регистрации</th>
+                <th>Дата проведения</th>
+                <th>Дата окончания</th>
+                <th>Статус</th>
+              </tr>
+            </thead>
+    
+            <tbody class="centered" id="tbodyContest">
+              <tr v-for="contest in contests" v-bind:key="contest.id" v-on:click="selectRowContest(contest)">
+                <td>{{contest.id}}</td>
+                <td>{{contest.name_contest}}</td>
+                <td>{{contest.type | typeSelectContest}}</td>
+                <td>{{contest.datetime_registration}}</td>
+                <td>{{contest.datetime_start}}</td>
+                <td>{{contest.datetime_end}}</td>
+                <td>{{contest.state_contest | stateSelectContest}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col s5">
+        <div class="container">
+          <div class="row">
+            <form class="col s12 form-table">
+              <div class="row">
+                <div class="input-field">
+                  <input id="nameContest" type="text" placeholder="Название соревнования" v-model="nameContest">
+                  <label for="nameContest">Название соревнования</label>
+                </div>
+              </div>
+              <div class="row">
+                <select class="browser-default" v-model="type" :disabled="!isSelect">
+                  <option v-for="typeContest in selectTypeContest" :value="typeContest.value">{{typeContest.text}}</option>
+                </select>
+              </div>
+              <div class="row">
+                <select class="browser-default" v-model="stateContest">
+                  <option v-for="stateContest in selectStateContest" :value="stateContest.value">{{stateContest.text}}</option>
+                </select>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <input type="text" id="datepickerStart" placeholder="Дата начала" v-model="dateStart">
+                  <label for="datepickerStart">Дата начала</label>
+                </div>
+                <div class="input-field col s6">
+                  <input type="text" id="timepickerStart" placeholder="Время начала" v-model="timeStart">
+                  <label for="timepickerStart">Время начала</label>
+                </div>
+              </div>
+              <div class="row" style="position: relative;">
+                <div class="input-field col s6">
+                  <input type="text" id="datepickerStop" placeholder="Дата конца" v-model="dateEnd">
+                  <label for="datepickerStop">Дата конца</label>
+                </div>
+                <div class="input-field col s6">
+                  <input type="text" id="timepickerStop" placeholder="Время конца" v-model="timeEnd">
+                  <label for="timepickerStop">Время конца</label>
+                </div>
+              </div>
+              <div class="row">
+                <h5 class="left-align error_text" id="error">{{error}}</h5>
+              </div>
+              <div class="row">
+                <a class="waves-effect waves-light btn light-blue darken-2" v-on:click="addContest" :disabled="!isSelect">Добавить</a>
+                <a class="waves-effect waves-light btn light-blue darken-2" v-on:click="updateContest" :disabled="isSelect">Обновить</a>
+                <a class="waves-effect waves-light btn deep-orange accent-4" v-on:click="deleteContest" :disabled="isSelect">Удалить</a>
+                <a class="waves-effect waves-light btn light-blue darken-2" v-on:click="clearForm">Очистить</a>
+              </div>
+              <div class="row">
+                <a class="waves-effect waves-light btn" v-on:click="contestReport" v-bind:class="{ disabled: isSelect }"><i class="material-icons left">cloud_download</i> Сгенерировать отчет</a>
+                <a class="waves-effect waves-light btn" v-on:click="registrationUsers" v-bind:class="{ disabled: isSelect }"><i class="material-icons left">add_box</i>Регестрация участников</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="teamModel">
+      <div class="modal-content" >
+        <h4>Выбирите участников</h4>
+        <div class="row" v-if="!isTeam">
+          <div class="col s6">
+            <div class="table">
+              <table class="centered highlight" id="tabel">
+                <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Фамилия</th>
+                      <th>Имя</th>
+                      <th>Отчество</th>
+                  </tr>
+                </thead>
+        
+                <tbody class="centered">
+                  <tr v-for="user in selectUsers" v-bind:key="user.id" v-on:click="selectRowUserContest(user)">
+                    <td>{{user.id}}</td>
+                    <td>{{user.sename}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.secondname}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col s6">
+            <div class="container" id="listUsers">
+              <div class="collection">
+                <a href="#!" class="collection-item" v-for="user in users" v-bind:key="user.id" v-on:click="deleteUserContest(user)">{{user.sename}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" v-else>
+          <div class="col s6">
+            <div class="table">
+              <table class="centered highlight" id="tabel">
+                <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Название команды</th>
+                      <th>Участники команды</th>
+                  </tr>
+                </thead>
+        
+                <tbody class="centered">
+                  <tr v-for="team in selectTeams" v-bind:key="team.id" v-on:click="selectRowTeamContest(team)">
+                    <td>{{team.id}}</td>
+                    <td>{{team.name_team}}</td>
+                    <td>{{team.users | convertUsers}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col s6">
+            <div class="container" id="listUsers">
+              <div class="collection">
+                <a href="#!" class="collection-item" v-for="team in teams" v-bind:key="team.id" v-on:click="deleteTeamContest(team)">{{team.name_team}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect light-blue darken-2 btn" v-on:click="agreaRegUsers">Подтвердить</a>
+      </div>
+    </div>
+
+
+    <div id="modalSelectReport" class="modal">
+      <div class="modal-content">
+        <h4>Создание отчета</h4>
+        <div class="row">
+          <form class="col s12 form-table">
+            <div class="row">
+              <div class="col s6 file-field input-field">
+                <div class="btn select_file" v-on:click="openPathFile">
+                    <span>Путь к файлу</span>
+                    <input type="hidden">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path" type="text" v-model="genereteReport.pathFile">
+                </div>
+              </div>
+              <div class="input-field col s6">
+                <input type="text" placeholder="Название файла" v-model="genereteReport.nameFile">
+                <label for="timepickerStart">Название файла</label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="row">
+          <div class="col s4" 
+          v-for="typeRep in typeReport" 
+          v-bind:key="typeRep" 
+          v-on:click="selectTypeReport(typeRep)">
+            <div class="type__report z-depth-3" :class="isSelectedTypeReport(typeRep)">
+              <h2 class="center">
+                <i class="material-icons large">insert_drive_file</i>
+              </h2>
+              <h5 class="center">
+                Формат {{typeRep}}
+              </h5>
+            </div>
+          </div>          
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect light-blue darken-2 btn" v-on:click="agreaReport">Подтвердить</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="task">
+    <div class="row">
+      <div class="col s6">
+        
+        <div class="card blue-grey darken-1" v-for="task in tasks" v-bind:key="task.id" v-on:click="selectRowTask(task)">
+          <div class="card-content white-text">
+            <span class="card-title">{{task.name_task}}</span>
+            <p>Cложность: {{task.type_task | typeTaskFilter}}</p>
+            <p>Тип входных данных: {{task.type_input | typeInputFilter}}</p>
+            <p>Тип выходных данных: {{task.type_output | typeOutputFilter}}</p>
+            <p>Краткое писание: {{task.description | shortDescription}}</p>
+            <p>Название файла: {{task.path_test_file}}</p>
+          </div>
+          <div class="card-action">
+            <a href="#">Время: {{task.time_work}} секунда</a>
+            <a href="#">Память: {{task.size_raw}} Mb</a>
+            <a href="#">Количество попыток: {{task.number_shipments}}</a>
+          </div>
+        </div>
+
+      </div>
+      <div class="col s6">
+        <div class="container">
+          <div class="row">
+            <form class="col s12 form-table">
+              <div class="row">
+                <div class="col s6">
+                  <select class="browser-default" v-model="timeWork">
+                    <option v-for="typeTimeWork in selectTimeWork" :value="typeTimeWork.value">{{typeTimeWork.text}}</option>
+                  </select>
+                </div>
+                <div class="col s6">
+                  <label>Количество доступной памяти: {{sizeRaw}} Mb</label>
+                  <div class="input-field">
+                      <input type="range" min="32" max="1024" v-model="sizeRaw"/>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s6">
+                  <select class="browser-default" v-model="typeInput">
+                    <option v-for="selTypeInput in selectTypeInput" :value="selTypeInput.value">{{selTypeInput.text}}</option>
+                  </select>
+                </div>
+                <div class="col s6">
+                  <select class="browser-default" v-model="typeOutput">
+                    <option v-for="selTypeOutput in selectTypeOutput" :value="selTypeOutput.value">{{selTypeOutput.text}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field">
+                  <input id="nameTest" type="text" placeholder="Название задания" v-model="nameTask">
+                  <label for="nameTest">Название задания</label>
+                </div>
+              </div>
+              <div class="row">
+                <select id="type_task" class="browser-default" v-model="typeTask">
+                  <option v-for="selTypeTask in selectTypeTask" :value="selTypeTask.value">{{selTypeTask.text}}</option>
+              </select>
+              </div>
+              <div class="row">
+                <div class="input-field">
+                  <textarea id="description" class="materialize-textarea" placeholder="Описание" v-model="description"></textarea>
+                  <label for="description">Описание</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field">
+                  <input id="descriptionInput" type="text" placeholder="Формат ввода" v-model="descriptionInput">
+                  <label for="descriptionInput">Формат ввода</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field">
+                  <input id="descriptionOutput" type="text" placeholder="Формат вывода" v-model="descriptionOutput">
+                  <label for="descriptionOutput">Формат вывода</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="file-field input-field">
+                    <div class="btn select_file" id="test_file" v-on:click="openFile">
+                        <span>JSON тестовый файл</span>
+                        <input type="hidden">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path" type="text" v-model="pathTestFile">
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+                <label>Количество доступных попыток: {{numberShipments}}</label>
+                  <div class="input-field">
+                      <input id="rowSize" type="range" min="10" max="200" v-model="numberShipments"/>
+                  </div>
+              </div>
+              <div class="row">
+                  <h5 class="left-align error_text" id="error">{{error}}</h5>
+              </div>
+              <div class="row">
+                  <a class="waves-effect waves-light light-blue darken-2 btn" v-on:click="addTask" :disabled="isSelect">Добавить</a>
+                  <a class="waves-effect waves-light light-blue darken-2 btn" v-on:click="updateTask" :disabled="!isSelect">Обновить</a>
+                  <a class="waves-effect waves-light deep-orange accent-4 btn" v-on:click="deleteTask" :disabled="!isSelect">Удалить</a>
+                  <a class="waves-effect waves-light light-blue darken-2 btn" v-on:click="clearForm">Очистить</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="../File/js/contest.js"></script>
+  <script type="text/javascript" src="../File/js/task.js"></script>
+{% endraw %}
+{% endblock %}

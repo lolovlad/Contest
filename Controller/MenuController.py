@@ -1,5 +1,5 @@
 import requests
-from Classes.ProxyController.MenuProxy import MenuProxy
+from Classes.ProxyController.ContestProxy import ContestProxy
 from Classes.Session import Session
 from View.MenuView import MenuView
 from json import dumps
@@ -8,10 +8,10 @@ from Model.MenuModel import MenuModel
 
 
 class MenuController:
-    def __init__(self, model: MenuModel = MenuModel(), proxy: MenuProxy = MenuProxy()):
+    def __init__(self, model: MenuModel = MenuModel()):
         self.__model: MenuModel = model
         self.__view: MenuView = MenuView(self, self.__model)
-        self.__proxy: MenuProxy = proxy
+        self.__proxy: ContestProxy = ContestProxy()
 
     def show_view(self):
         self.__view.show_view()
@@ -20,10 +20,8 @@ class MenuController:
         pass
 
     def load_contest(self):
-        data = {"id_user": Session().user.id}
-        is_send, response = self.__proxy.load_to_database_contest(data)
-        if is_send:
-            self.__model.contests = response
+        response = self.__proxy.contests_by_user_id(0)
+        self.__model.contests = response
 
     def get_select_contest(self, id_contest):
         return self.__model.select_contest(id_contest)
