@@ -1,0 +1,25 @@
+{
+  "name": "contest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lolovlad/Contest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lolovlad/Contest/issues"
+  },
+  "homepage": "https://github.com/lolovlad/Contest#readme",
+  "devDependencies": {
+    "electron": "^22.1.0"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-upload": "^36.0.1"
+  }
+}

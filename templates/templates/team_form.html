@@ -1,0 +1,77 @@
+{% extends 'base_admin.html' %}
+{% block nav_content %}{% endblock %}
+{% block content %}
+{% raw %}
+<div id="team">
+    <div class="col s12">
+        <div class="container">
+          <div class="row">
+            <form class="col s10 offset-s1" id="teamForm">
+              <div class="row">
+                <div class="input-field">
+                  <input id="name_team" type="text" placeholder="Имя команды" v-model="team.name_team">
+                  <label for="name_team">Имя команды</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="collection">
+                  <a href="#!" class="collection-item" v-for="user in team.users" v-bind:key="user.id">{{user.sename}}</a>
+                </div>
+                <a class="waves-effect waves-light btn" id="selectUsers" v-on:click="openViewUsers">Выбирите участников</a>
+              </div>
+              <div class="row">
+                <h5 class="left-align error_text" id="error">{{error}}</h5>
+              </div>
+              <div class="row">
+                <a class="waves-effect waves-light light-blue darken-2 btn" :disabled="modeUpdate || notActive" v-on:click="addTeam">Добавить</a>
+                <a class="waves-effect waves-light light-blue darken-2 btn" :disabled="!modeUpdate || notActive" v-on:click="updateTeam">Сохранить</a>
+                <a class="waves-effect waves-light btn light-blue darken-2">Очистить</a>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+    <div id="modalSelectUser" class="modal">
+        <div class="modal-content">
+          <h4>Выбирите участников</h4>
+          <div class="row">
+            <div class="col s6">
+              <div class="table">
+                <table class="centered highlight" id="tabel">
+                  <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Фамилия</th>
+                        <th>Имя</th>
+                        <th>Отчество</th>
+                    </tr>
+                  </thead>
+          
+                  <tbody class="centered">
+                    <tr v-for="user in selectUsers" v-bind:key="user.id" v-on:click="selectRowUserTeam(user)">
+                      <td>{{user.id}}</td>
+                      <td>{{user.sename}}</td>
+                      <td>{{user.name}}</td>
+                      <td>{{user.secondname}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col s6">
+              <div class="container" id="listUsers">
+                <div class="collection">
+                  <a href="#!" class="collection-item" v-for="user in team.users" v-bind:key="user.id" v-on:click="deleteUserTeam(user)">{{user.sename}}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect light-blue darken-2 btn" id="agreeButtonUser">Подтвердить</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../File/js/team.js"></script>
+{% endraw %}
+{% endblock %}

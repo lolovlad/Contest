@@ -1,0 +1,93 @@
+{% extends 'base_admin.html' %}
+{% block content %}
+{% raw %}
+<div id="settings" style="margin-top: 45px;">
+    <div class="col s12">
+        <div class="container">
+            <div class="row">
+                <form class="col s12 form-table">
+                    <div class="row">
+                        <div class="col s6">
+                          <select class="browser-default" v-model="settings.time_work">
+                            <option v-for="typeTimeWork in selectTimeWork" :value="typeTimeWork.value">{{typeTimeWork.text}}</option>
+                          </select>
+                        </div>
+                        <div class="col s6">
+                          <label>Количество доступной памяти: {{settings.size_raw}} Mb</label>
+                          <div class="input-field">
+                              <input type="range" min="32" max="1024" v-model="settings.size_raw"/>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                          <select class="browser-default" v-model="settings.type_input">
+                            <option v-for="selTypeInput in selectTypeInput" :value="selTypeInput.value">{{selTypeInput.text}}</option>
+                          </select>
+                        </div>
+                        <div class="col s6">
+                          <select class="browser-default" v-model="settings.type_output">
+                            <option v-for="selTypeOutput in selectTypeOutput" :value="selTypeOutput.value">{{selTypeOutput.text}}</option>
+                          </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label>Количество доступных попыток: {{settings.number_shipments}}</label>
+                          <div class="input-field">
+                              <input id="rowSize" type="range" min="10" max="200" v-model="settings.number_shipments"/>
+                          </div>
+                    </div>
+                    <div class="row">
+                      <a class="waves-effect waves-light light-blue darken-2 btn" v-on:click="openAddFileWindow()">Открыть файловую систему</a>
+                    </div>
+                    <div class="row">
+                        <a class="waves-effect waves-light light-blue darken-2 btn" v-on:click="updateSettings()">Обновить</a>
+                        <a class="waves-effect waves-light light-blue darken-2 btn">Очистить</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalAddFilse" class="modal">
+      <div class="modal-content">
+        <h4>Добавить файлы</h4>
+        <div class="row">
+          <form class="col s12 form-table">
+            <div class="row">
+              <div class="file-field input-field">
+                  <div class="btn select_file" id="test_file" v-on:click="openFile">
+                      <span>JSON тестовый файл</span>
+                      <input type="hidden">
+                  </div>
+                  <div class="file-path-wrapper">
+                      <input class="file-path" type="text" v-model="filseTest.pathTestFile">
+                  </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="row">
+          <a class="waves-effect waves-light btn" v-on:click="addFileInList"><i class="material-icons right">add</i>Добавить файлы</a>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <ul class="collection">
+              <li class="collection-item" v-for="(nameFile, index) in filseTest.listNameFilse" v-bind:key="index">
+                <div>
+                  {{nameFile}}<a href="#!" class="secondary-content" v-on:click="deleteFileInList(index)"><i class="material-icons">close</i></a>
+                </div>
+              </li>
+            </ul>
+          </div>          
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect light-blue darken-2 btn" v-on:click="closeModelWindowAddFile()">Закрыть</a>
+      </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="../File/js/settings.js"></script>
+{% endraw %}
+{% endblock %}

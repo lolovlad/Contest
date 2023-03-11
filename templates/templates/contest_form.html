@@ -1,0 +1,63 @@
+{% extends 'base_admin.html' %}
+{% block content %}
+{% raw %}
+
+<div id="contest">
+    <div class="container">
+          <div class="row">
+            <form class="col s12 form-table">
+              <div class="row">
+                <div class="input-field">
+                  <input id="nameContest" type="text" placeholder="Название соревнования" v-model="contest.name_contest">
+                  <label for="nameContest">Название соревнования</label>
+                </div>
+              </div>
+              <div class="row">
+                <select class="browser-default" v-model="contest.type" :disabled="updateMode">
+                  <option v-for="typeContest in selectTypeContest" :value="typeContest.value">{{typeContest.text}}</option>
+                </select>
+              </div>
+              <div class="row">
+                <select class="browser-default" v-model="contest.state_contest">
+                  <option v-for="stateContest in selectStateContest" :value="stateContest.value">{{stateContest.text}}</option>
+                </select>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <input type="text" id="datepickerStart" placeholder="Дата начала">
+                  <label for="datepickerStart">Дата начала</label>
+                </div>
+                <div class="input-field col s6">
+                  <input type="text" id="timepickerStart" placeholder="Время начала" v-model="timeStart">
+                  <label for="timepickerStart">Время начала</label>
+                </div>
+              </div>
+              <div class="row" style="position: relative;">
+                <div class="input-field col s6">
+                  <input type="text" id="datepickerStop" placeholder="Дата конца">
+                  <label for="datepickerStop">Дата конца</label>
+                </div>
+                <div class="input-field col s6">
+                  <input type="text" id="timepickerStop" placeholder="Время конца" v-model="timeEnd">
+                  <label for="timepickerStop">Время конца</label>
+                </div>
+              </div>
+              <div class="row">
+                <h5 class="left-align error_text" id="error">{{error}}</h5>
+              </div>
+              <div class="row">
+                <a class="waves-effect waves-light btn light-blue darken-2" :disabled="updateMode" v-on:click="addContest">Добавить</a>
+                <a class="waves-effect waves-light btn light-blue darken-2" :disabled="!updateMode" v-on:click="updateContest">Сохранить</a>
+                <a class="waves-effect waves-light btn light-blue darken-2" >Очистить</a>
+              </div>
+              <!--<div class="row">
+                <a class="waves-effect waves-light btn" v-on:click="contestReport" v-bind:class="{ disabled: isSelect }"><i class="material-icons left">cloud_download</i> Сгенерировать отчет</a>
+                <a class="waves-effect waves-light btn" v-on:click="registrationUsers" v-bind:class="{ disabled: isSelect }"><i class="material-icons left">add_box</i>Регестрация участников</a>
+              </div>-->
+            </form>
+          </div>
+        </div>
+</div>
+<script type="text/javascript" src="../File/js/contest.js"></script>
+{% endraw %}
+{% endblock %}

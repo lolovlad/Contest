@@ -1,0 +1,21 @@
+{% extends 'base_user.html' %}
+{% block content %}
+{% raw %}
+<div class="container" id="menu">
+    <div class="row" id="menuContest">
+      <div class="col s12 m4" v-for="contest in contests" v-bind:key="contest.id" v-on:click="selectRowContest(contest)">
+        <div class="card blue-grey darken-1">
+            <div v-bind:class="{ no_active: !contest.is_view }"></div>
+            <div class="card-content white-text">
+                <span class="card-title center-align">{{contest.name_contest}}</span>
+            </div>
+            <div class="card-action">
+                <a href="#">перейти в контест</a>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+<script type="text/javascript" src="../File/js/userVue/menu.js"></script>
+{% endraw %}
+{% endblock %}

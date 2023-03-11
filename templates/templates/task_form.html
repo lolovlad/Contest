@@ -1,0 +1,43 @@
+{% extends 'base_admin.html' %}
+{% block content %}
+{% raw %}
+<div id="task" style="margin-top: 45px;">
+    <div class="row">
+          <div class="container" style="margin-top: 60px;">
+              <div class="row">
+                  <div class="col s12">
+                      <div class="input-field">
+                          <input id="nameTest" type="text" placeholder="Название задания" v-model="task.name_task">
+                          <label for="nameTest">Название задания</label>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                <h5>Задание</h5>
+                <textarea name="content" id="contentTask"></textarea>
+              </div>
+              <div class="row">
+                <h5>Формат входных данных</h5>
+                <textarea name="content_input" id="contentInput"></textarea>
+              </div>
+              <div class="row">
+                <h5>Формат выходных данных</h5>
+                <textarea name="content_output" id="contentOutput"></textarea>
+              </div>
+              <div class="row">
+                <select id="type_task" class="browser-default" v-model="task.type_task">
+                  <option v-for="selTypeTask in selectTypeTask" :value="selTypeTask.value">{{selTypeTask.text}}</option>
+                </select>
+              </div>
+              <div class="row">
+                <a class="waves-effect waves-light light-blue darken-2 btn" :disabled="updateMode" v-on:click="addTask">Добавить</a>
+                <a class="waves-effect waves-light light-blue darken-2 btn" :disabled="!updateMode" v-on:click="updateTask">Обновить</a>
+              </div>
+          </div>
+    </div>
+</div>
+<script type="text/javascript" src="../File/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="../File/js/tineInit.js"></script>
+<script type="text/javascript" src="../File/js/task.js"></script>
+{% endraw %}
+{% endblock %}

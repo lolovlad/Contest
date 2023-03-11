@@ -1,0 +1,73 @@
+{% extends 'base_admin.html' %}
+{% block nav_content %}{% endblock %}
+{% block content %}
+{% raw %}
+<div id="user">
+    <div class="container">
+      <div class="row form-table">
+        <form class="col s10 offset-s1" id="formUser">
+          <div class="row">
+            <div class="input-field">
+              <input id="sename" type="text" placeholder="Фамилия"  v-model="userFilde.sename">
+              <label for="sename">Фамилия</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field">
+              <input id="name" type="text" placeholder="Имя" v-model="userFilde.name">
+              <label for="name">Имя</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field">
+              <input id="secondname" type="text" placeholder="Отчество" v-model="userFilde.secondname">
+              <label for="secondname">Отчество</label>
+            </div>
+          </div>
+          <div class="row">
+            <select class="browser-default" @change="switchSelectEdu($event)" v-model="userFilde.data.type_education">
+              <option v-for="typeEdu in selectTypeEdu" :value="typeEdu.value">{{typeEdu.text}}</option>
+            </select>
+          </div>
+          <div class="row">
+            <select class="browser-default"  v-model="userFilde.data.name_organization">
+              <option v-for="edu in targetEdu" :value="edu.value">{{edu.text}}</option>
+            </select>
+          </div>
+          <div class="row">
+            <select class="browser-default"  v-model="userFilde.data.learning_stage">
+              <option v-for="learningStage in targetLearningStage" :value="learningStage.value">{{learningStage.text}}</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="input-field">
+              <input id="login" type="text" placeholder="Логин" v-model="userFilde.login">
+              <label for="login">Логин</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field">
+              <input id="password" type="text" class="validate" placeholder="Пароль" v-model="userFilde.password">
+              <label for="password">Пароль</label>
+            </div>
+          </div>
+          <div class="row">
+            <select id="type" class="browser-default" v-model="userFilde.type">
+              <option v-for="typeUser in selectTypeUser" :value="typeUser.value">{{typeUser.text}}</option>
+            </select>
+          </div>
+          <div class="row">
+            <h5 class="left-align error_text">{{error}}</h5>
+          </div>
+          <div class="row">
+            <a class="waves-effect waves-light btn light-blue darken-2" v-on:click="addUser" :disabled="updateMode">Добавить</a>
+            <a class="waves-effect waves-light btn light-blue darken-2" v-on:click="updateUser" :disabled="!updateMode">Сохранить</a>
+            <a class="waves-effect waves-light btn light-blue darken-2" v-on:click="clearForm">Очистить</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="../File/js/user.js"></script>
+{% endraw %}
+{% endblock %}
