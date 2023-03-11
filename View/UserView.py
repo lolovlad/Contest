@@ -15,9 +15,14 @@ class UserView(View):
     def show_view(self):
         eel.locationReplace(self.__file_templates)
 
-    def update(self, type_notify: TypeNotify):
+    def show_view_form(self):
+        eel.locationReplace("templates/user_form.html")
+
+    def show_view_form_update(self):
+        eel.locationReplace("templates/user_form.html")
+
+    def update(self, type_notify: TypeNotify, **kwargs):
         if type_notify == TypeNotify.USER_TABLE:
-            users = [user.dict() for user in self.__model.users]
-            eel.updateUserTable(users)
+            eel.updateUserTable(kwargs["users"])
         elif type_notify == TypeNotify.USER_FORM:
-            eel.loadFormUser(self.__model.select_user.dict())
+            eel.loadFormUser(kwargs["user"])

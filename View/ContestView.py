@@ -14,12 +14,14 @@ class ContestView(View):
     def show_view(self):
         eel.locationReplace(self.__file_templates)
 
-    def update(self, type_notify: TypeNotify):
+    def show_view_form(self):
+        eel.locationReplace("templates/contest_form.html")
+
+    def update(self, type_notify: TypeNotify, **kwargs):
         if type_notify == TypeNotify.CONTEST_TABLE:
-            contests = [self.__model.dict_contest(contest) for contest in self.__model.contests]
-            eel.updateContestTable(contests)
+            eel.updateContestTable(kwargs["contests"])
         elif type_notify == TypeNotify.CONTEST_FORM:
-            eel.loadFormContest(self.__model.dict_contest(self.__model.select_contest))
+            eel.loadFormContest(kwargs["contest"])
         elif type_notify == TypeNotify.TASK_TABLE:
             tasks = [task.dict() for task in self.__model.select_contest.tasks]
             eel.updateTaskTable(tasks)

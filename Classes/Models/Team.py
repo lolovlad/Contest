@@ -12,7 +12,6 @@ class UserTeam(BaseModel):
 
 class BaseTeam(BaseModel):
     name_team: str = ""
-    is_solo: bool = True
 
 
 class TeamGet(BaseTeam):

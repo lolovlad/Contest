@@ -2,15 +2,21 @@ from Classes.ControllersInit import ControllersInit
 from Classes.EelModification import EelModification
 
 from Controller.PackageController import PackageController
-from Controller.MainWindowController import MainWindowController
 from Controller.MenuController import MenuController
 from Controller.TotalWindowController import TotalWindowController
 
 from Controller import UserController, TeamController, ContestController
+from Classes.TaskPage import TaskPage
+from Classes.ContestUserPage import ContestUserPage
+from Classes.TotalPage import TotalPage
 
 from tkinter import Tk, filedialog
 from settings import settings
 import eel
+
+from typing import List
+
+from random import randint
 
 
 @eel.expose
@@ -40,8 +46,8 @@ def load_user():
 
 
 @eel.expose
-def load_organization():
-    return ControllersInit().user.load_organization()
+def load_organization(type_edu: int):
+    return ControllersInit().user.load_organization(type_edu)
 
 
 @eel.expose
@@ -50,56 +56,70 @@ def button_login():
 
 
 @eel.expose
-def button_add_user():
-    ControllersInit().user.add_user()
+def button_add_user(user: dict):
+    ControllersInit().user.add_user(user)
 
 
 @eel.expose
-def button_update_user():
-    ControllersInit().user.update_user()
+def button_update_user(user: dict):
+    ControllersInit().user.update_user(user)
 
 
 @eel.expose
-def button_delete_user():
-    ControllersInit().user.delete_user()
+def button_delete_user(id_user: int):
+    ControllersInit().user.delete_user(id_user)
 
 
 @eel.expose
-def select_user(data: dict):
-    ControllersInit().user.set_select_user(data)
+def load_user_form_update(id_user: int):
+    ControllersInit().user.show_view_form_update(id_user)
 
 
 @eel.expose
-def update_select_user(data: dict):
-    ControllersInit().user.update_select_user(data)
+def get_user_mode_update():
+    return ControllersInit().user.get_mode_update()
 
+
+@eel.expose
+def load_form_user():
+    return ControllersInit().user.load_form_user()
 
 '''contest'''
 
 
 @eel.expose
-def button_add_contest():
-    ControllersInit().contest.add_contest()
+def load_contest_form_update(id_contest: int):
+    return ControllersInit().contest.show_view_form_update(id_contest)
 
 
 @eel.expose
-def button_update_contest():
-    ControllersInit().contest.update_contest()
+def get_contest_mode_update():
+    return ControllersInit().contest.get_mode_update()
 
 
 @eel.expose
-def button_delete_contest():
-    ControllersInit().contest.delete_contest()
+def load_form_contest():
+    ControllersInit().contest.load_form_contest()
 
 
 @eel.expose
-def select_contest(data: dict):
-    ControllersInit().contest.set_select_contest(data)
+def load_contest_form():
+    return ControllersInit().contest.show_view_form()
 
 
 @eel.expose
-def update_select_contest(data: dict):
-    ControllersInit().contest.update_select_contest(data)
+def button_add_contest(contest: dict):
+    ControllersInit().contest.add_contest(contest)
+
+
+@eel.expose
+def button_update_contest(contest: dict):
+    ControllersInit().contest.update_contest(contest)
+
+
+@eel.expose
+def button_delete_contest(id_contest: int):
+    ControllersInit().contest.delete_contest(id_contest)
 
 
 @eel.expose
@@ -109,45 +129,74 @@ def load_contests():
 
 @eel.expose
 def load_menu_contest():
-    ControllersInit().menu.load_contest()
+    return ControllersInit().menu.load_contest()
 
 
 '''task'''
 
-
 @eel.expose
-def select_task(task: dict):
-    ControllersInit().contest.set_select_task(task)
-
-
-@eel.expose
-def update_select_task(task: dict):
-    ControllersInit().contest.update_select_task(task)
+def open_task_form():
+    return ControllersInit().task.show_view_form()
 
 
 @eel.expose
-def load_tasks():
-    ControllersInit().contest.load_tasks()
+def open_task_update_form(id_task: int):
+    return ControllersInit().task.show_view_form_update(id_task)
 
 
 @eel.expose
-def button_add_task():
-    ControllersInit().contest.add_task()
+def open_task_settings_form(id_task: int):
+    return ControllersInit().task.show_view_form_settings(id_task)
 
 
 @eel.expose
-def button_delete_task():
-    ControllersInit().contest.delete_task()
+def load_form_task() -> dict:
+    return ControllersInit().task.get_task()
 
 
 @eel.expose
-def button_update_task():
-    ControllersInit().contest.update_task()
+def get_task_mode_update():
+    return ControllersInit().task.get_mode_update()
 
 
 @eel.expose
-def load_answer(data: dict):
-    ControllersInit().main_window.load_answer(data)
+def delete_file(name_file: str):
+    ControllersInit().task.delete_file(name_file)
+
+
+@eel.expose
+def upload_json_file(file_name: str):
+    return ControllersInit().task.upload_json_file(file_name)
+
+
+@eel.expose
+def get_list_task():
+    return ControllersInit().task.get_list_task_in_contest()
+
+
+@eel.expose
+def get_setting_task():
+    return ControllersInit().task.get_settings()
+
+
+@eel.expose
+def button_add_task(task: dict):
+    ControllersInit().task.add_task(task)
+
+
+@eel.expose
+def button_update_settings(settings: dict):
+    ControllersInit().task.update_setting(settings)
+
+
+@eel.expose
+def button_delete_task(id_task: int):
+    ControllersInit().task.delete_task(id_task)
+
+
+@eel.expose
+def get_list_answers(id_task: int):
+    return ControllersInit().main_window.get_list_answers(id_task)
 
 
 @eel.expose
@@ -156,8 +205,8 @@ def update_field_login(val: dict):
 
 
 @eel.expose
-def button_send_answer():
-    ControllersInit().main_window.send_answer()
+def button_send_answer(id_task: int, id_compiler: int):
+    return ControllersInit().main_window.send_answer(id_task, id_compiler)
 
 
 @eel.expose
@@ -179,17 +228,17 @@ def file() -> str:
         return ""
 
 
-@eel.expose
-def update_tasks():
-    ControllersInit().contest.update_task()
-
 
 @eel.expose
-def user_load_contest(id_contest):
-    contest = ControllersInit().menu.get_select_contest(id_contest)
+def open_window_contest_user(id_contest: int):
     ControllersInit().menu = None
-    ControllersInit().main_window = MainWindowController()
-    ControllersInit().main_window.show_view(contest)
+    ControllersInit().main_window = ContestUserPage(id_contest)
+    ControllersInit().main_window.show_view()
+
+
+@eel.expose
+def get_url_websocket():
+    return ControllersInit().main_window.get_url_websocket()
 
 
 @eel.expose
@@ -198,24 +247,28 @@ def load_compilation():
 
 
 @eel.expose
-def user_select_task(id_task: int):
-    ControllersInit().main_window.select_task(id_task)
+def load_main_window_select_task(id_task: int):
+    return ControllersInit().main_window.load_main_window_select_task(id_task)
 
 
 @eel.expose
-def load_report(id_answer: int):
-    ControllersInit().main_window.load_report(id_answer)
+def get_report(id_answer: int):
+    return ControllersInit().main_window.get_report(id_answer)
 
 
 @eel.expose
-def load_main_window_contest():
-    ControllersInit().main_window.load_contest()
+def load_main_window_contest() -> str:
+    return ControllersInit().main_window.load_contest()
 
 
 @eel.expose
-def select_answer(value: dict):
-    ControllersInit().main_window.set_select_answer(value)
+def load_main_window_list_task() -> str:
+    return ControllersInit().main_window.load_main_window_list_task()
 
+
+@eel.expose
+def parser_message(message: str):
+    ControllersInit().main_window.parser_message(message)
 
 @eel.expose
 def upload_file(value: dict):
@@ -233,38 +286,48 @@ def open_package_window():
 
 
 @eel.expose
+def load_form_team():
+    return ControllersInit().team.load_form_team()
+
+
+@eel.expose
+def get_team_mode_update():
+    return ControllersInit().team.get_mode_update()
+
+
+@eel.expose
+def load_team_form():
+    return ControllersInit().team.show_view_form()
+
+
+@eel.expose
+def load_team_form_update(id_team: int):
+    return ControllersInit().team.show_view_form_update(id_team)
+
+
+@eel.expose
 def load_teams():
     ControllersInit().team.load_team()
 
 
 @eel.expose
-def update_select_team(data: dict):
-    ControllersInit().team.update_select_team(data)
+def button_add_team(team: dict):
+    ControllersInit().team.add_team(team)
 
 
 @eel.expose
-def button_add_team():
-    ControllersInit().team.add_team()
+def button_delete_team(id_team: int):
+    ControllersInit().team.delete_team(id_team)
 
 
 @eel.expose
-def button_delete_team():
-    ControllersInit().team.delete_team()
-
-
-@eel.expose
-def button_update_team():
-    ControllersInit().team.update_team()
-
-
-@eel.expose
-def select_team(data: dict):
-    ControllersInit().team.set_select_team(data)
+def button_update_team(team: dict):
+    ControllersInit().team.update_team(team)
 
 
 @eel.expose
 def close_contest():
-    ControllersInit().main_window.close_contest()
+    return ControllersInit().main_window.close_contest()
 
 
 @eel.expose
@@ -284,19 +347,19 @@ def load_report_package(id_report):
 
 @eel.expose
 def open_window_total():
-    ControllersInit().total = TotalWindowController()
-    ControllersInit().total.show_view(ControllersInit().menu.get_contest())
+    ControllersInit().total = TotalPage()
+    ControllersInit().total.show_view()
     ControllersInit().menu = None
 
 
 @eel.expose
 def select_contest_total(id_contest):
-    ControllersInit().total.load_total_report(id_contest)
+    return ControllersInit().total.load_total_report(id_contest)
 
 
 @eel.expose
 def load_contest_to_total():
-    ControllersInit().total.load_contest()
+    return ControllersInit().total.load_contest()
 
 
 @eel.expose
@@ -320,8 +383,24 @@ def load_team_in_contest(id_contest: int):
 
 
 @eel.expose
-def registration_users_contest():
-    return ControllersInit().contest.registration_users_contest()
+def registration_users_contest(users):
+    return ControllersInit().contest.registration_users_contest(users)
+
+
+@eel.expose
+def files_test() -> List[str]:
+    root = Tk()
+    root.withdraw()
+    root.wm_attributes('-topmost', 1)
+    try:
+        files = filedialog.askopenfilenames(
+            title='Загрузить файл',
+            initialdir='/',
+        )
+        list_file = ControllersInit().task.add_files(list(root.splitlist(files)))
+        return list(list_file)
+    except AttributeError:
+        return []
 
 
 @eel.expose
@@ -365,43 +444,24 @@ def open_window_menu():
 
 
 @eel.expose
-def clear_select_user():
-    ControllersInit().user.clear_select_user()
-
-
-@eel.expose
-def clear_select_team():
-    ControllersInit().team.clear_select_team()
-
-
-@eel.expose
-def clear_select_contest():
-    ControllersInit().contest.clear_select_contest()
-
-
-@eel.expose
-def clear_select_task():
-    ControllersInit().contest.clear_select_task()
+def load_user_form():
+    ControllersInit().user.show_view_form()
 
 
 @eel.expose
 def open_window_user():
     ControllersInit().contest = None
     ControllersInit().team = None
+    ControllersInit().task = None
     ControllersInit().user = UserController()
     ControllersInit().user.show_view()
-
-
-'''@eel.expose
-def open_window_contest():
-    pass
-'''
 
 
 @eel.expose
 def open_window_team():
     ControllersInit().contest = None
     ControllersInit().user = None
+    ControllersInit().task = None
     ControllersInit().team = TeamController()
     ControllersInit().team.show_view()
 
@@ -410,16 +470,26 @@ def open_window_team():
 def open_window_contest():
     ControllersInit().team = None
     ControllersInit().user = None
+    ControllersInit().task = None
     ControllersInit().contest = ContestController()
     ControllersInit().contest.show_view()
+
+
+@eel.expose
+def open_window_task(id_contest: int):
+    ControllersInit().contest = None
+    ControllersInit().task = TaskPage(id_contest)
+    ControllersInit().task.show_view()
 
 
 if __name__ == '__main__':
     eel.init('templates')
     geometry = {'size': (720, 760), 'position': (300, 50)}
-    eel.start(settings.start_file, mode=settings.path_browser,
+    eel.start(settings.start_file, mode=settings.mode,
               size=geometry["size"], port=settings.port_app,
-              position=geometry["position"], jinja_templates='templates')
+              position=geometry["position"], jinja_templates='templates',
+              cmdline_args=[settings.path_browser, settings.args],
+              shutdown_delay=500000)
 
 
 

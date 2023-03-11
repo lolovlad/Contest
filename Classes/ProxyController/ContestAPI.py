@@ -13,6 +13,9 @@ class ContestAPI(Contest):
     def get_list_contest(self) -> List[dict]:
         return self.__api.get("contests/list_contest", {})
 
+    def get_contest(self, id_contest: int) -> List[dict]:
+        return self.__api.get(f"contests/{id_contest}", {})
+
     def post_contest(self, contest: dict) -> dict:
         return self.__api.post_token("contests", contest)
 
@@ -25,8 +28,8 @@ class ContestAPI(Contest):
     def registration_users_contest(self, contest: ContestPutUsers) -> dict:
         return self.__api.put_token("contests/registration_users", contest.dict())
 
-    def contests_by_user_id(self, id_user: int) -> List[dict]:
-        return self.__api.get_toke(f"contests/contests_by_user_id/{id_user}", {})
+    def contests_by_user_id(self) -> List[dict]:
+        return self.__api.get_toke(f"contests/contests_by_user_id", {})
 
     def contest_page(self, id_contest: int) -> dict:
         return self.__api.get(f"contests/contest_page/{id_contest}", {})

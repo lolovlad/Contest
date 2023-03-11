@@ -1,12 +1,16 @@
+import requests.exceptions
+
 from Classes.ProxyController.LoginProxy import LoginProxy
 from View.LoginView import LoginView
 from Model.LoginModel import LoginModel
 from Classes.Session import Session
 from Interfase import Controller
-import eel
+
 
 from Controller.UserController import UserController
 from Controller.MenuController import MenuController
+
+from Classes.Models.User import TypeUser
 
 
 class LoginController(Controller):
@@ -22,14 +26,16 @@ class LoginController(Controller):
 
     def login(self):
         self.__login_proxy.login(self.__model.login.dict())
-        response: dict = self.__login_proxy.send()
+        try:
+            response: dict = self.__login_proxy.send()
+        except requests.exceptions.ConnectionError:
+            response = {"message": "Не удалось установить соединение с сервером"}
         if response.get("message") is None:
             self.__model.token = response
-            Session().token = self.__model.token
-            if self.__model.token.type_user == 1:
+            if Session().token.type_user == TypeUser.ADMIN:
                 self.__controllers.user = UserController()
                 self.__controllers.user.show_view()
-            elif self.__model.token.type_user == 2:
+            elif Session().token.type_user == TypeUser.USER:
                 self.__controllers.menu = MenuController()
                 self.__controllers.menu.show_view()
         else:

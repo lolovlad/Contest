@@ -1,5 +1,5 @@
 from typing import List
-from Classes.Models.Task import TaskGet, TaskPage
+from Classes.Models.Task import TaskGet
 from Classes.Models.Contest import ContestGetPage
 from Interfase.Observer import Subject, Observer
 from Classes.Models.Answer import AnswerGet, AnswerPost
@@ -12,9 +12,9 @@ class MainWindowModel(Subject):
         self.__id_contest: int = 0
         self.__contest: ContestGetPage = ContestGetPage()
         self.__observer: List[Observer] = []
-        self.__tasks: List[TaskPage] = []
+        self.__tasks: List[TaskGet] = []
         self.__files = {}
-        self.__select_task: TaskPage = TaskPage()
+        self.__select_task: TaskGet = None
         self.__select_answer: AnswerPost = AnswerPost()
         self.__select_report: Report = Report()
         self.__answers: List[AnswerGet] = []

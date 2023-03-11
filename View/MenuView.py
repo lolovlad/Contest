@@ -11,7 +11,7 @@ class MenuView(Observer, View):
         self.__controller = controller
         self.__model: MenuModel = model
         self.__model.attach(self)
-        self.__file_templates: str = 'menu.html'
+        self.__file_templates: str = 'templates/menu.html'
         self.__name_window: str = "Menu"
         self.__port: int = randint(8000, 8030)
         self.__geometry: dict = {'size': (720, 760), 'position': (300, 50)}
@@ -20,5 +20,4 @@ class MenuView(Observer, View):
         eel.locationReplace(self.__file_templates)
 
     def update(self, type_notify=None):
-        if type_notify == "contests":
-            eel.updateMenuContest(self.__model.contests)
+        pass

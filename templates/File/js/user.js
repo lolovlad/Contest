@@ -1,18 +1,12 @@
 const appUser = new Vue({
     el: "#user",
     data: {
-        id: -1,
-        login: "",
-        name: "",
-        sename: "",
-        secondname: "",
-        placeOfStudy: "",
-        learningStage: "8 класс",
-        password: "",
-        type: 1,
-        users: [],
-        organizations: [],
         error: "",
+        users: [],
+        reversTypeUser: {
+            1: 'Администратор',
+            2: 'Пользователь'
+        },
         selectTypeEdu: [
             { text: 'Школа', value: 1 },
             { text: 'Вуз', value: 2 },
@@ -23,10 +17,6 @@ const appUser = new Vue({
             { text: 'Администратор', value: 1 },
             { text: 'Пользователь', value: 2 }
         ],
-        reversTypeUser: {
-            1: 'Администратор',
-            2: 'Пользователь'
-        },
         selectLearningStage: {
             1: [
                 { text: '8 класс', value: '8 класс' },
@@ -50,50 +40,106 @@ const appUser = new Vue({
                 { text: 'Обучение', value: 'Обучение' },
             ],
         },
+        userFilde: {
+            sename: "",
+            name: "",
+            secondname: "",
+            data: {
+                type_education: 1,
+                name_organization: "",
+                learning_stage: '8 класс'
+            },
+            login: "",
+            password: "",
+            type: ""
+        },
         targetEdu: [],
         targetLearningStage: [],
         typeEdu: 1,
-        isSelect: false
+        updateMode: false
     },
     methods: {
         updateUsers(value){
-            this.clearForm()
             this.users.length = 0
             for(let user of value){
                 this.users.push(user)
             }
-            console.log(this.users)
         },
-        selectRowUser(user){
-            eel.select_user(user)
-            this.isSelect = true
+        openPageForm(){
+            eel.load_user_form()
+            this.updateMode = false
         },
-        updateOrganization(value){
-            this.organizations.length = 0
-            for(let organization of value){
-                this.organizations.push(organization)
-            }
 
-            this.selectUpdateTargetEdu()
-            this.selectUpdateLearningStage()
-            
+        openPageFormUpdate(idUser){
+            this.updateMode = true
+            eel.load_user_form_update(idUser)
         },
-        selectUpdateTargetEdu(){
-            this.targetEdu.length = 0
-            for(let organization of this.organizations){
-                if(organization.type_organizations == this.typeEdu){
-                    this.targetEdu.push({text: organization.name_organizations, 
-                                         value: organization.name_organizations})
-                }
-            }
-            this.placeOfStudy = this.targetEdu[0].value
+
+        switchSelectEdu(event) {
+            const value = event.target.value
+            this.selectUpdateLearningStage(value)
+            this.selectUpdateTargetEdu(value)
         },
-        selectUpdateLearningStage(){
+        selectUpdateLearningStage(value){
             this.targetLearningStage.length = 0
-            for(let select of this.selectLearningStage[this.typeEdu]){
+            for(let select of this.selectLearningStage[value]){
                 this.targetLearningStage.push(select)
             }
         },
+        selectUpdateTargetEdu(value){
+            eel.load_organization(value)((edu)=>{
+                this.targetEdu.length = 0
+                for(let organization of edu){
+                    this.targetEdu.push({text: organization.name_organizations, 
+                                         value: organization.name_organizations})
+                }
+            })
+        },
+
+        addUser(){
+            eel.button_add_user(this.userFilde)
+            this.clearForm()       
+        },
+
+        deleteUser(id_user){
+            eel.button_delete_user(id_user)
+        },
+
+        updateUser(){
+            eel.button_update_user(this.userFilde)            
+        },
+
+        clearForm(){
+           this.userFilde = {
+                                sename: "",
+                                name: "",
+                                secondname: "",
+                                data: {
+                                    type_education: 1,
+                                    name_organization: "",
+                                    learning_stage: '8 класс'
+                                },
+                                login: "",
+                                password: "",
+                                type: ""
+                            }
+            this.updateMode = false
+        },
+
+        loadFormUser(user){
+            console.log(user, "loadForm")
+
+            this.selectUpdateLearningStage(user.data.type_education)
+            this.selectUpdateTargetEdu(user.data.type_education)
+
+            this.userFilde = user
+
+            /*for (const [key, value] of Object.entries(user)) {
+                this.userFilde[key] = value
+            }*/
+        },
+        /*
+       
         loadFormUser(user){
             console.log(user, "loadForm")
             this.id = user.id
@@ -160,51 +206,13 @@ const appUser = new Vue({
                 return false
             }
             return true
-        }
+        }*/
+    
     },
     watch: {
         login: function(val){
             this.login = val
             eel.update_select_user({login: this.login})
-        },
-        password: function(val){
-            this.password = val
-            eel.update_select_user({password: this.password})
-        },
-        name: function(val){
-            this.name = val
-            eel.update_select_user({name: this.name})
-        },
-        sename: function(val){
-            this.sename = val
-            eel.update_select_user({sename: this.sename})
-        },
-        secondname: function(val){
-            this.secondname = val
-            eel.update_select_user({secondname: this.secondname})
-        },
-        type: function(val){
-            this.type = val
-            eel.update_select_user({type: this.type})
-        },
-        selectUser: function(val){
-            this.selectUser = val
-            console.log(val)
-        },
-        typeEdu: function(val){
-            this.typeEdu = val
-            this.selectUpdateTargetEdu()
-            this.selectUpdateLearningStage()
-            eel.update_select_user({type_learning: this.typeEdu})
-        },
-        placeOfStudy: function(val){
-            this.placeOfStudy = val
-            this.selectUpdateLearningStage()
-            eel.update_select_user({place_of_study: this.placeOfStudy})
-        },
-        learningStage: function(val){
-            this.learningStage = val
-            eel.update_select_user({learning_stage: this.learningStage})
         }
     },
     filters: {
@@ -224,10 +232,17 @@ const appUser = new Vue({
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-    eel.load_organization()((edu)=>{
-        appUser.updateOrganization(edu)
-    })
     eel.load_user()
+    eel.get_user_mode_update()((val) => {
+        if(val){
+            eel.load_form_user()
+            appUser.updateMode = true
+        }else{
+            appUser.updateMode = false
+            appUser.selectUpdateLearningStage(1)
+            appUser.selectUpdateTargetEdu(1)
+        }
+    })
 })
 
 function updateUserTable(users){
@@ -236,7 +251,6 @@ function updateUserTable(users){
 
 
 function loadFormUser(user){
-    console.log(user)
     appUser.loadFormUser(user)
 }
 

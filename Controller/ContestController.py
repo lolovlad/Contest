@@ -2,12 +2,12 @@ from typing import List
 from Classes.ProxyController import ContestProxy, TaskProxy, UserProxy, TeamProxy
 
 from Classes.Models.Contest import ContestGet, ContestPost, ContestPutUsers
-from Classes.Models.Task import TaskPutInServer, TaskPostInServer
 from View.ContestView import ContestView
 from Model.ContestModel import ContestModel
 from Interfase import Controller
 from Classes.BuilderFile.ReportXlsx import ReportBuilder
 from Classes.BuilderFile.FileOutput import FileDocx, FileXlsx, FilePDF
+from Classes.Models.TypeNotify import TypeNotify
 import eel
 
 
@@ -19,66 +19,49 @@ class ContestController(Controller):
         self.__proxy_task: TaskProxy = TaskProxy()
 
     def show_view(self):
+        self.__model.mode_update = False
         self.__view.show_view()
 
-    def add_contest(self):
-        contest = self.__model.json_select_contest()
-        contest.pop("id")
+    def show_view_form(self):
+        self.__view.show_view_form()
+
+    def show_view_form_update(self, id_contest: int):
+        self.__model.mode_update = True
+        self.__model.id_contest = id_contest
+        self.__view.show_view_form()
+
+    def load_form_contest(self):
+        request = self.__proxy_contest.get_contest(self.__model.id_contest)
+        self.__view.update(TypeNotify.CONTEST_FORM, contest=request)
+
+    def add_contest(self, contest: dict):
         response = self.__proxy_contest.post_contest(contest)
-        self.__model.add_contest(response)
         self.__model.massage = "Запись успешно добавлена"
+        self.show_view()
 
-    def delete_contest(self):
-        contest = self.__model.select_contest
-        response = self.__proxy_contest.delete_contest(contest.id)
-        self.__model.delete_contest(response)
+    def delete_contest(self, id_contest: int):
+        response = self.__proxy_contest.delete_contest(id_contest)
+        self.load_contests()
 
-    def update_contest(self):
-        contest = self.__model.json_select_contest()
+    def update_contest(self, contest: dict):
+
         response = self.__proxy_contest.update_contest(contest)
-        self.__model.update_contest(response)
         self.__model.massage = "Запись успешно изменена"
+        self.show_view()
 
     def load_contests(self):
-        self.__model.contests = self.__proxy_contest.get_list_contest()
+        request = self.__proxy_contest.get_list_contest()
+        self.__view.update(TypeNotify.CONTEST_TABLE, contests=request)
 
-    def registration_users_contest(self):
-        contest = self.__model.select_contest
+    def registration_users_contest(self, users):
         data = {
-            "id": contest.id,
-            "users": contest.users
+            "id": self.__model.id_contest,
+            "users": users
         }
         contest_users = ContestPutUsers(**data)
         response = self.__proxy_contest.registration_users_contest(contest_users)
-        self.__model.update_contest(response)
         self.__model.massage = "участники успешно добавлены"
-
-    def add_task(self):
-        task = self.__model.select_task.dict()
-        task.pop("id")
-        task["file"] = open(self.__model.select_task.path_test_file, "rb").read().decode("utf-8")
-        response = self.__proxy_task.post_task(TaskPostInServer(**task))
-        self.__model.add_task(response)
-        self.__model.massage = "Запись успешно добавлена"
-
-    def delete_task(self):
-        task = self.__model.select_task
-        response = self.__proxy_task.delete_task(task.id)
-        self.__model.delete_task(response)
-        self.__model.massage = "Запись успешно удалена"
-
-    def update_task(self):
-        task = self.__model.select_task.dict()
-        try:
-            task["file"] = open(task["path_test_file"], "rb").read().decode("utf-8")
-        except Exception:
-            task["file"] = b"".decode("utf-8")
-        response = self.__proxy_task.put_task(TaskPutInServer(**task))
-        self.__model.update_task(response)
-        self.__model.massage = "Запись успешно изменена"
-
-    def load_tasks(self):
-        self.__model.tasks()
+        self.load_contests()
 
     def create_report(self, settings_report: dict):
         contest = self.__model.select_contest
@@ -95,31 +78,18 @@ class ContestController(Controller):
         file.file.return_file(f"{settings_report['pathFile']}/{settings_report['nameFile']}")
 
     def load_user_in_contest(self, id_contest: int) -> List[dict]:
+        self.__model.id_contest = id_contest
         user_proxy = UserProxy()
         if id_contest != -1:
             users = user_proxy.get_in_contest_users(id_contest)
             return users
 
     def load_team_in_contest(self, id_contest: int) -> List[dict]:
+        self.__model.id_contest = id_contest
         team_proxy = TeamProxy()
         if id_contest != -1:
             teams = team_proxy.get_list_team_in_contest(id_contest)
             return teams
 
-    def set_select_task(self, task: dict):
-        self.__model.select_task = task
-
-    def set_select_contest(self, contest: dict):
-        self.__model.select_contest = contest
-
-    def update_select_contest(self, contest: dict):
-        self.__model.update_select_contest(contest)
-
-    def update_select_task(self, task: dict):
-        self.__model.update_select_task(task)
-
-    def clear_select_contest(self):
-        self.__model.clear_select_contest()
-
-    def clear_select_task(self):
-        self.__model.clear_select_task()
+    def get_mode_update(self) -> int:
+        return self.__model.mode_update

@@ -7,11 +7,11 @@ from Classes.Models.Login import Token
 
 
 class LoginModel(Subject, Model):
-    def __init__(self, token: Token = Token(), login: Login = Login()):
-        self.__login: Login = login
+    def __init__(self):
+        self.__login: Login = None
         self.__error: str = ""
         self.__observer: List[Observer] = []
-        self.__token: Token = token
+        self.__token: Token = None
 
     @property
     def login(self):
@@ -36,8 +36,7 @@ class LoginModel(Subject, Model):
 
     @token.setter
     def token(self, val: dict):
-        self.__token = Token(**val)
-        Session().token = self.__token
+        Session().token = Token(**val)
 
     def attach(self, observer: Observer):
         self.__observer.append(observer)

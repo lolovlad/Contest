@@ -1,23 +1,91 @@
 const appTeam = new Vue({
     el: "#team",
     data: {
-        id: -1,
-        nameTeam: "",
-        isSolo: false,
-        users: [],
         error: "",
         teams: [],
         selectUsers: [],
-        isSelect: false
+        modeUpdate: false,
+        team: {
+            name_team: "",
+            users: []
+        },
+        notActive: false
     },
     methods:{
+        openPageForm(){
+            eel.load_team_form()
+        },
+        openPageFormUpdate(idTeam){
+            eel.load_team_form_update(idTeam)
+        },
         updateTeams(value){
-            this.clearForm()
+            console.log(value, "teamrr")
             this.teams.length = 0
+            this.teams.splice(0)
             for(let team of value){
                 this.teams.push(team)
             }
         },
+
+        openViewUsers(){
+            modelWindowUser.open()
+        },
+
+        closeViewUsers(){
+
+        },
+        selectRowUserTeam(user){
+            const id_name = this.team.users.map(el => el.id)
+            if (!id_name.includes(user.id)){
+                this.team.users.push(user)
+
+                const id_team = this.selectUsers.map(el => el.id)
+                const i = id_team.indexOf(user.id)
+                
+                this.selectUsers.splice(i, 1)
+            }
+            if(this.team.users.length == 0){
+                this.notActive = true
+            }else{
+                this.notActive = false
+            }
+        },
+        deleteUserTeam(user){
+            const id_name = this.team.users.map(el => el.id)
+            const i = id_name.indexOf(user.id)
+            this.selectUsers.push(user)
+            this.team.users.splice(i, 1)
+
+            if(this.team.users.length == 0){
+                this.notActive = true
+            }else{
+                this.notActive = false
+            }
+        },
+        updateViewUser(users){
+            this.selectUsers.length = 0
+            for(let user of users){
+                this.selectUsers.push(user)
+            }
+        },
+        addTeam(){
+            eel.button_add_team(this.team)
+        },
+        updateTeam(){
+            eel.button_update_team(this.team)
+        },
+        deleteTeam(idTeam){
+            eel.button_delete_team(idTeam)
+        },
+        loadFormTeam(team){
+            this.modeUpdate = true
+            this.team = team
+
+            eel.load_user_in_team(this.team.id)((users)=>{
+                this.updateViewUser(users)
+            })
+        },
+        /*
         clearForm(){
             this.id = -1
             this.nameTeam = ""
@@ -29,34 +97,6 @@ const appTeam = new Vue({
         },
         selectRowTeam(team){
             eel.select_team(team)
-        },
-        selectRowUserTeam(user){
-            const id_name = this.users.map(el => el.id)
-            if (!id_name.includes(user.id)){
-                this.users.push(user)
-
-                const id_team = this.selectUsers.map(el => el.id)
-                const i = id_team.indexOf(user.id)
-                
-                this.selectUsers.splice(i, 1)
-
-                eel.update_select_team({users: this.users})
-            }
-        },
-        openViewUsers(){
-            modelWindowUser.open()
-            eel.load_user_in_team(this.id)((users)=>{
-                this.updateViewUser(users)
-            })
-        },
-        closeViewUsers(){
-
-        },
-        updateViewUser(users){
-            this.selectUsers.length = 0
-            for(let user of users){
-                this.selectUsers.push(user)
-            }
         },
         deleteUserTeam(user){
             const id_name = this.users.map(el => el.id)
@@ -96,27 +136,10 @@ const appTeam = new Vue({
                 return false
             }
             return true
-        }
+        }*/
 
     },
-    watch: {
-        nameTeam: function(val){
-            this.nameTeam = val
-            eel.update_select_team({name_team: this.nameTeam})
-        },
-        isSolo: function(val){
-            this.isSolo = val
-            eel.update_select_team({is_solo: this.isSolo})
-        }
-    },
     filters: {
-        typeTeam(val){
-            if(val){
-                return "Да"
-            }else{
-                return "Нет"
-            }
-        },
         convertUsers(val){
             let mapping = val.map((el)=>{
                 return `${el.sename} ${el.name[0]}. ${el.secondname[0]}.`
@@ -130,10 +153,22 @@ let modelWindowUser
 
 document.addEventListener('DOMContentLoaded', () => {
     modelWindowUser = document.querySelector('#modalSelectUser')
-    M.Modal.init(modelWindowUser, {onCloseEnd: appTeam.closeViewUsers})
-    modelWindowUser = M.Modal.getInstance(modelWindowUser)
 
-
+    if(modelWindowUser != null){
+        M.Modal.init(modelWindowUser, {onCloseEnd: appTeam.closeViewUsers})
+        modelWindowUser = M.Modal.getInstance(modelWindowUser)
+    }
+    eel.get_team_mode_update()((val) => {
+        if(val){
+            eel.load_form_team()
+            appTeam.updateMode = true
+        }else{
+            eel.load_user_in_team(appTeam.team.id)((users)=>{
+                appTeam.updateViewUser(users)
+            })
+            appTeam.updateMode = false
+        }
+    })
     eel.load_teams()
 })
 
@@ -143,7 +178,6 @@ function updateTeamTabel(teams){
 }
 
 function errorUpdateFieldTeam(val){
-    console.log(val)
     appTeam.error = val
 }
 

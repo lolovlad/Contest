@@ -19,11 +19,9 @@ class UserBase(BaseModel):
     name: str = ""
     sename: str = ""
     secondname: str = ""
-    type_learning: int = 1
-    place_of_study: str = ""
-    learning_stage: str = ""
     foto: str = "Photo/default.png"
     password: str = ""
+    data: dict = {}
 
 
 class UserGet(UserBase):

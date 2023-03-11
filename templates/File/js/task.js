@@ -2,38 +2,21 @@ const appTask = new Vue({
     el: "#task",
     data: {
         tasks: [],
-        newTask: [],
-        id: -1,
-        idContest: -1,
-        timeWork: 1,
-        sizeRaw: 32,
-        typeInput: 1,
-        typeOutput: 1,
-        nameTask: "",
-        description: "",
-        descriptionInput: "",
-        descriptionOutput: "",
+        filseTest: {
+            pathTestFile: "",
+            listNameFilse: [],
 
-        pathTestFile: "",
+        },
+
+        task: {
+            name_task: "",
+            content: "",
+            type_task: 1,
+        },
 
         typeTask: 1,
         numberShipments: 100,
 
-        selectTimeWork: [
-            {text: "1 секунда", value: 1},
-            {text: "2 секунда", value: 2},
-            {text: "3 секунда", value: 3},
-            {text: "4 секунда", value: 4},
-            {text: "5 секунда", value: 5}
-        ],
-        selectTypeInput: [
-            {text: "стандартный ввод", value: 1},
-            {text: "файл input.txt", value: 2}
-        ],
-        selectTypeOutput: [
-            {text: "стандартный вывод", value: 1},
-            {text: "файл output.txt", value: 2}
-        ],
         selectTypeTask: [
             {text: "A", value: 1},
             {text: "B", value: 2},
@@ -43,71 +26,54 @@ const appTask = new Vue({
             {text: "F", value: 6}
         ],
         error: "",
-        isSelect: false
-    },
-    watch: {
-        timeWork: function(val){
-            this.timeWork = val
-
-            eel.update_select_task({time_work: this.timeWork})
-        },
-        sizeRaw: function(val){
-           this.sizeRaw = val
-
-           eel.update_select_task({size_raw: this.sizeRaw})
-        },
-        typeInput: function(val){
-            this.typeInput = val
-
-            eel.update_select_task({type_input: this.typeInput})
-        },
-        typeOutput: function(val){
-            this.typeOutput = val
-
-            eel.update_select_task({type_output: this.typeOutput})
-        },
-        description: function(val){
-            this.description = val
-            eel.update_select_task({description: this.description})
-        },
-        descriptionInput: function(val){
-            this.descriptionInput = val
-
-            eel.update_select_task({description_input: this.descriptionInput})
-        },
-        descriptionOutput: function(val){
-            this.descriptionOutput = val
-
-            eel.update_select_task({description_output: this.descriptionOutput})
-        },
-        pathTestFile: function(val){
-            this.pathTestFile = val
-
-            eel.update_select_task({path_test_file: this.pathTestFile})
-        },
-        typeTask: function(val){
-            this.typeTask = val
-
-            eel.update_select_task({type_task: this.typeTask})
-        },
-        numberShipments: function(val){
-            this.numberShipments = val
-
-            eel.update_select_task({number_shipments: this.numberShipments})
-        },
-        nameTask: function(val){
-            this.nameTask = val
-
-            eel.update_select_task({name_task: this.nameTask})
-        },
-        idContest: function(val){
-            this.idContest = val
-
-            eel.update_select_task({id_contest: this.idContest})
-        },
+        updateMode: false
     },
     methods: {
-        clearForm(){
+        updateTasks(value){
+            this.tasks = []
+            for(let task of value){
+                this.tasks.push(task)
+            }
+            
+        },
+        openPageForm(){
+            eel.open_task_form()
+        },
+        saveFileTest(){
+
+        },
+        addTask(){
+            this.task.description = tinymce.get("contentTask").getContent();
+            this.task.description_input = tinymce.get("contentInput").getContent();
+            this.task.description_output = tinymce.get("contentOutput").getContent();
+            eel.button_add_task(this.task)
+        },
+
+        updateTask(){
+            this.task.description = tinymce.get("contentTask").getContent();
+            this.task.description_input = tinymce.get("contentInput").getContent();
+            this.task.description_output = tinymce.get("contentOutput").getContent();
+            eel.button_update_task(this.task)
+        },
+        
+        openPageFormUpdate(idTask){
+            eel.open_task_update_form(idTask)
+        },
+        openPageFormSettings(idTask){
+            eel.open_task_settings_form(idTask)
+        },
+        loadForm(task){
+            tinymce.get("contentTask").setContent(task.description);
+            tinymce.get("contentInput").setContent(task.description_input);
+            tinymce.get("contentOutput").setContent(task.description_output);
+            this.task.id = task.id
+            this.task.name_task = task.name_task
+            this.task.type_task = task.type_task
+        },
+        deleteTask(idTask){
+            eel.button_delete_task(idTask)
+        },
+        /*clearForm(){
             this.id = -1
             this.timeWork = 1
             this.sizeRaw = 32
@@ -140,19 +106,6 @@ const appTask = new Vue({
             eel.update_select_task({id_contest: this.idContest})
             eel.button_delete_task()
         },
-        openFile(){
-            eel.file()((pathFile)=>{
-                this.pathTestFile = pathFile
-            })
-        },
-        updateTasks(value){
-            this.clearForm()
-            this.tasks = []
-            for(let task of value){
-                this.tasks.push(task)
-            }
-            
-        },
         selectRowTask(task){
             this.isSelect = true
             eel.select_task(task)
@@ -174,7 +127,7 @@ const appTask = new Vue({
             this.typeTask = task.type_task
             this.numberShipments = task.number_shipments
             setTimeout(autoResize, 10)
-        }
+        },*/
 
     },
     filters: {
@@ -220,6 +173,27 @@ const appTask = new Vue({
 })
 
 
+document.addEventListener("DOMContentLoaded", ()=>{
+    eel.get_task_mode_update()((val) => {
+        if(val){
+            appTask.updateMode = true
+            eel.load_form_task()((task) => {
+                appTask.loadForm(task)
+            })
+        }else{
+            //eel.load_user_in_team(appTeam.team.id)((users)=>{
+            //    appTeam.updateViewUser(users)
+            //})
+            //appTeam.updateMode = false
+        }
+    })
+
+    eel.get_list_task()((tasks)=>{
+        console.log(tasks)
+        appTask.updateTasks(tasks)
+    })
+})
+
 function updateTaskTable(tasks){
     appTask.updateTasks(tasks)
 }
@@ -228,10 +202,6 @@ function loadFormTask(task){
     appTask.loadFormTask(task)
 }
 
-function autoResize(){
-    const textArea = document.getElementById("description")
-    M.textareaAutoResize(textArea)
-}
 
 eel.expose(updateTaskTable)
 eel.expose(loadFormTask)

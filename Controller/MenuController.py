@@ -20,11 +20,5 @@ class MenuController:
         pass
 
     def load_contest(self):
-        response = self.__proxy.contests_by_user_id(0)
-        self.__model.contests = response
-
-    def get_select_contest(self, id_contest):
-        return self.__model.select_contest(id_contest)
-
-    def get_contest(self):
-        return self.__model.contests
+        response = self.__proxy.contests_by_user_id()
+        return response

@@ -13,6 +13,11 @@ class EducationalOrganizationsProxy(EducationalOrganizations):
         self.operations.append(func)
         return func()
 
+    def get_organizations_type(self, type_edu: int):
+        func = partial(self.__api.get_organizations_type, type_edu)
+        self.operations.append(func)
+        return func()
+
     def post_organizations(self, *args, **kwargs):
         pass
 

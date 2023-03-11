@@ -90,8 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems);
-    
-    initDatePiker()
 
 });
 
@@ -117,38 +115,41 @@ function initDatePiker(){
 
     datapickerElementStart = M.Datepicker.init(datepickerStart, {i18n: datapickerRu, 
                                                onSelect(date){
-                                                   appContest.dateStart = this.date
+                                                   appContest.dateStartNotStr = this.date
                                                },
                                                format: 'dd.mm.yyyy',
                                                minDate: dateNow,
-                                               firstDay: 1})
+                                               firstDay: 1,
+                                               setDefaultDate: true,
+                                               defaultDate: appContest.dateStartNotStr})
     M.Timepicker.init(timepickerStart, {i18n: timepickerRu,
                                         twelveHour: false,
                                         onSelect(hours, min){
                                             appContest.dateStartNotStr.setHours(hours)
                                             appContest.dateStartNotStr.setMinutes(min)
-                                            appContest.timeStart = `${hours}:${min}`
                                         },
-                                        default: "00:00"})
+                                        defaultTime: `${appContest.dateStartNotStr.getHours()}:${appContest.dateStartNotStr.getMinutes()}`})
     M.Timepicker.init(timepickerStop, {i18n: timepickerRu,
                                         twelveHour: false,
                                         onSelect(hours, min){
                                             appContest.dateEndNotStr.setHours(hours)
                                             appContest.dateEndNotStr.setMinutes(min)
-                                            appContest.timeEnd = `${hours}:${min}`
                                         },
-                                        default: "00:00"})
+                                        defaultTime: `${appContest.dateEndNotStr.getHours()}:${appContest.dateEndNotStr.getMinutes()}`})
     datapickerElementEnd = M.Datepicker.init(datepickerStop, {i18n: datapickerRu,
                                                               onSelect(date){
-                                                                   appContest.dateEnd = this.date
+                                                                   appContest.dateEndNotStr = this.date
                                                               },
                                                               format: 'dd.mm.yyyy',
                                                               minDate: dateNow,
-                                                              firstDay: 1})
+                                                              firstDay: 1,
+                                                              setDefaultDate: true,
+                                                              defaultDate: appContest.dateEndNotStr})
+    
+    console.log(appContest.dateStartNotStr, appContest.dateEndNotStr)
 }
 
 function locationReplace(path){
-    console.log(path)
     window.location.replace(`/${path}`);
 }
 

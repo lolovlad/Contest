@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import List
 from enum import Enum
-from .Task import TaskGet, TaskPage
+from .Task import TaskGet
 
 
 class TypeContest(int, Enum):
@@ -61,7 +61,18 @@ class ContestPutUsers(BaseModel):
 
 class ContestGetPage(BaseContest):
     id: int = 0
-    tasks: List[TaskPage] = 0
+    tasks: List[TaskGet] = 0
 
     class Config:
         orm_mode = True
+
+
+class ContestModelView(BaseContest):
+    id: int
+    name_contest: str
+    type: TypeContest
+    state_contest: TypeState
+    data_start: str
+    time_start: str
+    data_end: str
+    time_end: str

@@ -6,6 +6,7 @@ from Controller.MenuController import MenuController
 from Controller.PackageController import PackageController
 from Controller.TotalWindowController import TotalWindowController
 from Controller import UserController, TeamController, ContestController
+from Classes.TaskPage import TaskPage
 
 
 class ControllersInit(metaclass=Singleton):
@@ -18,6 +19,7 @@ class ControllersInit(metaclass=Singleton):
         self.menu = None
         self.package = None
         self.total = None
+        self.task: TaskPage = None
         self.__target = self.login
 
     @property

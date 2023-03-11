@@ -13,8 +13,11 @@ class TeamAPI(Team):
     def get_team(self) -> List[dict]:
         return self.__api.get("teams", {})
 
+    def get_one_team(self, id_team: int) -> dict:
+        return self.__api.get(f"teams/{id_team}", {})
+
     def post_team(self, team: TeamPost) -> dict:
-        return self.__api.post("teams", team.dict())
+        return self.__api.post_token("teams", team.dict())
 
     def put_team(self, team: TeamGet) -> dict:
         return self.__api.put_token("teams", team.dict())

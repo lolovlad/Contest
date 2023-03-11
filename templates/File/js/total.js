@@ -22,44 +22,41 @@ const appTotal = new Vue({
             }else{
                 col = ["№", "Название команды"].concat(thNew, ["Сумма баллов"])
             }
-            for(let value of col){
+            for(const value of col){
                 this.nameColumn.push(value)
             }
             this.report = []
             n = 1
-            console.log(total)
-            for(let value of total){
+            for(const value of total){
                 const tdNew = []
                 for(const [keyNew, valueNew] of Object.entries(value.total)){
-                    tdNew.push(valueNew.points)
+                    tdNew.push(valueNew)
                 }
-                if(typeContest == 1){
-                    value.name = value.name_user
-                }else{
-                    value.name = value.name_team
-                }
+                value.name = value.name
                 value.total = tdNew
                 value.num = n
                 this.report.push(value)
                 ++n
             }
-            console.log(this.report)
         },
         loadContest(contests){
             this.contests = []
-            console.log(contests)
             for(let contest of contests){
                 this.contests.push(contest)
             }
         },
         openReportTotal(idContest){
-            eel.select_contest_total(idContest)
+            eel.select_contest_total(idContest)((total)=>{
+                this.loadTotalReport(total)
+            })
         }
     }
 })
 
 document.addEventListener('DOMContentLoaded', function() {
-    eel.load_contest_to_total()
+    eel.load_contest_to_total()((contest)=>{
+        appTotal.loadContest(contest)
+    })
 })
 
 
@@ -70,50 +67,6 @@ function loadContest(contest){
 
 function loadTotalContest(total){
     appTotal.loadTotalReport(total)
- /*   console.log(total)
-    totalMenu.innerHTML = ""
-
-    for(const [key, value] of Object.entries(total.reports_total)){
-        console.log(key, value)
-        let thNew = ``
-        
-        for(const [keyNew, valueNew] of Object.entries(value[0].total)){
-            thNew += `<th>Задание ${keyNew}</th>`
-        }
-
-        totalMenu.innerHTML += `<table>
-                                  <thead>
-                                    <tr>
-                                        <th>№</th>
-                                        <th>Название команды</th>
-                                        <th>Участники</th>
-                                        ${thNew}
-                                        <th>Сумма баллов</th>
-                                    </tr>
-                                  </thead>
-                        
-                                  <tbody id="totalBody">
-                                  </tbody>
-                                </table>`
-        const tabel = totalMenu.querySelectorAll("#totalBody")[0]
-        tabel.innerHTML = ""
-        
-        for(let i=0; i < value.length; i++){
-            let thNew = ``
-        
-            for(const [keyNew, valueNew] of Object.entries(value[i].total)){
-                thNew += `<th>${valueNew.points}</th>`
-            }
-            let row = tabel.insertRow(-1)
-            row.innerHTML = `<tr>
-                                <th>${i+1}</th>
-                                <th>${value[i].name_team}</th>
-                                <th>${value[i].name_team}</th>
-                                ${thNew}
-                                <th>${value[i].sum_point}</th>
-                            </tr>`
-        }
-    }*/ 
 }
 
 eel.expose(loadTotalContest)

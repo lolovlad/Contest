@@ -14,6 +14,11 @@ class TeamProxy(Team):
         self.operations.append(func)
         return func()
 
+    def get_one_team(self, id_team: int):
+        func = partial(self.__api.get_one_team, id_team)
+        self.operations.append(func)
+        return func()
+
     def post_team(self, team: TeamPost):
         func = partial(self.__api.post_team, team)
         self.operations.append(func)

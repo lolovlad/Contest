@@ -14,6 +14,11 @@ class ContestProxy(Contest):
         self.operations.append(func)
         return func()
 
+    def get_contest(self, id_contest: int):
+        func = partial(self.__api.get_contest, id_contest)
+        self.operations.append(func)
+        return func()
+
     def post_contest(self, contest: dict):
         func = partial(self.__api.post_contest, contest)
         self.operations.append(func)
@@ -34,8 +39,8 @@ class ContestProxy(Contest):
         self.operations.append(func)
         return func()
 
-    def contests_by_user_id(self, id_user: int):
-        func = partial(self.__api.contests_by_user_id, id_user)
+    def contests_by_user_id(self):
+        func = partial(self.__api.contests_by_user_id)
         self.operations.append(func)
         return func()
 

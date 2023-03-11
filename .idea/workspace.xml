@@ -1,19 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0d0c2e20-8cff-47f1-899d-cc956e664d99" name="Changes" comment="beta 1.3">
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/AnswersAPI.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classes/ProxyController/AnswersProxy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Interfase/Proxy/Answers.py" afterDir="false" />
+    <list default="true" id="0d0c2e20-8cff-47f1-899d-cc956e664d99" name="Changes" comment="update 2:28">
+      <change afterPath="$PROJECT_DIR$/Classes/ContestUserPage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classes/Models/WebSocketMessage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classes/TaskPage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classes/TotalPage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ControllersInit.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ControllersInit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/Models/Contest.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/Contest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/Models/Task.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/Task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/Models/Team.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/Team.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/Models/User.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Models/User.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classes/ProxyController/ContestAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/ContestAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/ContestProxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/ContestProxy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/EducationalOrganizationsAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/EducationalOrganizationsAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/EducationalOrganizationsProxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/EducationalOrganizationsProxy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/TaskAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/TaskAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/TaskProxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/TaskProxy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/TeamAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/TeamAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/TeamProxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/TeamProxy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/UserAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/UserAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/ProxyController/UserProxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/ProxyController/UserProxy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/ContestController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/ContestController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/MainWindowController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/MainWindowController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/LoginController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/LoginController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/MenuController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/MenuController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/PackageController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/PackageController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/TeamController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/TeamController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/TotalWindowController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/TotalWindowController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/File/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/UserController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/UserController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Files/settings_app.env" beforeDir="false" afterPath="$PROJECT_DIR$/Files/settings_app.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interfase/Proxy/Task.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interfase/Proxy/Task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/ContestModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/ContestModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/LoginModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/LoginModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/MainWindowModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/MainWindowModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/TeamModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/TeamModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/UserModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/UserModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/ContestView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/ContestView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/MenuView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/MenuView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/TeamView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/TeamView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/UserView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/UserView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/File/js/admin_panel.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/admin_panel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/File/js/contest.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/contest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/File/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/File/js/menu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/File/js/task.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/task.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/File/js/team.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/team.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/File/js/total.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/total.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/File/js/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/File/js/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_panel.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/menu.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templates/contest.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates/contest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templates/team.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates/team.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templates/user.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates/user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/total.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_reg.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +98,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Classes/ProxyController" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Application.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -67,10 +109,10 @@
       <recent name="C:\Users\Vlad\PycharmProjects\Contest\Files" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Vlad\PycharmProjects\Contest\Classes" />
       <recent name="C:\Users\Vlad\PycharmProjects\Contest\templates\File\js" />
       <recent name="C:\Users\Vlad\PycharmProjects\Contest\Classes\Models" />
       <recent name="C:\Users\Vlad\PycharmProjects\Contest\Controller\Tabs" />
-      <recent name="C:\Users\Vlad\PycharmProjects\Contest\Classes" />
     </key>
   </component>
   <component name="RunManager" selected="Python.Application">
@@ -144,12 +186,33 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Python310\python.exe" />
       <option name="WORKING_DIRECTORY" value="$USER_HOME$/Desktop/09 - Eelectron-quick-start" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$USER_HOME$/Desktop/09 - Eelectron-quick-start/hello.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="programm2" type="PythonConfigurationType" factoryName="Python">
+      <module name="Sort_Robot" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Python310\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Application.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -179,11 +242,19 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.programm2" />
+      <item itemvalue="Python.Application" />
+      <item itemvalue="Python.hello" />
+      <item itemvalue="Python.LoginResourceProxy" />
+      <item itemvalue="Python.RequestsAPI" />
+      <item itemvalue="Python.test_reg" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.Application" />
-        <item itemvalue="Python.hello" />
         <item itemvalue="Python.test_reg" />
+        <item itemvalue="Python.hello" />
         <item itemvalue="Python.RequestsAPI" />
         <item itemvalue="Python.LoginResourceProxy" />
       </list>
@@ -250,7 +321,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664904473953</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="update 2:28">
+      <created>1671488900779</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1671488900779</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -272,7 +350,8 @@
     <MESSAGE value="beta 1.0" />
     <MESSAGE value="beta 1.2" />
     <MESSAGE value="beta 1.3" />
-    <option name="LAST_COMMIT_MESSAGE" value="beta 1.3" />
+    <MESSAGE value="update 2:28" />
+    <option name="LAST_COMMIT_MESSAGE" value="update 2:28" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -333,26 +412,6 @@
           <option name="timeStamp" value="1207" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>64</line>
-          <option name="timeStamp" value="1269" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>65</line>
-          <option name="timeStamp" value="1270" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>66</line>
-          <option name="timeStamp" value="1271" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>67</line>
-          <option name="timeStamp" value="1272" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Model/MainWindowModel.py</url>
           <line>59</line>
           <option name="timeStamp" value="1273" />
@@ -368,21 +427,6 @@
           <option name="timeStamp" value="1275" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Model/ContestModel.py</url>
-          <line>95</line>
-          <option name="timeStamp" value="1276" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Model/ContestModel.py</url>
-          <line>96</line>
-          <option name="timeStamp" value="1277" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Model/ContestModel.py</url>
-          <line>99</line>
-          <option name="timeStamp" value="1281" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Controller/TotalWindowController.py</url>
           <line>15</line>
           <option name="timeStamp" value="1331" />
@@ -391,46 +435,6 @@
           <url>file://$PROJECT_DIR$/Controller/TotalWindowController.py</url>
           <line>16</line>
           <option name="timeStamp" value="1333" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>24</line>
-          <option name="timeStamp" value="1370" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>25</line>
-          <option name="timeStamp" value="1371" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>26</line>
-          <option name="timeStamp" value="1372" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>27</line>
-          <option name="timeStamp" value="1373" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
-          <line>28</line>
-          <option name="timeStamp" value="1374" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Classes/ProxyController/ContestProxy.py</url>
-          <line>17</line>
-          <option name="timeStamp" value="1376" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Classes/ProxyController/ContestProxy.py</url>
-          <line>18</line>
-          <option name="timeStamp" value="1377" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Classes/ProxyController/ContestProxy.py</url>
-          <line>19</line>
-          <option name="timeStamp" value="1378" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Classes/RequestsAPI.py</url>
@@ -443,18 +447,8 @@
           <option name="timeStamp" value="1380" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Classes/RequestsAPI.py</url>
-          <line>27</line>
-          <option name="timeStamp" value="1381" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Classes/RequestsAPI.py</url>
-          <line>28</line>
-          <option name="timeStamp" value="1382" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Classes/ProxyController/UserAPI.py</url>
-          <line>18</line>
+          <line>21</line>
           <option name="timeStamp" value="1385" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -471,6 +465,101 @@
           <url>file://$PROJECT_DIR$/Controller/MainWindowController.py</url>
           <line>44</line>
           <option name="timeStamp" value="1408" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
+          <line>47</line>
+          <option name="timeStamp" value="1432" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
+          <line>48</line>
+          <option name="timeStamp" value="1433" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Controller/ContestController.py</url>
+          <line>49</line>
+          <option name="timeStamp" value="1434" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/TaskPage.py</url>
+          <line>61</line>
+          <option name="timeStamp" value="1441" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/TaskPage.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="1442" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/TaskPage.py</url>
+          <line>63</line>
+          <option name="timeStamp" value="1443" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/TaskPage.py</url>
+          <line>64</line>
+          <option name="timeStamp" value="1444" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/TaskPage.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="1445" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/TaskPage.py</url>
+          <line>66</line>
+          <option name="timeStamp" value="1446" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/TaskPage.py</url>
+          <line>67</line>
+          <option name="timeStamp" value="1447" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/TaskPage.py</url>
+          <line>69</line>
+          <option name="timeStamp" value="1448" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/TaskPage.py</url>
+          <line>68</line>
+          <option name="timeStamp" value="1449" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/TaskPage.py</url>
+          <line>70</line>
+          <option name="timeStamp" value="1450" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/ContestUserPage.py</url>
+          <line>74</line>
+          <option name="timeStamp" value="1455" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/ContestUserPage.py</url>
+          <line>73</line>
+          <option name="timeStamp" value="1456" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Application.py</url>
+          <line>356</line>
+          <option name="timeStamp" value="1457" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Application.py</url>
+          <line>355</line>
+          <option name="timeStamp" value="1459" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/TotalPage.py</url>
+          <line>18</line>
+          <option name="timeStamp" value="1460" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classes/TotalPage.py</url>
+          <line>17</line>
+          <option name="timeStamp" value="1461" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

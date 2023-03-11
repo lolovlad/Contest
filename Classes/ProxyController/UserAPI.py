@@ -9,8 +9,11 @@ class UserAPI(User):
     def __init__(self):
         self.__api: RequestsAPI = RequestsAPI(Session().token.access_token)
 
-    def get_users(self) -> List[dict]:
-        return self.__api.get_toke("users", {})
+    def get_users(self, params: dict) -> List[dict]:
+        return self.__api.get_toke("users", params)
+
+    def get_user(self, id_user: int) -> dict:
+        return self.__api.get_toke(f"users/{id_user}", {})
 
     def get_status_user(self, data: dict) -> dict:
         return self.__api.get_toke(f"users/status/{data['id_contest']}/{data['id_user']}", {})

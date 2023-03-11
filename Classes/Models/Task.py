@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import List
 from enum import Enum
-from ..Models.TaskView import TaskView
 
 
 class TypeTask(int, Enum):
@@ -24,53 +23,41 @@ class TypeOutput(int, Enum):
 
 
 class BaseTask(BaseModel):
-    id_contest: int = 0
-    time_work: int = 1
-    size_raw: int = 32
-    type_input: TypeInput = 1
-    type_output: TypeOutput = 1
-    name_task: str = ""
-    description: str = ""
-    description_input: str = ""
-    description_output: str = ""
+    id_contest: int
+    name_task: str
+    description: str
+    description_input: str
+    description_output: str
+    type_task: TypeTask
 
-    type_task: TypeTask = 1
-    number_shipments: int = 100
+
+class TaskSettings(BaseModel):
+    id: int
+    time_work: int
+    size_raw: int
+    type_input: TypeInput
+    type_output: TypeOutput
+    number_shipments: int
+    files: List[str]
 
 
 class TaskGet(BaseTask):
-    id: int = 0
-    path_test_file: str = ""
+    id: int
 
     class Config:
         orm_mode = True
 
 
 class TaskPost(BaseTask):
-    file: bytes = b""
+    pass
 
 
 class TaskPut(BaseTask):
-    id: int = 0
-    file: bytes = b""
-    path_test_file: str = ""
+    id: int
 
 
-class TaskPostInServer(BaseTask):
-    file: str = ""
-
-
-class TaskPutInServer(BaseTask):
-    id: int = 0
-    file: str = ""
-    path_test_file: str = ""
-
-
-class TaskDelete(BaseTask):
-    id: int = 0
-    path_test_file: str = ""
-
-
-class TaskPage(BaseTask):
-    id: int = 0
-    task_view: TaskView = None
+class FileUpload(BaseModel):
+    file_name: str
+    file_extend: str
+    file: object
+    task: TaskGet

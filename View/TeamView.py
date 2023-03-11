@@ -14,9 +14,11 @@ class TeamView(View):
     def show_view(self):
         eel.locationReplace(self.__file_templates)
 
-    def update(self, type_notify: TypeNotify):
+    def show_view_form(self):
+        eel.locationReplace("templates/team_form.html")
+
+    def update(self, type_notify: TypeNotify, **kwargs):
         if type_notify == TypeNotify.TEAM_TABLE:
-            teams = [user.dict() for user in self.__model.teams]
-            eel.updateTeamTabel(teams)
+            eel.updateTeamTabel(kwargs['teams'])
         elif type_notify == TypeNotify.TEAM_FORM:
-            eel.loadFormTeam(self.__model.select_team.dict())
+            eel.loadFormTeam(kwargs['team'])

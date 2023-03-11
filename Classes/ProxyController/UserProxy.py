@@ -10,8 +10,13 @@ class UserProxy(User):
         self.__api: UserAPI = UserAPI()
         self.operations = []
 
-    def get_users(self):
-        func = partial(self.__api.get_users)
+    def get_users(self, params: dict):
+        func = partial(self.__api.get_users, params)
+        self.operations.append(func)
+        return func()
+
+    def get_user(self, id_user: int):
+        func = partial(self.__api.get_user, id_user)
         self.operations.append(func)
         return func()
 

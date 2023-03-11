@@ -1,20 +1,24 @@
 const appContest = new Vue({
     el: "#contest",
     data: {
-        id: -1,
-        dateStart: "",
-        dateEnd: "",
-        timeStart: "",
-        timeEnd: "",
-        type: 1,
-        nameContest: "",
-        stateContest: 0,
         users: [],
         teams: [],
+        contest: {
+            name_contest: "",
+            type: 1,
+            state_contest: 0,
+            datetime_start: Date(ms=0),
+            datetime_end: Date(ms=0),
+        },
+
 
         dateStartNotStr: new Date(ms=0),
         dateEndNotStr: new Date(ms=0),
         
+        dateStart: "",
+        dateEnd: "",
+        timeStart: "",
+        timeEnd: "",
         
 
         selectTypeContest: [
@@ -43,90 +47,158 @@ const appContest = new Vue({
             typeReport: ""
         },
 
-        typeReport: ["Exel", "Word", "PDF"]
+        typeReport: ["Exel", "Word", "PDF"],
+        updateMode: false
 
     },
     methods: {
-        padTo2Digits(num) {
-            return num.toString().padStart(2, '0');
-        },
-        formatDate(date) {
-            return [
-              this.padTo2Digits(date.getDate()),
-              this.padTo2Digits(date.getMonth() + 1),
-              date.getFullYear()
-            ].join('.');
-        },
-
-        selectRowContest(contest){
-            this.isSelect = false
-            appNav.setSelect(true)
-
-            eel.select_contest(contest)
-        },
-        loadFormContest(contest){
-            const datetimeStartStr = contest.datetime_start.split(", ")
-            const datetimeEndStr = contest.datetime_end.split(", ")
-
-
-            this.id = contest.id,
-            this.dateStart = datetimeStartStr[0]
-            this.dateEnd = datetimeEndStr[0]
-            this.timeStart = datetimeStartStr[1]
-            this.timeEnd = datetimeEndStr[1]
-            this.typeSelectedContes = contest.type
-            this.nameContest = contest.name_contest
-            this.stateContest = contest.state_contest
-            this.users = contest.users
-
-            const dateStart = datetimeStartStr[0].split(".").map(el=>parseInt(el))
-            const dateEnd = datetimeEndStr[0].split(".").map(el=>parseInt(el))
-
-            const timeStart = datetimeStartStr[1].split(":").map(el=>parseInt(el))
-            const timeEnd = datetimeEndStr[1].split(":").map(el=>parseInt(el))
-
-            this.dateStartNotStr = new Date(year=dateStart[2], month=dateStart[1], day=dateStart[0], 
-                hour=timeStart[0], minute=timeStart[1])
-            this.dateEndNotStr = new Date(year=dateEnd[2], month=dateEnd[1], day=dateEnd[0], 
-                hour=timeEnd[0], minute=timeEnd[1])
-
-            if(this.typeSelectedContes == 1){
-                this.isTeam = false
-            }else{
-                this.isTeam = true
+        updateContests(value){
+            this.contests.length = 0
+            for(let contest of value){
+                this.contests.push(contest)
             }
-            appTask.idContest = contest.id
         },
-        registrationUsers(){
-            if(this.typeSelectedContes == 1){
-                eel.load_user_in_contest(this.id)((users)=>{
+
+        openPageForm(){
+            eel.load_contest_form()
+        },
+        addContest(){
+            if(this.dateEndNotStr.getTime() > this.dateStartNotStr.getTime()){
+                const isAgree = confirm("Поле типа соревнования нельзя будет изменить. Вы согласны с ведеными данными?");
+                if(isAgree){
+                    this.contest.datetime_start = this.dateStartNotStr
+                    this.contest.datetime_end = this.dateEndNotStr
+                    eel.button_add_contest(this.contest)
+                }
+            }else{
+                this.error = "Дата начала больше даты окончания"
+            }
+        },
+
+        deleteContest(idContest){
+            eel.button_delete_contest(idContest)
+        },
+        updateContest(){
+            if(this.dateEndNotStr.getTime() > this.dateStartNotStr.getTime()){
+                this.contest.datetime_start = this.dateStartNotStr
+                this.contest.datetime_end = this.dateEndNotStr
+                eel.button_update_contest(this.contest)
+            }else{
+                this.error = "Дата начала больше даты окончания"
+            }
+        },
+        openPageFormUpdate(idContest){
+            eel.load_contest_form_update(idContest)
+        },
+
+        loadFormContest(contest){
+           this.contest = contest
+           this.dateStartNotStr = new Date(contest.datetime_start + ".00Z")
+           this.dateEndNotStr = new Date(contest.datetime_end + ".00Z")
+           initDatePiker()
+           this.timeStart = `${this.dateEndNotStr.getHours()}:${this.dateEndNotStr.getMinutes()}`
+           this.timeEnd = `${this.dateEndNotStr.getHours()}:${this.dateEndNotStr.getMinutes()}`
+        },
+
+        registrationUsers(idContest, type){
+            if(type == 1){
+                eel.load_user_in_contest(idContest)((users)=>{
+                    this.isTeam = false
                     this.updateViewUser(users)
                 })
             }else{
-                eel.load_team_in_contest(this.id)((teams)=>{
+                eel.load_team_in_contest(idContest)((teams)=>{
+                    this.isTeam = true
                     this.updateViewUserTeam(teams)
                 })
             }
 
             modelWindowContest.open()
         },
+
         updateViewUser(users){
             this.selectUsers.length = 0
-            for(let user of users){
+            this.users.length = 0
+
+            for(let user of users.user_not_in_contest){
                 this.selectUsers.push(user)
             }
+            for(let user of users.user_in_contest){
+                this.users.push(user)
+            }
         },
+
         updateViewUserTeam(teams){
             this.selectTeams.length = 0
             this.teams.length = 0
-            console.log(teams, "teams")
             for(let team of teams.team_not_in_contest){
                 this.selectTeams.push(team)
+                for(let user of team.users){
+                    this.users.push(user)
+                }
             }
             for(let team of teams.team_in_contest){
                 this.teams.push(team)
             }
         },
+
+        selectRowUserContest(user){
+            const id_name = this.users.map(el => el.id)
+            if (!id_name.includes(user.id)){
+                this.users.push(user)
+
+                const id_team = this.selectUsers.map(el => el.id)
+                const i = id_team.indexOf(user.id)
+            
+                this.selectUsers.splice(i, 1)
+            }
+        },
+        deleteUserContest(user){
+            const id_name = this.users.map(el => el.id)
+            const i = id_name.indexOf(user.id)
+            this.selectUsers.push(user)
+            this.users.splice(i, 1)
+        },
+
+        selectRowTeamContest(team){
+            const id_team = this.teams.map(el => el.id)
+            if (!id_team.includes(team.id)){
+                let id_now_team = new Set(team.users.map(el => el.id))
+                let id_all_team = new Set(this.users.map(el => el.id))
+                let intersection = new Set(
+                    [...id_now_team].filter(x => id_all_team.has(x)))
+                
+                console.log(id_now_team, id_all_team, intersection)
+                if(intersection.size == 0){
+                    this.teams.push(team)
+
+                    const id_team = this.selectTeams.map(el => el.id)
+                    const i = id_team.indexOf(team.id)
+                    
+                    this.selectTeams.splice(i, 1)
+                    this.users = this.users.concat(team.users)
+                }
+            }
+        },
+        deleteTeamContest(team){
+            const id_team = this.teams.map(el => el.id)
+            const i = id_team.indexOf(team.id)
+            this.selectTeams.push(team)
+            this.teams.splice(i, 1)
+            this.users.length = 0
+            for(let team of this.teams){
+                this.users = this.users.concat(team.users)
+            }
+        },
+
+        agreaRegUsers(){
+            eel.registration_users_contest(this.users)
+            modelWindowContest.close()
+        },
+        openWindowTask(idContest){
+            eel.open_window_task(idContest)
+        }
+        /*
         addContest(){
             eel.update_select_contest({datetime_registration: new Date(ms=0)})
             if(this.dateEndNotStr.getTime() > this.dateStartNotStr.getTime()){
@@ -136,13 +208,6 @@ const appContest = new Vue({
                     this.clearForm()
             }else{
                 this.error = "Дата начала больше даты окончания"
-            }
-        },
-        updateContests(value){
-            this.clearForm()
-            this.contests.length = 0
-            for(let contest of value){
-                this.contests.push(contest)
             }
         },
         clearForm(){
@@ -170,33 +235,7 @@ const appContest = new Vue({
         closeViewContest(){
 
         },
-        deleteContest(){
 
-            eel.button_delete_contest()
-        },
-        updateContest(){
-            eel.button_update_contest()
-        },
-        selectRowUserContest(user){
-            const id_name = this.users.map(el => el.id)
-            if (!id_name.includes(user.id)){
-                this.users.push(user)
-
-                const id_team = this.selectUsers.map(el => el.id)
-                const i = id_team.indexOf(user.id)
-                
-                this.selectUsers.splice(i, 1)
-
-                eel.update_select_contest({users: this.users})
-            }
-        },
-        deleteUserContest(user){
-            const id_name = this.users.map(el => el.id)
-            const i = id_name.indexOf(user.id)
-            this.selectUsers.push(user)
-            this.users.splice(i, 1)
-            eel.update_select_contest({users: this.users})
-        },
         selectRowTeamContest(team){
             const id_team = this.teams.map(el => el.id)
             if (!id_team.includes(team.id)){
@@ -228,10 +267,7 @@ const appContest = new Vue({
             console.log(this.users)
             eel.update_select_contest({users: this.users})
         },
-        agreaRegUsers(){
-            eel.registration_users_contest()
-            modelWindowContest.close()
-        },
+      
         contestReport(){
             modelWindowReport.open()
             //eel.button_contest_create_report()
@@ -260,58 +296,8 @@ const appContest = new Vue({
             }else{
                 alert("Не все поля заполнены")
             }
-        }
+        }*/
         
-    },
-    watch: {
-        dateStart: function(val){
-            try{
-                this.dateStartNotStr.setMonth(val.getMonth())
-                this.dateStartNotStr.setFullYear(val.getFullYear())
-                this.dateStartNotStr.setDate(val.getDate())
-                this.dateStart = this.formatDate(val)
-
-                eel.update_select_contest({datetime_start: this.dateStartNotStr})
-            }catch (err){
-                this.dateStart = val
-            }
-        },
-        dateEnd: function(val){
-            try{
-                this.dateEndNotStr.setMonth(val.getMonth())
-                this.dateEndNotStr.setFullYear(val.getFullYear())
-                this.dateEndNotStr.setDate(val.getDate())
-                this.dateEnd = this.formatDate(val)
-
-                eel.update_select_contest({datetime_end: this.dateEndNotStr})
-            }catch (err){
-                this.dateEnd = val
-            }
-        },
-        timeStart: function(val){
-            this.timeStart = val
-
-            eel.update_select_contest({datetime_start: this.dateStartNotStr})
-        },
-        timeEnd: function(val){
-            this.timeEnd = val
-
-            eel.update_select_contest({datetime_end: this.dateEndNotStr})
-        },
-        nameContest: function(val){
-            this.nameContest = val
-            eel.update_select_contest({name_contest: this.nameContest})
-        },
-        stateContest: function(val){
-            this.stateContest = val
-
-            eel.update_select_contest({state_contest: this.stateContest})
-        },
-        type: function(val){
-            this.type = val
-
-            eel.update_select_contest({type: this.type})
-        },
     },
     filters: {
         typeSelectContest(val){
@@ -336,6 +322,9 @@ const appContest = new Vue({
                 return `${el.sename} ${el.name[0]}. ${el.secondname[0]}.`
             })
             return mapping.join(" ")
+        },
+        dateFilter(val){
+            return new Date(val).toLocaleString()
         }
     },
     computed: {
@@ -348,24 +337,6 @@ const appContest = new Vue({
     }
 })
 
-const appNav = new Vue({
-    el: "#navApp",
-    data: {
-        isSelect: false
-    },
-    methods: {
-        setSelect(val){
-            this.isSelect = val
-            console.log(val)
-        },
-        loadsTasks(){
-            console.log(this.isSelect, "loadsTasks")
-            if(this.isSelect)
-                eel.load_tasks()
-        }
-    }
-})
-
 let modelWindowContest = NaN
 let modelWindowReport = NaN
 
@@ -373,15 +344,30 @@ document.addEventListener("DOMContentLoaded", ()=>{
     modelWindowContest = document.querySelector('#teamModel')
     modelWindowReport = document.querySelector('#modalSelectReport')
 
-    M.Modal.init(modelWindowContest, {onCloseEnd: appContest.closeViewContest})
-    modelWindowContest = M.Modal.getInstance(modelWindowContest)
-    
-    M.Modal.init(modelWindowReport, {onCloseEnd: appContest.closeViewContest})
-    modelWindowReport = M.Modal.getInstance(modelWindowReport)
+    if(modelWindowContest != null){
+        M.Modal.init(modelWindowContest, {onCloseEnd: appContest.closeViewContest})
+        modelWindowContest = M.Modal.getInstance(modelWindowContest)
+    }
 
-    M.textareaAutoResize(document.getElementById("description"))
+    if(modelWindowReport != null){    
+        M.Modal.init(modelWindowReport, {onCloseEnd: appContest.closeViewContest})
+        modelWindowReport = M.Modal.getInstance(modelWindowReport)
+    }
+
+    eel.get_contest_mode_update()((val) => {
+        if(val){
+            eel.load_form_contest()
+            appContest.updateMode = true
+        }else{
+            //eel.load_user_in_team(appTeam.team.id)((users)=>{
+            //    appTeam.updateViewUser(users)
+            //})
+            //appTeam.updateMode = false
+        }
+    })
 
     eel.load_contests()
+    initDatePiker()
 })
 
 function updateContestTable(contests){
