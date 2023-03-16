@@ -242,11 +242,6 @@ def get_url_websocket():
 
 
 @eel.expose
-def load_compilation():
-    return ControllersInit().main_window.load_compilation()
-
-
-@eel.expose
 def load_main_window_select_task(id_task: int):
     return ControllersInit().main_window.load_main_window_select_task(id_task)
 
@@ -257,13 +252,14 @@ def get_report(id_answer: int):
 
 
 @eel.expose
-def load_main_window_contest() -> str:
+def load_main_window_contest() -> dict:
     return ControllersInit().main_window.load_contest()
 
 
 @eel.expose
-def load_main_window_list_task() -> str:
-    return ControllersInit().main_window.load_main_window_list_task()
+def load_main_window_list_task() -> dict:
+    tasks = ControllersInit().main_window.load_main_window_list_task()
+    return {task["id"]: task for task in tasks}
 
 
 @eel.expose
@@ -279,7 +275,7 @@ def upload_file(value: dict):
 def open_package_window():
     ControllersInit().package = PackageController()
     controller = ControllersInit().package
-    ControllersInit().main_window.open_package_window(controller)
+    #ControllersInit().main_window.open_package_window(controller)
 
 
 '''team'''
@@ -331,11 +327,6 @@ def close_contest():
 
 
 @eel.expose
-def is_close():
-    return ControllersInit().main_window.is_close_contest()
-
-
-@eel.expose
 def load_answer_package():
     ControllersInit().package.load_answer_package()
 
@@ -363,8 +354,8 @@ def load_contest_to_total():
 
 
 @eel.expose
-def button_contest_create_report(settings_report: dict):
-    ControllersInit().contest.create_report(settings_report)
+def button_contest_create_report(id_contest: int, type_contest: int, settings_report: dict):
+    ControllersInit().contest.create_report(id_contest, type_contest, settings_report)
 
 
 @eel.expose

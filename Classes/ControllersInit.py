@@ -7,6 +7,7 @@ from Controller.PackageController import PackageController
 from Controller.TotalWindowController import TotalWindowController
 from Controller import UserController, TeamController, ContestController
 from Classes.TaskPage import TaskPage
+from Classes.ContestUserPage import ContestUserPage
 
 
 class ControllersInit(metaclass=Singleton):
@@ -15,7 +16,7 @@ class ControllersInit(metaclass=Singleton):
         self.user: UserController = None
         self.team: TeamController = None
         self.contest: ContestController = None
-        self.main_window = None
+        self.main_window: ContestUserPage = None
         self.menu = None
         self.package = None
         self.total = None

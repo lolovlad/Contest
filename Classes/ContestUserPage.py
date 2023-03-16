@@ -1,6 +1,7 @@
 from Classes.Models.WebSocketMessage import TypeMessage, BaseMessage
 from settings import settings
 from Classes.Session import Session
+from Classes.ProxyController.UserContestViewProxy import UserContestViewProxy
 
 from json import loads
 
@@ -15,7 +16,7 @@ class ContestUserPage:
         self.__file_templates: dict = {
             "main": "templates/main_page.html",
         }
-
+        self.__proxy: UserContestViewProxy = UserContestViewProxy()
         self.__path_file_program: bytes = b""
 
     def show_view(self, **kwargs):
@@ -25,27 +26,20 @@ class ContestUserPage:
         self.__url_socket = f"ws://{settings.host_server}:{settings.port_server}/user_contest_view/view_contest?token={Session().token.access_token}"
         return self.__url_socket
 
-    def load_contest(self):
-        return BaseMessage(message=TypeMessage.GET_CONTEST,
-                           body_message={"id": self.__id_contest}).json()
+    def load_contest(self) -> dict:
+        return self.__proxy.get_contest(self.__id_contest)["body_message"]
 
-    def load_main_window_list_task(self):
-        return BaseMessage(message=TypeMessage.GET_LIST_TASK,
-                           body_message={"id": self.__id_contest}).json()
+    def load_main_window_list_task(self) -> dict:
+        return self.__proxy.get_list_task(self.__id_contest)["body_message"]["list_task"]
 
-    def load_main_window_select_task(self, id_task: int):
-        return BaseMessage(message=TypeMessage.GET_SELECT_TASK,
-                           body_message={"id": id_task}).json()
+    def load_main_window_select_task(self, id_task: int) -> dict:
+        return self.__proxy.get_task(id_task)["body_message"]
 
-    def get_report(self, id_answer: int):
-        return BaseMessage(message=TypeMessage.GET_REPORT,
-                           body_message={"id_answer": id_answer}).json()
+    def get_report(self, id_answer: int) -> dict:
+        return self.__proxy.get_report(id_answer)["body_message"]["report"]
 
-    def get_list_answers(self, id_task: int):
-        return BaseMessage(message=TypeMessage.GET_LIST_ANSWER,
-                           body_message={"id_task": id_task,
-                                         "token": Session().token,
-                                         "id_contest": self.__id_contest}).json()
+    def get_list_answers(self, id_task: int) -> dict:
+        return self.__proxy.get_list_answers(self.__id_contest, id_task)["body_message"]["list"]
 
     def set_file(self, file: dict):
         self.__path_file_program = open(file["file_name"], "rb").read().decode()
@@ -59,19 +53,9 @@ class ContestUserPage:
                                          "program_file": self.__path_file_program}).json()
 
     def close_contest(self):
-        return BaseMessage(message=TypeMessage.CLOSER_CONTEST,
-                           body_message={"token": Session().token,
-                                         "id_contest": self.__id_contest}).json()
+        self.__proxy.close_contest(self.__id_contest)
 
     def parser_message(self, message: str):
         message = loads(message)
-        if message["message"] == TypeMessage.GET_CONTEST:
-            eel.setContestInformation(message["body_message"])
-        if message["message"] == TypeMessage.GET_LIST_TASK:
-            eel.setTaskList(message["body_message"]["list_task"])
-        if message["message"] == TypeMessage.GET_SELECT_TASK:
-            eel.setSelectTask(message["body_message"])
-        if message["message"] == TypeMessage.GET_LIST_ANSWER:
-            eel.setAnswer(message["body_message"]["list"])
-        if message["message"] == TypeMessage.GET_REPORT:
-            eel.setReport(message["body_message"]["report"])
+        if message["message"] == TypeMessage.POTS_ANSWER:
+            eel.getListAnswer()

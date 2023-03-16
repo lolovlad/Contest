@@ -63,16 +63,15 @@ class ContestController(Controller):
         self.__model.massage = "участники успешно добавлены"
         self.load_contests()
 
-    def create_report(self, settings_report: dict):
-        contest = self.__model.select_contest
-        response = self.__proxy_contest.get_report_total(contest.id)
+    def create_report(self, id_contest: int, type_contest:int,  settings_report: dict):
+        response = self.__proxy_contest.get_report_total(id_contest)
         if settings_report["typeReport"] == "Exel":
             file = FileXlsx()
         elif settings_report["typeReport"] == "Word":
             file = FileDocx()
         else:
             file = FilePDF()
-        file = ReportBuilder(response, contest.type.value, file)
+        file = ReportBuilder(response, type_contest, file)
         file.build_name_column()
         file.build_main_body()
         file.file.return_file(f"{settings_report['pathFile']}/{settings_report['nameFile']}")

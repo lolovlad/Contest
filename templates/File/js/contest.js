@@ -48,7 +48,10 @@ const appContest = new Vue({
         },
 
         typeReport: ["Exel", "Word", "PDF"],
-        updateMode: false
+        updateMode: false,
+
+        modelIdContest: 0,
+        modelTypeConntest: 0
 
     },
     methods: {
@@ -197,6 +200,36 @@ const appContest = new Vue({
         },
         openWindowTask(idContest){
             eel.open_window_task(idContest)
+        },
+        contestReport(idContest, typeContest){
+            this.modelIdContest = idContest
+            this.modelTypeConntest = typeContest
+            modelWindowReport.open()
+        },
+        openPathFile(){
+            eel.path_report()((pathFile) => {
+                this.genereteReport.pathFile = pathFile
+            })
+        },
+        selectTypeReport(typeReport){
+            this.genereteReport.typeReport = typeReport
+        },
+        isSelectedTypeReport(typeReport){
+            if(this.genereteReport.typeReport == typeReport)
+                return "type__report__active"
+            return ""
+        },
+        agreaReport(){
+            if(this.genereteReport.pathFile && this.genereteReport.nameFile && this.genereteReport.typeReport){
+                eel.button_contest_create_report(this.modelIdContest, this.modelTypeConntest, this.genereteReport)
+                this.genereteReport = {
+                    pathFile: "",
+                    nameFile: "",
+                    typeReport: ""
+                }
+            }else{
+                alert("Не все поля заполнены")
+            }
         }
         /*
         addContest(){
@@ -266,37 +299,7 @@ const appContest = new Vue({
             }
             console.log(this.users)
             eel.update_select_contest({users: this.users})
-        },
-      
-        contestReport(){
-            modelWindowReport.open()
-            //eel.button_contest_create_report()
-        },
-        openPathFile(){
-            eel.path_report()((pathFile) => {
-                this.genereteReport.pathFile = pathFile
-            })
-        },
-        selectTypeReport(typeReport){
-            this.genereteReport.typeReport = typeReport
-        },
-        isSelectedTypeReport(typeReport){
-            if(this.genereteReport.typeReport == typeReport)
-                return "type__report__active"
-            return ""
-        },
-        agreaReport(){
-            if(this.genereteReport.pathFile && this.genereteReport.nameFile && this.genereteReport.typeReport){
-                eel.button_contest_create_report(this.genereteReport)
-                this.genereteReport = {
-                    pathFile: "",
-                    nameFile: "",
-                    typeReport: ""
-                }
-            }else{
-                alert("Не все поля заполнены")
-            }
-        }*/
+        },*/
         
     },
     filters: {

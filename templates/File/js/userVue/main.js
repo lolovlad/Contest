@@ -36,7 +36,7 @@ const appMain = new Vue({
             }
         },
 
-        tasks: [],
+        tasks: {},
         answers: [],
         selectCompilation: [],
         planeSeconds: 0,
@@ -127,11 +127,9 @@ const appMain = new Vue({
             }
         },
         loadsTask(tasks){
-            this.tasks = []
-            for(let task of tasks){
-                this.tasks.push(task)
-            }
-            this.selectRowTask(this.tasks[0].id)
+            this.tasks = tasks
+            console.log(parseInt(Object.keys(tasks)[0]), tasks)
+            this.selectRowTask(parseInt(Object.keys(tasks)[0]))
         },
         loadSelectTask(task){
             this.selectTask = task
@@ -140,9 +138,9 @@ const appMain = new Vue({
 
         selectRowTask(IdTask){
             window.clearInterval(this.loadAnswerId)
-            this.selectTask.id = IdTask
-            eel.load_main_window_select_task(IdTask)((message)=>{
-                websocket.send(message)
+            this.selectTask.id = parseInt(IdTask)
+            eel.load_main_window_select_task(parseInt(IdTask))((task)=>{
+                this.loadSelectTask(task)
             })
             this.getAnswers()
         },
@@ -184,8 +182,8 @@ const appMain = new Vue({
 
 
         getAnswers(){
-            eel.get_list_answers(this.selectTask.id)((message)=>{
-                websocket.send(message)
+            eel.get_list_answers(this.selectTask.id)((answer)=>{
+                this.loadsAnswers(answer)
             })
         },
 
@@ -198,9 +196,8 @@ const appMain = new Vue({
             this.updateNumberShipments(this.selectTask.number_shipments)
         },
         loadReport(id_answer){
-            eel.get_report(id_answer)((message)=>{
-                console.log(id_answer)
-                websocket.send(message)
+            eel.get_report(id_answer)((report)=>{
+                this.openWindowReport(report)
             })
         },
         openWindowReport(report){
@@ -244,9 +241,7 @@ const appMain = new Vue({
             this.isClose = true
         },
         buttonCloseContest(){
-            eel.close_contest()((message)=>{
-                websocket.send(message)
-            })
+            eel.close_contest()
             this.closeContest()
         },
         ExitContest(){
@@ -295,7 +290,7 @@ const appMain = new Vue({
         compileter: function(val){
             this.compileter = val
 
-            eel.select_answer({type_compilation: this.compileter})
+            
         }
     }
     
@@ -311,11 +306,11 @@ document.addEventListener('DOMContentLoaded', () => {
         websocket = new WebSocket(url);
 
         websocket.onopen = function(e) {
-            eel.load_main_window_contest()((message) => {
-                websocket.send(message)
+            eel.load_main_window_contest()((contest) => {
+                appMain.loadLeftInformation(contest)
             })
-            eel.load_main_window_list_task()((message) => {
-                websocket.send(message)
+            eel.load_main_window_list_task()((tasks) => {
+                appMain.loadsTask(tasks)
             })
         };
           
@@ -339,32 +334,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-
-function setContestInformation(contest){
-    appMain.loadLeftInformation(contest)
-}
-
-function setTaskList(tasks){
-    appMain.loadsTask(tasks)
-}
-
-function setSelectTask(task){
-    appMain.loadSelectTask(task)
-}
-
-function setAnswer(answers){
-    console.log(answers)
-    appMain.loadsAnswers(answers)
-}
-
-function setReport(report){
-    console.log(report)
-    appMain.openWindowReport(report)
+function getListAnswer(){
+    appMain.getAnswers()
 }
 
 
-eel.expose(setContestInformation)
-eel.expose(setTaskList)
-eel.expose(setSelectTask)
-eel.expose(setAnswer)
-eel.expose(setReport)
+
+eel.expose(getListAnswer)

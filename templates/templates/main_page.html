@@ -13,7 +13,7 @@
             </div>
             <div class="section ">
                 <ul class="collection with-header">
-                    <a href="#" v-for="task in tasks" v-bind:key="task.id" v-on:click="selectRowTask(task.id)">
+                    <a href="#" v-for="(task, key) in tasks" v-bind:key="key" v-on:click="selectRowTask(key)">
                         <li class="collection-item">
                             <span class="secondary-content" id="total">{{task.last_answer}}</span>{{task.type_task | typeTaskFilter}}  {{task.name}}
                         </li>

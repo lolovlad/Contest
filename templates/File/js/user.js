@@ -60,7 +60,7 @@ const appUser = new Vue({
     },
     methods: {
         updateUsers(value){
-            this.users.length = 0
+            this.users = []
             for(let user of value){
                 this.users.push(user)
             }
@@ -134,80 +134,7 @@ const appUser = new Vue({
 
             this.userFilde = user
 
-            /*for (const [key, value] of Object.entries(user)) {
-                this.userFilde[key] = value
-            }*/
         },
-        /*
-       
-        loadFormUser(user){
-            console.log(user, "loadForm")
-            this.id = user.id
-            this.login = user.login
-            this.name = user.name
-            this.sename = user.sename
-            this.secondname = user.secondname
-            this.typeEdu = user.type_learning
-            this.placeOfStudy = user.place_of_study
-            
-            this.password = user.password
-            this.type = user.type
-
-            this.learningStage = user.learning_stage
-        },
-        addUser(){
-            if(this.fieldValidete(this.login, "Поле логина обязательное"))
-                if(this.fieldValidete(this.password, "Поле пароля обязательное"))
-                    if(this.fieldValidete(this.name, "Поле имени обязательное"))
-                        if(this.fieldValidete(this.sename, "Поле фамилии обязательное"))
-                            if(this.fieldValidete(this.secondname, "Поле отчества обязательное")){
-                                eel.update_select_user({
-                                    type_learning: this.typeEdu,
-                                    place_of_study: this.placeOfStudy,
-                                    learning_stage: this.learningStage,
-                                    
-                                })
-                                eel.button_add_user()
-                            }
-        },
-        deleteUser(){
-            eel.button_delete_user()
-        },
-        updateUser(){
-            if(this.fieldValidete(this.login, "Поле логина обязательное"))
-                if(this.fieldValidete(this.name, "Поле имени обязательное"))
-                    if(this.fieldValidete(this.sename, "Поле фамилии обязательное"))
-                        if(this.fieldValidete(this.secondname, "Поле отчества обязательное")){
-                            eel.update_select_user({
-                                type_learning: this.typeEdu,
-                                place_of_study: this.placeOfStudy,
-                                learning_stage: this.learningStage,
-                                
-                            })
-                            eel.button_update_user()
-                        }
-        },
-        clearForm(){
-            this.id = -1
-            this.login = ""
-            this.name = ""
-            this.sename = ""
-            this.secondname = ""
-            this.password = ""
-            this.error = ""
-            this.type = 1
-            this.typeEdu = 1
-            this.isSelect = false
-            eel.clear_select_user()
-        },
-        fieldValidete(value, error){
-            if(value.length == 0){
-                this.error = error
-                return false
-            }
-            return true
-        }*/
-    
     },
     watch: {
         login: function(val){
@@ -246,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function updateUserTable(users){
+    console.log(users)
     appUser.updateUsers(users)
 }
 

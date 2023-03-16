@@ -70,12 +70,7 @@ class ReportBuilder(FileBuilder):
         for report in self.__data:
             del report["name_contest"]
             del report["type_contest"]
-            if report["name_user"]:
-                del report["name_team"]
-            else:
-                del report["name_user"]
             report["total"] = list(report["total"].values())
-            report["total"] = [po["points"] for po in report["total"]]
             item = []
             for i in report.values():
                 if isinstance(i, list):
